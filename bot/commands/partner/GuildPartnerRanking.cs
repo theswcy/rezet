@@ -145,7 +145,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 #pragma warning disable CS8600 
                 var guildRanking = new List<(ulong GuildId, string Name, int Score, string rxp)>();
-                var f = Guild.IconUrl.ToString();
+                var f = ctx.User.AvatarUrl;
                 foreach (var element in shard.Elements)
                 {
                     if (element.Name == "_id") continue;
