@@ -51,7 +51,7 @@ namespace Rezet
             });
             var interactivity = Rezet.UseInteractivity(
                 new DSharpPlus.Interactivity.InteractivityConfiguration()
-                    { Timeout = TimeSpan.FromMinutes(5) }
+                { Timeout = TimeSpan.FromMinutes(5) }
                 );
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
@@ -84,27 +84,34 @@ namespace Rezet
 
         private static async Task Client_Ready(DiscordClient sender, DSharpPlus.EventArgs.ReadyEventArgs args)
         {
-            var serverCount = Rezet?.Guilds.Count;
-            var totalMembers = 0;
-            foreach (var guild in Rezet.Guilds.Values)
+            await UpdateStatusLoop();
+        }
+        private static async Task UpdateStatusLoop()
+        {
+            while (true)
             {
-                totalMembers += guild.MemberCount;
+                var serverCount = Rezet?.Guilds.Count;
+                DateTime now = DateTime.Now;
+                var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
+
+
+
+                var activity = new DiscordActivity($"Nya! In {serverCount} communities!", ActivityType.Playing);
+                var userStatus = UserStatus.DoNotDisturb;
+                await Rezet.UpdateStatusAsync(activity, userStatus);
+
+
+
+                Console.WriteLine($"0 [  {y}  |  REZET  ] I added status!");
+                Console.WriteLine($"0 [  {y}  |  REZET  ] I'm in sync with {serverCount} communities!");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("===================================================");
+                Console.ResetColor();
+
+
+
+                await Task.Delay(StatusUpdateInterval);
             }
-            DateTime now = DateTime.Now;
-            var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-
-
-
-            var activity = new DiscordActivity($"Nya! In {serverCount} communities!", ActivityType.Playing);
-            var userStatus = UserStatus.DoNotDisturb;
-            await Rezet.UpdateStatusAsync(activity, userStatus);
-
-
-            Console.WriteLine($"0 [  {y}  |  REZET  ] I added status!");
-            Console.WriteLine($"0 [  {y}  |  REZET  ] I'm in sync with {serverCount} communities!");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("===================================================");
-            Console.ResetColor();
         }
     }
     class Config
