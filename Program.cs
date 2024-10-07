@@ -102,14 +102,6 @@ namespace Rezet
 
 
 
-                Console.WriteLine($"0 [  {y}  |  REZET  ] I added status!");
-                Console.WriteLine($"0 [  {y}  |  REZET  ] I'm in sync with {serverCount} communities!");
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("===================================================");
-                Console.ResetColor();
-
-
-
                 await Task.Delay(StatusUpdateInterval);
             }
         }
