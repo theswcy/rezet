@@ -84,8 +84,6 @@ public class CommunityPartnerMore : ApplicationCommandModule
                     {
                         emoji = "🦈";
 #pragma warning disable CS8602
-                        var t = await Program.Rezet.GetUserAsync(ulong.Parse(userId));
-                        if (t != null)
                     };
 
                     ranking += $"> {emoji}⠀`{position:D2}. -⠀{score:D4}`⠀<@{userId}>\n";
