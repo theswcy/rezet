@@ -36,7 +36,7 @@ public class RezetGets : ApplicationCommandModule
             "<:rezet_shine:1147368423475658882> Development:",
             "> **My version**: `Sharp 1.0`" +
             "\n> **Language**: `CSharp. [ C# ]`" +
-            "\n> **Library**: `DS+ [ DSharpPlus ]`"  + 
+            "\n> **Library**: `D#+ [ DSharpPlus ]`"  +
             "\n> **Framework**: `.NET 8.0`" +
             $"\n> **Operating in**: `{ctx.Client.Guilds.Count} communities`"
             );
