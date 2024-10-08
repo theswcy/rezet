@@ -75,7 +75,6 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
                 string ranking = "";
                 int position = 1;
-                var thumb = Guild.IconUrl;
                 foreach (var entry in orderedRanking)
                 {
                     string userId = entry.Key;
@@ -87,7 +86,6 @@ public class CommunityPartnerMore : ApplicationCommandModule
 #pragma warning disable CS8602
                         var t = await Program.Rezet.GetUserAsync(ulong.Parse(userId));
                         if (t != null)
-                        { thumb = t.AvatarUrl; }
                     };
 
                     ranking += $"> {emoji}⠀`{position:D2}. -⠀{score:D4}`⠀<@{userId}>\n";
@@ -98,7 +96,6 @@ public class CommunityPartnerMore : ApplicationCommandModule
                     Description = $"**Local leaderboard!**\n{ranking}",
                     Color = new DiscordColor("7e67ff")
                 };
-                embed.WithThumbnail(thumb);
                 embed.WithAuthor(Guild.Name, iconUrl: Guild.IconUrl);
                 var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{ctx.User.Id}_PAexit", "Exit");
 
