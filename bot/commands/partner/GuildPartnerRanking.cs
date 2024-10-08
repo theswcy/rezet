@@ -91,7 +91,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 }
                 var embed = new DiscordEmbedBuilder()
                 {
-                    Description = $"**Local leaderboard!**\n{ranking}",
+                    Description = $"**Local leaderboard!**\n`⠀⠀##⠀⠀⠀⠀⠀Score⠀⠀⠀⠀⠀Name`\n{ranking}",
                     Color = new DiscordColor("7e67ff")
                 };
                 embed.WithAuthor(Guild.Name, iconUrl: Guild.IconUrl);
