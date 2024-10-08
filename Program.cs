@@ -74,7 +74,7 @@ namespace Rezet
             await Rezet.ConnectAsync();
             Rezet.Ready += Client_Ready;
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"O [  {y}  |  REZET  ] Nyaaaaa!!!!! Rezet is ready!!!!!!!!!!.");
+            Console.WriteLine($"O [  {y}  |  REZET  ] Rezet is ready!!!!!!!!!!.");
 
             await Task.Delay(-1);
         }
