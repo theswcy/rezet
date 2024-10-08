@@ -91,7 +91,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 }
                 var embed = new DiscordEmbedBuilder()
                 {
-                    Description = $"**Local leaderboard!**\n`⠀⠀##⠀⠀⠀⠀⠀Score⠀⠀⠀⠀⠀Name`\n{ranking}",
+                    Description = $"**Local leaderboard!**\n`Position⠀⠀⠀Score⠀⠀⠀⠀Name`\n{ranking}",
                     Color = new DiscordColor("7e67ff")
                 };
                 embed.WithAuthor(Guild.Name, iconUrl: Guild.IconUrl);
@@ -177,7 +177,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 }
                 var embed = new DiscordEmbedBuilder()
                 {
-                    Description = $"**Global Partnership ranked!**\nRanking **global** das comunidades com mais **parcerias**!\n\n{rankingMessage}⠀",
+                    Description = $"**Global Partnership ranked!**\nRanking **global** das comunidades com mais **parcerias**!\n\n`Position⠀⠀⠀Score⠀⠀⠀⠀Name`\n{rankingMessage}⠀",
                     Color = new DiscordColor("7e67ff")
                 };
                 embed.WithFooter(
