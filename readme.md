@@ -1,3 +1,3 @@
-<H1 align=1>
+<h1 align=center>
     Rezet Sharp 1
 </h1>
