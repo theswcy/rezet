@@ -75,6 +75,9 @@ namespace Rezet
             Rezet.Ready += Client_Ready;
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"O [  {y}  |  REZET  ] Rezet is ready!!!!!!!!!!.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("CNTRL ===================================================");
+            Console.ResetColor();
 
             await Task.Delay(-1);
         }
