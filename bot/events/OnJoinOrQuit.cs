@@ -31,9 +31,10 @@ public static class OnJoinOrQuit
 
             if (shard[$"{Guild.Id}"]["partner"]["anti-qi"] == 1)
             {
-                var ch2 = e.Guild.GetChannel((ulong)shard[$"{Guild.Id}"]["partner"]["configs"]["options"]["channel"].AsInt64); var messages = await ch2.GetMessagesAsync(100);
+                var ch2 = e.Guild.GetChannel((ulong)shard[$"{Guild.Id}"]["partner"]["configs"]["options"]["channel"].AsInt64);
+                var messages = await ch2.GetMessagesAsync(100);
                 var msg = messages.Where(msg => msg.MentionedUsers.Any(u => u.Id == Member.Id));
-                if (msg != null)
+                if (msg.Count() != 0)
                 {
                     if (shard[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                     {
