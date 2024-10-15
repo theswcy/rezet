@@ -3,7 +3,7 @@
 </h1>
 <br>
 <p>
-    Version: <strong>Sharp 1 - Beta R-0007</strong>.
+    Version: <strong>Sharp 1 - Beta R-0008</strong>.
 </p>
 <li><strong>+</strong> new prefix command: <code>mute</code>.</li>
 <br>
