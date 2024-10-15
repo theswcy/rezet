@@ -13,22 +13,23 @@ namespace Rezet.Commands
 
             // PRIMARY:
             prefix.RegisterCommands<PrefixPrimary>();
+            prefix.RegisterCommands<ToModerationBasic>(); // !! EM TESTES
 
 
 
 
 
-            var slash = client.UseSlashCommands();
-            slash.RegisterCommands<RezetGets>();
+            var slash = client.UseSlashCommands(null);
+            slash.RegisterCommands<RezetGets>(null);
 
             // COMMUNITY:
-            slash.RegisterCommands<CommunityCommands>();
-            slash.RegisterCommands<CommunityRole>();
-            slash.RegisterCommands<CommunityChats>();
+            slash.RegisterCommands<CommunityCommands>(null);
+            slash.RegisterCommands<CommunityRole>(null);
+            slash.RegisterCommands<CommunityChats>(null);
 
             // PARTNERSHIP:
-            slash.RegisterCommands<PartnershipCommands>();
-            slash.RegisterCommands<CommunityPartnerMore>();
+            slash.RegisterCommands<PartnershipCommands>(null);
+            slash.RegisterCommands<CommunityPartnerMore>(null);
 
 
 
