@@ -15,4 +15,8 @@
 <br>
 🪛 - <a href="https://discord.com/oauth2/authorize?client_id=889388725719683082">
     <strong>Add Rezet</strong>
+<<<<<<< HEAD
 </a>.
+=======
+</a>.
+>>>>>>> dbf3225af1c961ba3225b7ffc161e2a7bff5029d
