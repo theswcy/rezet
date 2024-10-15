@@ -62,7 +62,7 @@
 </h2>
 📘 - <a href="https://horizon-witwicky.gitbook.io/rezet">
     <strong>Gitbook</strong>
-</a>.
+</a>
 <br>
 🪛 - <a href="https://discord.com/oauth2/authorize?client_id=889388725719683082">
     <strong>Add Rezet</strong>
