@@ -138,28 +138,31 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-#pragma warning disable CS8600 
                 var guildRanking = new List<(ulong GuildId, string Name, int Score, string rxp)>();
                 var f = ctx.User.AvatarUrl;
                 foreach (var element in shard.Elements)
                 {
                     if (element.Name == "_id") continue;
 
+
+
                     var guildData = element.Value.AsBsonDocument;
                     ulong guildId = ulong.Parse(element.Name);
                     string GuildName = guildData["guild_name"].AsString;
                     int GuildScore = guildData["partner"]["ps"].AsInt32;
 
+                    if (GuildScore > 0)
+                    {
+                        string rbxp = "<:rezet_c_elite:1290676392870023190>";
+                        if (guildData["partner"]["xp"] > 10000) { rbxp = "<:rezet_sss_elite:1290676886556377112>"; }
+                        else if (guildData["partner"]["xp"] > 5000) { rbxp = "<:rezet_ss_elite:1290676831544017046>"; }
+                        else if (guildData["partner"]["xp"] > 2500) { rbxp = "<:rezet_s_elite:1290676775826886696>"; }
+                        else if (guildData["partner"]["xp"] > 1000) { rbxp = "<:rezet_a_elite:1290676720537567373>"; }
+                        else if (guildData["partner"]["xp"] >= 500) { rbxp = "<:rezet_b_elite:1290676630527934567>"; }
 
-                    string rbxp = "<:rezet_c_elite:1290676392870023190>";
-                    if (guildData["partner"]["xp"] > 10000) { rbxp = "<:rezet_sss_elite:1290676886556377112>"; }
-                    else if (guildData["partner"]["xp"] > 5000) { rbxp = "<:rezet_ss_elite:1290676831544017046>"; }
-                    else if (guildData["partner"]["xp"] > 2500) { rbxp = "<:rezet_s_elite:1290676775826886696>"; }
-                    else if (guildData["partner"]["xp"] > 1000) { rbxp = "<:rezet_a_elite:1290676720537567373>"; }
-                    else if (guildData["partner"]["xp"] >= 500) { rbxp = "<:rezet_b_elite:1290676630527934567>"; }
 
-
-                    guildRanking.Add((guildId, GuildName, GuildScore, rbxp));
+                        guildRanking.Add((guildId, GuildName, GuildScore, rbxp));
+                    }
                 }
                 var rankedGuild = guildRanking.OrderByDescending(g => g.Score).Take(20).ToList();
 
@@ -295,7 +298,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                     return;
                 }
                 long p = shard[$"{Guild.Id}"]["partner"]["leaderboard"]["ranking"][$"{user.Id}"].AsInt32;
-                if (amount >= p) { p = 0; } else { p -= amount; if (p <= 0 ) { p = 0; } }
+                if (amount >= p) { p = 0; } else { p -= amount; if (p <= 0) { p = 0; } }
                 if (shard[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                 {
                     var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");

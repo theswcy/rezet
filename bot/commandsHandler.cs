@@ -12,7 +12,6 @@ namespace Rezet.Commands
             var prefix = Program.commands;
 
             // PRIMARY:
-            prefix.RegisterCommands<PrefixPrimary>();
             prefix.RegisterCommands<ToModerationBasic>(); // !! EM TESTES
 
 
