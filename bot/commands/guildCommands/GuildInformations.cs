@@ -107,7 +107,7 @@ public class CommunityCommands : ApplicationCommandModule
     {
         try
         {
-            await ctx.CreateResponseAsync("<a:rezet_loading:1147722017806762045> Loading...");
+            await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
             var Guild = await Program.Rezet.GetGuildAsync(ctx.Guild.Id);
             var Author = ctx.Member;
 
@@ -136,7 +136,7 @@ public class CommunityCommands : ApplicationCommandModule
 
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"Nice! A descrição da comunidade foi alterada com sucesso!\n- Nova descrição: `{description}`"));
+                        .WithContent($"Nice! A descrição da comunidade foi alterada com sucesso!\nNova descrição:\n> `{description}`"));
             }
             catch (Exception ex)
             {

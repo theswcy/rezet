@@ -9,7 +9,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 {
     [SlashCommand("ban", "💉 | Ban someone.")]
     public static async Task Ban(InteractionContext ctx,
-        [Option("member", "Select the member to ban. [ for ID use @rezet ban <id> ]")] DiscordUser User,
+        [Option("member", "Select the member to ban. [ for ID: @rezet ban <id> ]")] DiscordUser User,
         [Option("reason", "The reason of the ban.")] string? Reason = null
     )
     {
@@ -28,7 +28,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
     [SlashCommand("unban", "💉 | Unban someone")]
     public static async Task Unban(InteractionContext ctx,
-        [Option("id", "The ID of the member")] long ID,
+        [Option("id", "The ID of the member")] string ID,
         [Option("reason", "The reason of the unban")] string? Reason = null
     )
     {

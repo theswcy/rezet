@@ -32,6 +32,15 @@
 <li>🟢 | <code>role info</code> [ complete ]</li>
 <li>🟢 | <code>role remove</code> [ complete ]</li>
 <br>
+<li>🟠 | <code>moderation ban</code> [ incomplete ]</li>
+<li>🟠 | <code>moderation unban</code> [ incomplete ]</li>
+<li>🟠 | <code>moderation timeout</code> [ incomplete ]</li>
+<li>🟠 | <code>moderation timeout</code> [ incomplete ]</li>
+<li>🟠 | <code>moderation untimeout</code> [ incomplete ]</li>
+<li>🟠 | <code>moderation kick</code> [ incomplete ]</li>
+<li>🟠 | <code>moderation warn</code> [ incomplete ]</li>
+<li>🟠 | <code>moderation unwarn</code> [ incomplete ]</li>
+<li>🟠 | <code>moderation warns</code> [ incomplete ]</li>
 
 
 <h3>
