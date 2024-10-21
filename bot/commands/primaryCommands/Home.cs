@@ -30,11 +30,11 @@ public class RezetGets : ApplicationCommandModule
             Color = new DiscordColor("#7e67ff")
         };
         embed.WithAuthor(
-            "Sharp In tests!", iconUrl: ctx.Client.CurrentUser.AvatarUrl
+            "Public Beta!", iconUrl: ctx.Client.CurrentUser.AvatarUrl
         );
         embed.AddField(
             "<:rezet_shine:1147368423475658882> Development:",
-            "> **My version**: `Sharp 1.0`" +
+            "> **My version**: `Sharp 1.0 / Beta R-0009`" +
             "\n> **Language**: `CSharp. [ C# ]`" +
             "\n> **Library**: `D#+ [ DSharpPlus ]`"  +
             "\n> **Framework**: `.NET 8.0`" +

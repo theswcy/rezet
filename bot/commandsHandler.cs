@@ -12,7 +12,7 @@ namespace Rezet.Commands
             var prefix = Program.commands;
 
             // PRIMARY:
-            prefix.RegisterCommands<ToModerationBasic>(); // !! EM TESTES
+            prefix.RegisterCommands<ToModerationBasic_prefix>(); // !! EM TESTES
 
 
 
@@ -29,6 +29,9 @@ namespace Rezet.Commands
             // PARTNERSHIP:
             slash.RegisterCommands<PartnershipCommands>(null);
             slash.RegisterCommands<CommunityPartnerMore>(null);
+
+            // MODERATION:
+            slash.RegisterCommands<ToModerationBasic_slash>(null);
 
 
 

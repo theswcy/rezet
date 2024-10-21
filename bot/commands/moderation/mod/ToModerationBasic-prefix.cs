@@ -4,7 +4,7 @@ using DSharpPlus.Entities;
 
 
 
-public class ToModerationBasic : BaseCommandModule
+public class ToModerationBasic_prefix : BaseCommandModule
 {
     private static readonly List<string> Keys =
     [
