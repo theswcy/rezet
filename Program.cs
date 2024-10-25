@@ -38,6 +38,8 @@ namespace Rezet
                 Token = config?.Token,
                 TokenType = TokenType.Bot,
                 Intents = DiscordIntents.All,
+                ReconnectIndefinitely = true,
+                GatewayCompressionLevel = GatewayCompressionLevel.Payload,
                 MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error
             };
             Rezet = new DiscordClient(rzt);
