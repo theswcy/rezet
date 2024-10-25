@@ -16,6 +16,9 @@ public class ToModerationBasic_slash : ApplicationCommandModule
         try
         {
             await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
+
+            var Guild = ctx.Guild;
+            var Member = Guild.GetMemberAsync(User.Id);
         }
         catch (Exception ex)
         {
