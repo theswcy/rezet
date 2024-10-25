@@ -77,6 +77,8 @@ namespace Rezet
             Rezet.Ready += Client_Ready;
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"O [  {y}  |  REZET  ] Rezet is ready!!!!!!!!!!.");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine($"V [  {y}  ]  SHARP  ] Version: Sharp 1.0 | PTB R-0013");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("CNTRL ===================================================");
             Console.ResetColor();
@@ -100,7 +102,7 @@ namespace Rezet
 
 
 
-                var activity = new DiscordActivity($"Nya! In {serverCount} communities!", ActivityType.Playing);
+                var activity = new DiscordActivity($"Neyo! In {serverCount}-C | V: Sharp 1.0 [ PTB R-0013 ]!", ActivityType.Playing);
                 var userStatus = UserStatus.DoNotDisturb;
                 await Rezet.UpdateStatusAsync(activity, userStatus);
 
