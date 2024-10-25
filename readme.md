@@ -4,9 +4,6 @@
 <br>
 <p>
     Version: <strong>Sharp 1 - Public Test Build R-0013</strong>.
-</p>
-<li><strong>+</strong> new prefix command: <code>mute</code>.</li>
-<br>
 
 
 
