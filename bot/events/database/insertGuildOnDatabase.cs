@@ -65,21 +65,20 @@ public static class InsertGuildDB
                                 { "blackout", BsonNull.Value }
                             }
                         },
+                        // ---------- START TEST NEW:
                         { "auto_actions", new BsonDocument
                             {
                                 { "auto_role", BsonNull.Value },
                                 { "auto_ping", BsonNull.Value }
                             }
                         },
-                        { "verify", new BsonDocument
+                        { "warns", new BsonDocument 
                             {
-                                { "option", 0 }
-                                // ========== OPTIONS:
-                                // 0 -> off.
-                                // 1 -> simple.
-                                // 2 -> complex.
+                                { "type_w", BsonNull.Value },
+                                { "type_u", BsonNull.Value }
                             }
                         }
+                        // ---------- END TEST NEW.
                     }
                 },
                 { "partner", new BsonDocument
@@ -124,6 +123,11 @@ public static class InsertGuildDB
                             {
                                 { "option", 0 },
                                 { "ranking", new BsonDocument {} }
+                            }
+                        },
+                        { "ticket", new BsonDocument
+                            {
+                                { "test", "test" }
                             }
                         }
                     }
