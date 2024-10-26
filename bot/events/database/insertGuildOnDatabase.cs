@@ -61,7 +61,6 @@ public static class InsertGuildDB
                                 { "modified_category_channel", BsonNull.Value }, // <- REMOVE.
                                 // <---> TO ADD:
                                 { "modified_roles", BsonNull.Value },
-                                { "modified_channels", BsonNull.Value },
                                 { "modified_channels", BsonNull.Value }
                             }
                         },
@@ -76,20 +75,39 @@ public static class InsertGuildDB
                                 { "blackout", BsonNull.Value }
                             }
                         },
-                        // ---------- START TEST NEW:
                         { "auto_actions", new BsonDocument
                             {
                                 { "auto_role", BsonNull.Value },
                                 { "auto_ping", BsonNull.Value }
                             }
                         },
+                        // ---------- START TEST NEW:
                         { "warns", new BsonDocument 
                             {
                                 { "type_w", BsonNull.Value },
                                 { "type_u", BsonNull.Value }
                             }
-                        }
+                        },
                         // ---------- END TEST NEW.
+                    }
+                },
+                { "features", new BsonDocument
+                    {
+                        { "welcome", new BsonDocument
+                            {
+                                { "channel", BsonNull.Value },
+                                { "delete", 0 },
+                                { "embed", new BsonDocument
+                                    {
+                                        { "title", "Welcome new member!" },
+                                        { "description", "Welcome to the community @[guild.name], @[member.mention]!" },
+                                        { "image", 0 },
+                                        { "thumbnail", 0 },
+                                        { "author", 0 }
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 { "partner", new BsonDocument
