@@ -13,7 +13,7 @@ namespace Rezet.Commands
 
             // PRIMARY:
             // prefix.RegisterCommands<ToModerationBasic_prefix>(); // !! EM TESTES
-            prefix.RegisterCommands<SharpTestDatabase>();
+            // prefix.RegisterCommands<SharpTestDatabase>();
 
 
 
@@ -32,7 +32,7 @@ namespace Rezet.Commands
             slash.RegisterCommands<CommunityPartnerMore>(null);
 
             // MODERATION:
-            slash.RegisterCommands<ToModerationBasic_slash>(null);
+            // slash.RegisterCommands<ToModerationBasic_slash>(null);
 
 
 
