@@ -1,6 +1,8 @@
 using DSharpPlus.Entities;
 using DSharpPlus;
 using DSharpPlus.SlashCommands;
+using Rezet;
+using MongoDB.Bson;
 
 
 
@@ -24,8 +26,18 @@ public class ToModerationBasic_slash : ApplicationCommandModule
             var Guild = ctx.Guild;
             var Member = await Guild.GetMemberAsync(User.Id);
 
+
             await CheckPermi.CheckMemberPermissions(ctx, 7);
             await CheckPermi.CheckBotPermissions(ctx, 7);
+            if (Member.Id == Program.Rezet?.CurrentUser.Id)
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent("Calma ai! Eu não posso me banir!")
+                );
+                return;
+            }
+
 
             await Member.BanAsync(
                 Delete != null ? 7 : 0,
@@ -100,8 +112,17 @@ public class ToModerationBasic_slash : ApplicationCommandModule
             var Guild = ctx.Guild;
             var Member = await Guild.GetMemberAsync(User.Id);
 
+
             await CheckPermi.CheckMemberPermissions(ctx, 8);
             await CheckPermi.CheckBotPermissions(ctx, 8);
+            if (Member.Id == Program.Rezet?.CurrentUser.Id)
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent("Calma ai! Eu não posso me mutar!")
+                );
+                return;
+            }
 
 
             TimeSpan timeoutDuration = TimeSpan.Zero;
@@ -166,13 +187,22 @@ public class ToModerationBasic_slash : ApplicationCommandModule
     {
         try
         {
-             await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
+            await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
 
             var Guild = ctx.Guild;
             var Member = await Guild.GetMemberAsync(User.Id);
 
+
             await CheckPermi.CheckMemberPermissions(ctx, 6);
             await CheckPermi.CheckBotPermissions(ctx, 6);
+            if (Member.Id == Program.Rezet?.CurrentUser.Id)
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent("Calma ai! Eu não posso me chutar!")
+                );
+                return;
+            }
 
 
             await Member.RemoveAsync(Reason);
@@ -198,7 +228,31 @@ public class ToModerationBasic_slash : ApplicationCommandModule
     {
         try
         {
-            await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
+            await CheckPermi.CheckMemberPermissions(ctx, 8);
+            await CheckPermi.CheckMemberPermissions(ctx, 8);
+            if (User.Id == Program.Rezet?.CurrentUser.Id)
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent("Calma ai! Eu não posso me dar warn!")
+                );
+                return;
+            }
+            var Guild = ctx.Guild;
+            var shard = Program._databaseService?.GetShard(Guild, 1);
+
+
+
+            #pragma warning disable CS8602
+            if (shard[$"{Guild.Id}"]["moderation"]["warns"]["type_u"].AsBsonDocument.Contains($"{User.Id}"))
+            {
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                
+            }
+            else
+            {
+
+            }
         }
         catch (Exception ex)
         {
