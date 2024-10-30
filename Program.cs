@@ -9,23 +9,11 @@ using Rezet.Events;
 
 #pragma warning disable CS8602
 #pragma warning disable CS8604
-namespace Rezet
-{
-    class Program
-    {
-        public static DiscordClient? Rezet;
-        public static CommandsNextExtension? commands;
-        public static DatabaseService? _databaseService;
-        private static readonly TimeSpan StatusUpdateInterval = TimeSpan.FromMinutes(10);
-        static async Task Main(string[] args)
-        {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("START ===================================================");
-            Console.ResetColor();
-
-
-var configPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "obj", "config.json");
-var configJson = await File.ReadAllTextAsync(configPath);var config = JsonSerializer.Deserialize<Config>(configJson);
+namespace Rezet{
+class Program{public static DiscordClient? Rezet;public static CommandsNextExtension? commands;
+public static DatabaseService? _databaseService;private static readonly TimeSpan StatusUpdateInterval = TimeSpan.FromMinutes(10);
+static async Task Main(string[] args){Console.ForegroundColor = ConsoleColor.White;Console.WriteLine("START ===================================================");Console.ResetColor();
+var configPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "obj", "config.json");var configJson = await File.ReadAllTextAsync(configPath);var config = JsonSerializer.Deserialize<Config>(configJson);
 
 
             // ========== CLIENT:
