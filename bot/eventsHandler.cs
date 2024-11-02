@@ -22,7 +22,7 @@ namespace Rezet.Events
 
             // MESSAGE EVENTS:
             client.MessageCreated += OnMessageEvents.OnMessageComponents;
-            client.GuildMemberRemoved += OnJoinOrQuit.OnQuit;
+            client.GuildMemberRemoved += OnJoinOrQuit.OnQuitPARTNER;
 
 
 

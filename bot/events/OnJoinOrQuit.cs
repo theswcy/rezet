@@ -9,8 +9,32 @@ using Rezet;
 
 public static class OnJoinOrQuit
 {
+    // AUTOROLE:
+    public static async Task OnJoinAUTOROLE(DiscordClient sender, GuildMemberAddEventArgs e)
+    {
+        try
+        {
+            var Guild = e.Guild;
+            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var Member = e.Member;
+            if (shard == null)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
+                Console.ResetColor();
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+
+
     // PARTNERSHIP:
-    public static async Task OnQuit(DiscordClient sender, GuildMemberRemoveEventArgs e)
+    public static async Task OnQuitPARTNER(DiscordClient sender, GuildMemberRemoveEventArgs e)
     {
         try
         {
