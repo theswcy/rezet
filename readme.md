@@ -37,9 +37,9 @@
 <li>🟠 | <code>moderation unwarn</code> [ incomplete ]</li>
 <li>🟠 | <code>moderation warns</code> [ incomplete ]</li>
 <br>
-<li>🟠 | <code>autorole add</code> [ incomplete ]</li>
-<li>🟠 | <code>autorole remove</code> [ incomplete ]</li>
-<li>🟠 | <code>autorole clear</code> [ incomplete ]</li>
+<li>🟢 | <code>autorole add</code> [ complete ]</li>
+<li>🟢 | <code>autorole remove</code> [ complete ]</li>
+<li>🟢 | <code>autorole clear</code> [ complete ]</li>
 
 
 <h3>
@@ -64,7 +64,7 @@
 <h3>
     Automatic Tools
 </h3>
-<li>🟠 | <code>autorole</code> [ incomplete ]</li>
+<li>🟢 | <code>autorole</code> [ complete ]</li>
 
 
 <hr>
