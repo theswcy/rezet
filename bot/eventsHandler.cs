@@ -25,6 +25,10 @@ namespace Rezet.Events
             client.GuildMemberRemoved += OnJoinOrQuit.OnQuitPARTNER;
 
 
+            // AUTOMATIC:
+            client.GuildMemberAdded += OnJoinOrQuit.OnJoinAUTOROLE;
+
+
 
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
