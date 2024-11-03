@@ -35,9 +35,9 @@
 <li>🟣 | <code>moderation timeout</code> [ monitoring ]</li>
 <li>🟣 | <code>moderation untimeout</code> [ monitoring ]</li>
 <li>🟣 | <code>moderation kick</code> [ monitoring ]</li>
-<li>🟣 | <code>moderation warn</code> [ monitoring ]</li>
-<li>🟣 | <code>moderation unwarn</code> [ monitoring ]</li>
-<li>🟣 | <code>moderation warns</code> [ monitoring ]</li>
+<li>🟠 | <code>moderation warn</code> [ incomplete ]</li>
+<li>🟠 | <code>moderation unwarn</code> [ incomplete ]</li>
+<li>🟠 | <code>moderation warns</code> [ incomplete ]</li>
 <br>
 <li>🟠 | <code>autorole add</code> [ incomplete ]</li>
 <li>🟠 | <code>autorole remove</code> [ incomplete ]</li>
