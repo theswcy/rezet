@@ -32,7 +32,6 @@
 <li>🟣 | <code>moderation ban</code> [ monitoring ]</li>
 <li>🟣 | <code>moderation unban</code> [ monitoring ]</li>
 <li>🟣 | <code>moderation timeout</code> [ monitoring ]</li>
-<li>🟣 | <code>moderation timeout</code> [ monitoring ]</li>
 <li>🟣 | <code>moderation untimeout</code> [ monitoring ]</li>
 <li>🟣 | <code>moderation kick</code> [ monitoring ]</li>
 <li>🟠 | <code>moderation warn</code> [ incomplete ]</li>
