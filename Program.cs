@@ -53,5 +53,5 @@ await Task.Delay(-1);}
 
 private static async Task Client_Ready(DiscordClient sender, DSharpPlus.EventArgs.ReadyEventArgs args){await UpdateStatusLoop();}
 private static async Task UpdateStatusLoop(){while (true){var serverCount = Rezet?.Guilds.Count;
-var activity = new DiscordActivity($"Neyo! In {serverCount} communities! [ IN TEST ]", ActivityType.Playing);var userStatus = UserStatus.DoNotDisturb;
+var activity = new DiscordActivity($"Heyo! In {serverCount} communities! [ IN TEST ]", ActivityType.Playing);var userStatus = UserStatus.DoNotDisturb;
 await Rezet.UpdateStatusAsync(activity, userStatus);await Task.Delay(StatusUpdateInterval);}}}class Config{public string? Token { get; set; }public string? Keydb { get; set; }}}
