@@ -30,12 +30,19 @@ public class CommunityRole : ApplicationCommandModule
 
             var botMember = await ctx.Guild.GetMemberAsync(ctx.Client.CurrentUser.Id);
             var highestBotRole = botMember.Roles.OrderByDescending(r => r.Position).FirstOrDefault();
-
             if (role.Position >= highestBotRole.Position)
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
                         .WithContent($"<:rezet_dred:1147164215837208686> Eu não posso atribuir um cargo maior que o meu maior cargo atual!"));
+                return;
+            }
+            var highestMemberRole = ctx.Member.Roles.OrderByDescending(r => r.Position).FirstOrDefault();
+            if (role.Position >= highestMemberRole.Position)
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"<:rezet_dred:1147164215837208686> Você não pode atribuir um cargo maior que o seu maior cargo atual!"));
                 return;
             }
 
@@ -129,7 +136,15 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"<:rezet_dred:1147164215837208686> Eu não posso remover um cargo maior que o meu maior cargo atual!"));
+                        .WithContent($"<:rezet_dred:1147164215837208686> Eu não posso atribuir um cargo maior que o meu maior cargo atual!"));
+                return;
+            }
+            var highestMemberRole = ctx.Member.Roles.OrderByDescending(r => r.Position).FirstOrDefault();
+            if (role.Position >= highestMemberRole.Position)
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"<:rezet_dred:1147164215837208686> Você não pode atribuir um cargo maior que o seu maior cargo atual!"));
                 return;
             }
 
