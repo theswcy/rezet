@@ -195,9 +195,9 @@ public class PartnerDashboard
                     };
                     embed.AddField(
                         "<:rezet_shine:1147368423475658882> Staff variables",
-                        "> `@[user.name]`: Nome do funcionário." +
-                        "\n> `@[user.mention]`: Menção do funcionário. ( Disponível apenas na descrição da embed )" +
-                        "\n> `@[user.id]`: Id do funcionário." +
+                        "> `@[staff.name]`: Nome do funcionário." +
+                        "\n> `@[staff.mention]`: Menção do funcionário. ( Disponível apenas na descrição da embed )" +
+                        "\n> `@[staff.id]`: Id do funcionário." +
                         "\n> `@[user.points]`: Total de pontos do funcionário. ( Apenas se o módulo **ranking** estiver ativada. )"
                     );
                     embed.AddField(
