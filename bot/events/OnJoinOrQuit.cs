@@ -24,6 +24,31 @@ public static class OnJoinOrQuit
                 Console.ResetColor();
                 return;
             }
+            
+
+
+            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
+            {
+                var RolesDict = shard
+                                [$"{Guild.Id}"]
+                                ["moderation"]
+                                ["auto_actions"]
+                                ["auto_role"]
+                                .AsBsonDocument.ToDictionary(
+                                    elem => elem.Name,
+                                    elem => elem.Value.AsInt64
+                                );
+                foreach (var entry in RolesDict)
+                {
+                    ulong RoleId = (ulong)entry.Value;
+                    var r = Guild.GetRole(RoleId);
+                    await Member.GrantRoleAsync(r, "Função Autorole.");
+                }
+            }
+            else
+            {
+                return;
+            }
         }
         catch (Exception ex)
         {
