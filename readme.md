@@ -3,7 +3,7 @@
 </h1>
 <br>
 <p>
-    Version: <strong>Sharp 1 - Public Test Build R-0020</strong>.a
+    Version: <strong>Sharp 1 - Public Test Build R-0020</strong>.
 
 
 <h2>
