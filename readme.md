@@ -3,7 +3,7 @@
 </h1>
 <br>
 <p>
-    Version: <strong>Sharp 1 - Public Test Build R-0016</strong>.
+    Version: <strong>Sharp 1 - Public Test Build R-0019</strong>.
 
 
 
@@ -29,21 +29,25 @@
 <li>🟢 | <code>role info</code> [ complete ]</li>
 <li>🟢 | <code>role remove</code> [ complete ]</li>
 <br>
-<li>🟠 | <code>moderation ban</code> [ incomplete ]</li>
-<li>🟠 | <code>moderation unban</code> [ incomplete ]</li>
-<li>🟠 | <code>moderation timeout</code> [ incomplete ]</li>
-<li>🟠 | <code>moderation timeout</code> [ incomplete ]</li>
-<li>🟠 | <code>moderation untimeout</code> [ incomplete ]</li>
-<li>🟠 | <code>moderation kick</code> [ incomplete ]</li>
-<li>🟠 | <code>moderation warn</code> [ incomplete ]</li>
-<li>🟠 | <code>moderation unwarn</code> [ incomplete ]</li>
-<li>🟠 | <code>moderation warns</code> [ incomplete ]</li>
+<li>🟣 | <code>moderation ban</code> [ monitoring ]</li>
+<li>🟣 | <code>moderation unban</code> [ monitoring ]</li>
+<li>🟣 | <code>moderation timeout</code> [ monitoring ]</li>
+<li>🟣 | <code>moderation timeout</code> [ monitoring ]</li>
+<li>🟣 | <code>moderation untimeout</code> [ monitoring ]</li>
+<li>🟣 | <code>moderation kick</code> [ monitoring ]</li>
+<li>🟣 | <code>moderation warn</code> [ monitoring ]</li>
+<li>🟣 | <code>moderation unwarn</code> [ monitoring ]</li>
+<li>🟣 | <code>moderation warns</code> [ monitoring ]</li>
+<br>
+<li>🟠 | <code>autorole add</code> [ incomplete ]</li>
+<li>🟠 | <code>autorole remove</code> [ incomplete ]</li>
+<li>🟠 | <code>autorole clear</code> [ incomplete ]</li>
 
 
 <h3>
     Prefix [ -r or @rezet ]
 </h3>
-<li>🟣 | <code>mute</code> [ monitoring ] <strong>new!</strong></li>
+<li>🟣 | <code>mute</code> [ monitoring ]</li>
 <br>
 
 
@@ -55,10 +59,14 @@
     Partnership
 </h3>
 <li>🟢 | <code>partnership announcement</code> [ complete ]</li>
-<li>🟢 | <code>audit logs</code> [ complete ]</li>
+<li>🟢 | <code>partnership logs</code> [ complete ]</li>
 <li>🟢 | <code>delete on partner quit</code> [ complete ]</li>
 <li>🟢 | <code>delete on everyone/here mention</code> [ complete ]</li>
 <br>
+<h3>
+    Automatic Tools
+</h3>
+<li>🟠 | <code>autorole</code> [ incomplete ]</li>
 
 
 <hr>
