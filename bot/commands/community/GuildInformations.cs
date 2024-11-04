@@ -138,18 +138,18 @@ public class CommunityCommands : ApplicationCommandModule
                     new DiscordWebhookBuilder()
                         .WithContent($"Nice! A descrição da comunidade foi alterada com sucesso!\nNova descrição:\n> `{description}`"));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"<:rezet_dred:1147164215837208686> {ex}"));
+                        .WithContent($"Ops! Não consegui fazer as alterações na descrição da comunidade. Verifique minhas permissões!"));
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"<:rezet_dred:1147164215837208686> Erro: `{ex}`"));
+                    .WithContent($"Ops! Não consegui fazer as alterações na descrição da comunidade. Verifique minhas permissões!"));
         }
     }
 }
