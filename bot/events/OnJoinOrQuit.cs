@@ -40,8 +40,7 @@ public static class OnJoinOrQuit
                                 );
                 foreach (var entry in RolesDict)
                 {
-                    ulong RoleId = (ulong)entry.Value;
-                    var r = Guild.GetRole(RoleId);
+                    var r = Guild.GetRole((ulong)entry.Value);
                     await Member.GrantRoleAsync(r, "Função Autorole.");
                 }
             }
