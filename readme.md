@@ -3,7 +3,7 @@
 </h1>
 <br>
 <p>
-    Version: <strong>Sharp 1 - Public Test Build R-0021</strong>.
+    Version: <strong>Sharp 1 - Public Test Build R-0022</strong>.
 
 
 <h2>
@@ -13,7 +13,7 @@
 <li>🟢 | <code>basic about</code> [ complete ]</li>
 <li>🟢 | <code>chat clear</code> [ complete ]</li>
 <br>
-<li>🟡 | <code>community description</code> [ incomplete but working ]</li>
+<li>🟢 | <code>community description</code> [ complete ]</li>
 <li>🟢 | <code>communty informations</code> [ complete ]</li>
 <br>
 <li>🟢 | <code>partner points add</code> [ complete ]</li>
@@ -40,6 +40,10 @@
 <li>🟢 | <code>autorole add</code> [ complete ]</li>
 <li>🟢 | <code>autorole remove</code> [ complete ]</li>
 <li>🟢 | <code>autorole clear</code> [ complete ]</li>
+<br>
+<li>🟢 | <code>autoping add</code> [ complete ]</li>
+<li>🟢 | <code>autoping remove</code> [ complete ]</li>
+<li>🟢 | <code>autoping clear</code> [ complete ]</li>
 
 
 <h3>
@@ -65,6 +69,7 @@
     Automatic Tools
 </h3>
 <li>🟢 | <code>autorole</code> [ complete ]</li>
+<li>🟢 | <code>autoping</code> [ complete ]</li>
 
 
 <hr>
