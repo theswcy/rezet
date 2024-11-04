@@ -35,31 +35,15 @@ public static class InsertGuildDB
                         { "key_pass", BsonNull.Value },
                         { "mod_logs", new BsonDocument
                             {
-                                // MODIFIED:
                                 // MODERATION LOGS
-                                { "message_deleted_channel", BsonNull.Value }, // <- REMOVE.
-                                { "banned_user_channel", BsonNull.Value }, // < REMOVE.
-                                { "kick_user_channel", BsonNull.Value }, // <- REMOVE.
-                                { "mute_user_channel", BsonNull.Value }, // <- REMOVE.
-                                { "role_add_user_channel", BsonNull.Value }, // <- REMOVE.
-                                // <---> TO ADD:
                                 { "messages_channel", BsonNull.Value },
                                 { "moderation_channel", BsonNull.Value },
                                 { "roles_channel", BsonNull.Value },
 
                                 // GUILD MANAGER LOGS
-                                { "change_icon_channel", BsonNull.Value }, // <- REMOVE.
-                                { "change_banner_channel", BsonNull.Value }, // <- REMOVE.
-                                { "change_splash_channel", BsonNull.Value }, // <- REMOVE.
-                                { "change_name_channel", BsonNull.Value }, // <- REMOVE.
-                                // <---> TO ADD:
                                 { "manage_guild", BsonNull.Value },
 
                                 // ROLES AND CHANNELS:
-                                { "modified_role_channel", BsonNull.Value }, // <- REMOVE.
-                                { "modified_chat_channel", BsonNull.Value }, // <- REMOVE.
-                                { "modified_category_channel", BsonNull.Value }, // <- REMOVE.
-                                // <---> TO ADD:
                                 { "modified_roles", BsonNull.Value },
                                 { "modified_channels", BsonNull.Value }
                             }
