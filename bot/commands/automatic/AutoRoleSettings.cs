@@ -12,7 +12,7 @@ using Rezet;
 public class AutoRoleSettings : ApplicationCommandModule
 {
     [SlashCommand("add", "🎟️ | Add an automatic join role!")]
-    public static async Task AutoRoleAdd(InteractionContext ctx,
+    public static async Task Add(InteractionContext ctx,
         [Option("role", "The role that will be given to the new member!")] DiscordRole Role
     )
     {
@@ -85,6 +85,7 @@ public class AutoRoleSettings : ApplicationCommandModule
                     new DiscordWebhookBuilder()
                         .WithContent($"Nice! O cargo `@{Role.Name} [ {Role.Id} ]` foi adicionado a função **Autorole**.")
                 );
+                return;
             }
             else
             {
@@ -112,7 +113,7 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
     [SlashCommand("remove", "🎟️ | Remove an automatic role.")]
-    public static async Task AutoRoleRemove(InteractionContext ctx,
+    public static async Task Remove(InteractionContext ctx,
         [Option("role", "The role that will be removed.")] DiscordRole Role
     )
     {
@@ -152,6 +153,18 @@ public class AutoRoleSettings : ApplicationCommandModule
                 );
                 return;
             }
+            else if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Count() == 1)
+            {
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_role", BsonNull.Value);
+                await collection.UpdateOneAsync(shard, update);
+
+
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Nice! O cargo `{Role.Name} [ {Role.Id} ]` foi removido da função **Autorole**.")
+                );
+            }
             else
             {
                 var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
@@ -174,7 +187,7 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
     [SlashCommand("clear", "🎟️ | Remove all automatic roles!")]
-    public static async Task AutoRoleClear(InteractionContext ctx)
+    public static async Task Clear(InteractionContext ctx)
     {
         try
         {
@@ -194,6 +207,14 @@ public class AutoRoleSettings : ApplicationCommandModule
             // PERMISSIONS:
             await CheckPermi.CheckMemberPermissions(ctx, 4);
             await CheckPermi.CheckBotPermissions(ctx, 4);
+            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] == BsonNull.Value)
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Não há nenhum canal com a função **Autorole**!")
+                );
+                return;
+            }
 
 
 
