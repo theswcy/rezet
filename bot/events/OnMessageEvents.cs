@@ -26,12 +26,22 @@ public static class OnMessageEvents
             }
 
 
-            
-            // ON EVERYONE:
-            if (shard[Guild.Id.ToString()]["partner"]["option"] != 0)
+
+
+            // FOR AUTOPING:
+            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
             {
                 if (e.Author.IsBot) { return; }
-                if ((ulong)shard[Guild.Id.ToString()]["partner"]["configs"]["options"]["channel"].ToInt64() != e.Channel.Id) { return; }
+                await ForAutoping(sender, e, shard);
+            }
+
+
+
+            // FOR PARTNERSHIP:
+            if (shard[$"{Guild.Id}"]["partner"]["option"] != 0)
+            {
+                if (e.Author.IsBot) { return; }
+                if ((ulong)shard[$"{Guild.Id}"]["partner"]["configs"]["options"]["channel"].ToInt64() != e.Channel.Id) { return; }
                 if (e.Message.Content.Contains("@everyone") || e.Message.Content.Contains("@here"))
                 {
                     if (shard[Guild.Id.ToString()]["partner"]["anti-eh"] == 1)
@@ -142,6 +152,33 @@ public static class OnMessageEvents
         catch (Exception ex)
         {
             Console.WriteLine(ex);
+        }
+    }
+
+
+
+    // AUTOPING:
+    public static async Task ForAutoping(DiscordClient sender, MessageCreateEventArgs e, BsonDocument shard)
+    {
+        var Guild = e.Guild;
+        var PingDict = shard
+                        [$"{Guild.Id}"]
+                        ["moderation"]
+                        ["auto_actions"]
+                        ["auto_ping"]
+                        .AsBsonDocument;
+        foreach (var entry in PingDict.Elements)
+        {
+            if (e.Channel.Id == ulong.Parse(entry.Name))
+            {
+                var pingData = entry.Value.AsBsonDocument;
+                var ping = Guild.GetRole((ulong)pingData["ping"].AsInt64);
+
+
+                await e.Message.RespondAsync(
+                    $"{ping.Mention} | {pingData["message"].AsString}"
+                );
+            }
         }
     }
 
