@@ -8,7 +8,7 @@ using MongoDB.Bson;
 
 
 
-[SlashCommandGroup("basic", "Rezet Gets")]
+[SlashCommandGroup("a", "Rezet Gets")]
 public class RezetGets : ApplicationCommandModule
 {
     [SlashCommand("about", "✨ | About me!")]
