@@ -29,6 +29,10 @@ namespace Rezet.Events
             client.GuildMemberAdded += OnJoinOrQuit.OnJoinAUTOROLE;
 
 
+            // MODERATOR:
+            client.ComponentInteractionCreated += ModeratorDashboard.MD_Primary;
+
+
 
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
