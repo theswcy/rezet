@@ -44,7 +44,7 @@ Rezet.Ready += Client_Ready;
 Console.ForegroundColor = ConsoleColor.Blue;
 Console.WriteLine($"O [  {y}  |  REZET  ] {Rezet.CurrentUser.Username} is ready!!!!!!!!!!.");
 Console.ForegroundColor = ConsoleColor.Cyan;
-Console.WriteLine($"V [  {y}  ]  SHARP  ] Version: Sharp 1.0 | PTB R-0021");
+Console.WriteLine($"V [  {y}  ]  SHARP  ] Version: Sharp 1.0 | PTB R-0022");
 Console.ForegroundColor = ConsoleColor.White;
 Console.WriteLine("CNTRL ===================================================");
 Console.ResetColor();
