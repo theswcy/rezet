@@ -28,6 +28,7 @@
 <li>🟢 | <code>role info</code> [ complete ]</li>
 <li>🟢 | <code>role remove</code> [ complete ]</li>
 <br>
+<li>🟠 | <code>moderator dashboard</code> [ incomplete ]</li>
 <li>🟣 | <code>moderation ban</code> [ monitoring ]</li>
 <li>🟣 | <code>moderation unban</code> [ monitoring ]</li>
 <li>🟣 | <code>moderation timeout</code> [ monitoring ]</li>
