@@ -36,6 +36,7 @@ namespace Rezet.Commands
 
             // AUTOMATIC:
             slash.RegisterCommands<AutoRoleSettings>(null);
+            slash.RegisterCommands<AutoPingSettings>(null);
 
 
 
