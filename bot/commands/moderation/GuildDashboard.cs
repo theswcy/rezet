@@ -42,57 +42,6 @@ public class Moderators : ApplicationCommandModule
 
 
 
-            // // SHOW THE AUTOROLE CONFIGS:
-            // if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
-            // {
-            //     var RolesDict = shard
-            //     [$"{Guild.Id}"]
-            //     ["moderation"]
-            //     ["auto_actions"]
-            //     ["auto_role"]
-            //     .AsBsonDocument.ToDictionary(
-            //         elem => elem.Name,
-            //         elem => elem.Value.AsInt64
-            //     );
-
-
-            //     var fieldValue = "";
-            //     foreach (var entry in RolesDict)
-            //     {
-            //         ulong RoleId = (ulong)entry.Value;
-            //         var r = Guild.GetRole(RoleId);
-
-            //         fieldValue = $"> {r.Mention}";
-            //     }
-            //     embed.AddField(
-            //         "<:rezet_3_act:1189936284379119726> Autorole:",
-            //         fieldValue
-            //     );
-            // }
-            // else
-            // {
-            //     embed.AddField(
-            //         "<:rezet_3_nact:1189936390113341601> Autorole:",
-            //         "> Nenhum cargo adicionado a função **Autorole**."
-            //     );
-            // }
-
-
-
-            // // SHOW THE AUTOPING CONFIGS:
-            // if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
-            // {
-
-            // }
-            // else
-            // {
-            //     embed.AddField(
-            //         "<:rezet_3_nact:1189936390113341601> Autoping:",
-            //         "> Nenhum canal com a função autoping ativada."
-            //     );
-            // }
-
-
 
             var emoji = new DiscordComponentEmoji("🪛");
             var AutomaticActions = new List<DiscordSelectComponentOption>
@@ -178,7 +127,6 @@ public class Moderators : ApplicationCommandModule
                 if (entry.Value != BsonNull.Value)
                 {
                     t++;
-                    break;
                 }
             }
             if (t != 0)
