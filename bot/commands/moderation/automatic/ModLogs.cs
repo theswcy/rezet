@@ -14,7 +14,7 @@ public class ModdingLogs : ApplicationCommandModule
     [SlashCommandGroup("logs", "Modding logs command.")]
     public class ModdingLogsCommands : ApplicationCommandModule
     {
-        [SlashCommand("setup", "📜 | Add modding logs channel.")]
+        [SlashCommand("setup", "📜 | Activate an modding logs channel.")]
         public static async Task Setup(InteractionContext ctx,
             [Option("config", "The configuration type of modding logs channel.")]
                 [Choice("Message delete / modify.", 1)]
@@ -130,7 +130,7 @@ public class ModdingLogs : ApplicationCommandModule
 
 
 
-        [SlashCommand("remove", "📜 | Remove modding logs channel.")]
+        [SlashCommand("Unactivate", "📜 | Unactivate an modding logs channel.")]
         public static async Task Unactivate(InteractionContext ctx,
             [Option("config", "The configuration type that will be uncativated.")]
                 [Choice("Message delete / modify.", 1)]
