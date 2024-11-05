@@ -243,11 +243,11 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
 
 
-            #pragma warning disable CS8602
+#pragma warning disable CS8602
             if (shard[$"{Guild.Id}"]["moderation"]["warns"]["type_u"].AsBsonDocument.Contains($"{User.Id}"))
             {
                 var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
-                
+
             }
             else
             {
@@ -265,9 +265,27 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
     [SlashCommand("unwarn", "💉 | Unwarn someone.")]
     public static async Task Unwarn(InteractionContext ctx,
-        [Option("member", "Select the member to unwarn")] DiscordUser User,
-        [Option("warn_id", "The if of the warn.")] string WarnID,
+        [Option("warn_id", "The id of the warn.")] string WarnID,
         [Option("reason", "The reaosn of the unwarn.")] string? Reason = null
+    )
+    {
+        try
+        {
+            await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+
+
+
+    [SlashCommand("warn-modify", "💉 | Modify the warns of someone.")]
+    public static async Task WarnModify(InteractionContext ctx,
+        [Option("warn", "Select the to modify.")] string WarnID,
+        [Option("reason", "The warn reason.")] string Reason
     )
     {
         try
