@@ -33,6 +33,7 @@ namespace Rezet.Commands
 
             // MODERATION:
             // slash.RegisterCommands<ToModerationBasic_slash>(null);
+            slash.RegisterCommands<ModdingLogs>(null);
 
             // AUTOMATIC:
             slash.RegisterCommands<AutoRoleSettings>(null);
