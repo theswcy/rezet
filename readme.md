@@ -3,7 +3,7 @@
 </h1>
 <br>
 <p>
-    Version: <strong>Sharp 1 - Public Test Build R-0022</strong>.
+    Version: <strong>Sharp 1 - Public Test Build R-0023</strong>.
 
 
 <h2>
@@ -28,7 +28,11 @@
 <li>🟢 | <code>role info</code> [ complete ]</li>
 <li>🟢 | <code>role remove</code> [ complete ]</li>
 <br>
+<li>🟢 | <code>modding logs activate</code> [ complete ]</li>
+<li>🟢 | <code>modding logs unactivate</code> [ complete ]</li>
+<br>
 <li>🟠 | <code>moderator dashboard</code> [ incomplete ]</li>
+<br>
 <li>🟣 | <code>moderation ban</code> [ monitoring ]</li>
 <li>🟣 | <code>moderation unban</code> [ monitoring ]</li>
 <li>🟣 | <code>moderation timeout</code> [ monitoring ]</li>
