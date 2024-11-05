@@ -38,7 +38,6 @@ public static class InsertGuildDB
                                 // MODERATION LOGS
                                 { "messages_channel", BsonNull.Value },
                                 { "moderation_channel", BsonNull.Value },
-                                { "roles_channel", BsonNull.Value },
 
                                 // GUILD MANAGER LOGS
                                 { "manage_guild", BsonNull.Value },
@@ -135,12 +134,60 @@ public static class InsertGuildDB
                         { "leaderboard", new BsonDocument
                             {
                                 { "option", 0 },
+                                { "invite", BsonNull.Value },
                                 { "ranking", new BsonDocument {} }
                             }
                         },
                         { "ticket", new BsonDocument
                             {
-                                { "test", "test" }
+                                { "option", 0 },
+                                { "automatic", 0 },
+                                { "embed_1", "default" },
+                                { "embed_2", "default" },
+                                { "configs", new BsonDocument
+                                    {
+                                        { "channel", BsonNull.Value },
+                                        { "category", BsonNull.Value },
+                                        { "support", BsonNull.Value },
+                                        { "invite", BsonNull.Value }
+                                    }
+                                },
+                                { "req_embeds", new BsonDocument
+                                    {
+                                        { "default", new BsonDocument
+                                            {
+                                                { "title", "Partnership Ticket!" }, // CAN BE NULL!
+                                                { "description", "Quer fazer uma parceria com a nossa comunidade? Abra um ticket clicando no botão abaixo!" },
+                                                { "footer", "Managed by Rezet!" },
+                                                { "color", "#7e67ff" },
+                                                { "image", "https://media.discordapp.net/attachments/1111358828282388532/1172043117294264350/IMG_20231109_020343.png" },
+                                                { "thumb", 0 },
+                                                { "author", 0 },
+                                                { "button", new BsonDocument
+                                                    {
+                                                        { "color", "gray" },
+                                                        { "text", "Solicitar parceria!" }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                { "tic_embeds", new BsonDocument
+                                    {
+                                        { "default", new BsonDocument
+                                            {
+                                                { "title", "Partnership Ticket!" }, // CAN BE NULL!
+                                                { "description", "Aguarde um de nossos funcionários atender você!" },
+                                                { "footer", "Managed by Rezet!" },
+                                                { "color", "#7e67ff" },
+                                                { "image", "https://media.discordapp.net/attachments/1111358828282388532/1172043117294264350/IMG_20231109_020343.png" },
+                                                { "thumb", 0 },
+                                                { "author", 0 },
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
