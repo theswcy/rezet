@@ -4,6 +4,7 @@ using DSharpPlus.Entities;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using Rezet;
+using DSharpPlus.SlashCommands;
 
 
 
@@ -28,7 +29,6 @@ public class ModeratorDashboard
             if (e.Values[0] == "autorole")
             {
                 await e.Interaction.DeferAsync();
-                var Member = await e.Guild.GetMemberAsync(e.User.Id);
                 var RoleDict = shard
                         [$"{Guild.Id}"]
                         ["moderation"]
@@ -125,7 +125,76 @@ public class ModeratorDashboard
             }
             else if (e.Values[0] == "modlogs")
             {
+                await e.Interaction.DeferAsync();
+                var LogsDict = shard
+                        [$"{Guild.Id}"]
+                        ["moderation"]
+                        ["mod_logs"]
+                        .AsBsonDocument.ToDictionary(
+                            elem => elem.Name,
+                            elem => elem.Value
+                        );
+                var embed = new DiscordEmbedBuilder()
+                {
+                    Color = new DiscordColor("#7e67ff")
+                };
+                var desc = "## <:rezet_shine:1147373071737573446> Modding Logs!\nCanais dedicados aos registros da moderação do servidor!\n⠀\n";
 
+
+
+                foreach (var entry in LogsDict)
+                {
+                    if (entry.Value != BsonNull.Value)
+                    {
+                        switch (entry.Key)
+                        {
+                            case "messages_channel":
+                                desc += $"<:rezet_3_act:1189936284379119726> Messages Management:\n> Channel: <#{(ulong)entry.Value.AsInt64}>\n> `Messages Delete`\n> `Messages Modify`\n⠀\n";
+                                break;
+                            case "moderation_channel":
+                                desc += $"<:rezet_3_act:1189936284379119726> Moderation Actions:\n> Channel: <#{(ulong)entry.Value.AsInt64}>\n> `Member Kick`\n> `Member Ban / Unban`\n> `Member Timeout / Untimeout`\n> `Member Warn / Unwarn / Warn Modify`\n⠀\n";
+                                break;
+                            case "modified_roles":
+                                desc += $"<:rezet_3_act:1189936284379119726> Roles Management:\n> Channel: <#{(ulong)entry.Value.AsInt64}>\n> `Role Add`\n> `Role Remove`\n> `Role Create`\n> `Role Modify`\n> `Role Delete`\n⠀\n";
+                                break;
+                            case "modified_channels":
+                                desc += $"<:rezet_3_act:1189936284379119726> Channels Management:\n> Channel: <#{(ulong)entry.Value.AsInt64}>\n> `Channel Create`\n> `Channel Delete`\n> `Channel Modify`\n⠀\n";
+                                break;
+                            case "manage_guild":
+                                desc += $"<:rezet_3_act:1189936284379119726> Guild Management:\n> Channel: <#{(ulong)entry.Value.AsInt64}>\n> `Guild Name Change`\n> `Guild Description Change`\n> `Guild Icon Change`\n> `Guild Splash Change`\n> `Guild Banner Change`\n> `Guild Bot Add`\n> `Guild Bot Remove`\n⠀\n";
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (entry.Key)
+                        {
+                            case "messages_channel":
+                                desc += $"<:rezet_3_nact:1189936390113341601> Messages Management:\n> Uncativated.\n⠀\n";
+                                break;
+                            case "moderation_channel":
+                                desc += $"<:rezet_3_nact:1189936390113341601> Moderation Actions:\n> Uncativated.\n⠀\n";
+                                break;
+                            case "modified_roles":
+                                desc += $"<:rezet_3_nact:1189936390113341601> Roles Management:\n> Uncativated.\n⠀\n";
+                                break;
+                            case "modified_channels":
+                                desc += $"<:rezet_3_nact:1189936390113341601> Channels Management:\n> Uncativated.\n⠀\n";
+                                break;
+                            case "manage_guild":
+                                desc += $"<:rezet_3_nact:1189936390113341601> Guild Management:\n> Uncativated.\n⠀\n";
+                                break;
+                        }
+                    }
+                }
+                embed.WithDescription(desc);
+                var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Exit");
+                await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent("BIp bup bip!")
+                        .AddEmbed(embed)
+                        .AddComponents(button)
+                );
             }
         }
     }
