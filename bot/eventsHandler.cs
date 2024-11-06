@@ -14,9 +14,11 @@ namespace Rezet.Events
 
 
             // PARTNERSHIP EVENTS & INTERACTIONS:
-            client.ComponentInteractionCreated += PartnerDashboard.PD_PrimaryButtons;
-            client.ComponentInteractionCreated += PartnerDashboard.PD_SelectMenuEmbeds;
-            client.ModalSubmitted += PartnerDashboard.PD_ModalSubmit;
+            // client.ComponentInteractionCreated += PartnerDashboard.PD_PrimaryButtons;
+            // client.ComponentInteractionCreated += PartnerDashboard.PD_SelectMenuEmbeds;
+            // client.ModalSubmitted += PartnerDashboard.PD_ModalSubmit;
+            // NEW:
+            client.ComponentInteractionCreated += PartnershipDashboardPrimaryButtons.PrimaryButtons;
 
 
 
