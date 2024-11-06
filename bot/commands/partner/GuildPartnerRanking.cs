@@ -138,7 +138,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-                var guildRanking = new List<(ulong GuildId, string Name, int Score, string rxp)>();
+                var guildRanking = new List<(ulong GuildId, string Name, dynamic Invite, int Score, string rxp)>();
                 var f = ctx.User.AvatarUrl;
                 foreach (var element in shard.Elements)
                 {
@@ -149,6 +149,8 @@ public class CommunityPartnerMore : ApplicationCommandModule
                     var guildData = element.Value.AsBsonDocument;
                     ulong guildId = ulong.Parse(element.Name);
                     string GuildName = guildData["guild_name"].AsString;
+                    var GuildInvite = guildData["partner"]["leaderboard"]["invite"];
+                    if (GuildInvite == BsonNull.Value) { GuildInvite = $"{GuildName}"; } else { GuildInvite = $"[{GuildName}](https://discord.gg/{GuildInvite})"; }
                     int GuildScore = guildData["partner"]["ps"].AsInt32;
 
                     if (GuildScore > 0)
@@ -161,7 +163,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                         else if (guildData["partner"]["xp"] >= 500) { rbxp = "<:rezet_b_elite:1290676630527934567>"; }
 
 
-                        guildRanking.Add((guildId, GuildName, GuildScore, rbxp));
+                        guildRanking.Add((guildId, GuildName, GuildInvite, GuildScore, rbxp));
                     }
                 }
                 var rankedGuild = guildRanking.OrderByDescending(g => g.Score).Take(20).ToList();
@@ -176,7 +178,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 var rankingMessage = "";
                 for (int i = 0; i < rankedGuild.Count; i++)
                 {
-                    rankingMessage += $"> {rankedGuild[i].rxp}⠀`{i + 1:D2}.⠀-⠀{rankedGuild[i].Score}` ⠀**{rankedGuild[i].Name}**\n";
+                    rankingMessage += $"> {rankedGuild[i].rxp}⠀`{i + 1:D2}.⠀-⠀{rankedGuild[i].Score}` ⠀**{rankedGuild[i].Invite}**\n";
                 }
                 var embed = new DiscordEmbedBuilder()
                 {
