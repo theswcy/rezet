@@ -97,14 +97,14 @@ public class Moderators : ApplicationCommandModule
                     r++;
                 }
                 embed.AddField(
-                    "<:rezet_3_act:1189936284379119726> Autoping:",
+                    "<:rezet_3_act:1189936284379119726> Autoping: <:rezet_beta:1165999715633090620>",
                     $"> Canais com a função Autoping: **{r}**."
                 );
             }
             else
             {
                 embed.AddField(
-                    "<:rezet_3_nact:1189936390113341601> Autoping:",
+                    "<:rezet_3_nact:1189936390113341601> Autoping: <:rezet_beta:1165999715633090620>",
                     "> Nenhum canal com a função autoping ativada."
                 );
                 AutomaticActions.RemoveAll(action => action.Value == "autoping");
@@ -132,14 +132,14 @@ public class Moderators : ApplicationCommandModule
             if (t != 0)
             {
                 embed.AddField(
-                    "<:rezet_3_act:1189936284379119726> Mod Logs:",
+                    "<:rezet_3_act:1189936284379119726> Mod Logs: <:rezet_beta:1165999715633090620>",
                     $"> Canais de registro da moderação: **{t}**."
                 );
             }
             else
             {
                 embed.AddField(
-                    "<:rezet_3_nact:1189936390113341601> Mod Logs:",
+                    "<:rezet_3_nact:1189936390113341601> Mod Logs: <:rezet_beta:1165999715633090620>",
                     "> Nenhum canal possui a função de registros."
                 );
                 AutomaticActions.RemoveAll(action => action.Value == "modlogs");
