@@ -120,11 +120,32 @@ public class PartnershipCommands : ApplicationCommandModule
                     $"\n> {xr}" +
                     $"\n> {tr}"
                 );
+                var o = "Unactivated.";
+                if (shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"] != BsonNull.Value)
+                {
+                    try
+                    {
+                        var inv = await Program.Rezet.GetInviteByCodeAsync(shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString);
+                        if (inv.Guild.Id != Guild.Id)
+                        {
+                            o = $"https://discord.gg/{shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}\n> [ <:rezet_exclamation:1164417019303702570> este convite pertence a outro servidor! ]";
+                        }
+                        else
+                        {
+                            o = $"https://discord.gg/{shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}";
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        o = $"https://discord.gg/{shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}\n> [ <:rezet_exclamation:1164417019303702570> convite inválido! ]";
+                    }
+                }
                 embed.AddField(
-                    "<:rezet_shine:1147368423475658882> Partnership status:",
+                    "<:rezet_shine:1147368423475658882> Partnership ranked:",
                     $"> **Partnerships**: `{shard[$"{Guild.Id}"]["partner"]["ps"]}`" +
                     $"\n> **Partner XP**: `{shard[$"{Guild.Id}"]["partner"]["xp"]}`" +
-                    $"\n> **Ranking**: {rbxp}"
+                    $"\n> **Ranking**: {rbxp}" +
+                    $"\n> **Invite**: {o}"
                 );
 
 
