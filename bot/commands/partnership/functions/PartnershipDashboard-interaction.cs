@@ -65,16 +65,6 @@ public class PartnershipDashboardPrimaryButtons
                         suppressEmbeds: true
                 );
             }
-            // ERROR:
-            else if (!e.Interaction.Data.CustomId.Contains(e.Interaction.User.Id.ToString()))
-            {
-                await e.Interaction.DeferAsync(ephemeral: true);
-                await e.Interaction.CreateFollowupMessageAsync(
-                    new DiscordFollowupMessageBuilder()
-                        .AsEphemeral(true)
-                        .WithContent("Ops, você não pode interferir nos comandos dos outros!")
-                );
-            }
         }
         catch (Exception ex)
         {
