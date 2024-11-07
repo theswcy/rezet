@@ -1,4 +1,6 @@
 using DSharpPlus;
+using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 
 
 namespace Rezet.Events
@@ -7,6 +9,8 @@ namespace Rezet.Events
     {
         public static void RegisterEvents(DiscordClient client)
         {
+            // PRIMARY:
+            client.ComponentInteractionCreated += OnCommandSenderError;
             // GUILD CREATE & DELETE:
             client.GuildCreated += InsertGuildDB.OnGuildCreated;
             client.GuildDeleted += DeleteGuildDB.OnGuildDelete;
@@ -19,6 +23,9 @@ namespace Rezet.Events
             // client.ModalSubmitted += PartnerDashboard.PD_ModalSubmit;
             // NEW:
             client.ComponentInteractionCreated += PartnershipDashboardPrimaryButtons.PrimaryButtons;
+            client.ComponentInteractionCreated += PartnershipEmbedConfigs.DashboardSelectMenu;
+            client.ComponentInteractionCreated += PartnershipEmbedConfigs.PartershipEmbedBuilder;
+            client.ModalSubmitted += PartnershipEmbedConfigs.PartnershipEmbedBulderModal;
 
 
 
@@ -41,6 +48,26 @@ namespace Rezet.Events
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"O [  {y}  |  REZET  ] All events synchronized!");
             Console.ResetColor();
+        }
+
+        public static async Task OnCommandSenderError(DiscordClient sender, ComponentInteractionCreateEventArgs e)
+        {
+            try
+            {
+                if (!e.Interaction.Data.CustomId.Contains(e.Interaction.User.Id.ToString()))
+                {
+                    await e.Interaction.DeferAsync(ephemeral: true);
+                    await e.Interaction.CreateFollowupMessageAsync(
+                        new DiscordFollowupMessageBuilder()
+                            .AsEphemeral(true)
+                            .WithContent("Ops, você não pode interferir nos comandos dos outros!")
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }
