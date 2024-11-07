@@ -12,11 +12,12 @@ using Rezet;
 #pragma warning disable CS8602
 public class PartnershipEmbedConfigs
 {
+    // ========== PRIMARY:
     public static async Task DashboardSelectMenu(DiscordClient sender, ComponentInteractionCreateEventArgs e)
     {
         try
         {
-            // PARTNERSHIP EMBED OPTIONS:
+            // ========== PARTNERSHIP EMBED OPTIONS:
             if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_PEOptions")
             {
                 // VARIABLES:
@@ -170,6 +171,7 @@ public class PartnershipEmbedConfigs
                     await e.Interaction.CreateFollowupMessageAsync(
                         new DiscordFollowupMessageBuilder()
                             .WithContent("Bip bup bip! Selecione a embed!")
+                            .AsEphemeral(true)
                             .AddComponents(SelectMenu)
                             .AddComponents(button));
                 }
@@ -190,13 +192,6 @@ public class PartnershipEmbedConfigs
                     var value = shard[$"{Guild.Id}"]
                                 ["partner"]
                                 ["selected"].ToString();
-                    if (shard == null)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                        Console.ResetColor();
-                        return;
-                    }
 
 
 
@@ -261,15 +256,357 @@ public class PartnershipEmbedConfigs
                     );
                 }
             }
-            // ERROR:
-            else if (!e.Interaction.Data.CustomId.Contains(e.Interaction.User.Id.ToString()))
+            // ========== SET EMBED:
+            else if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_EDSet")
             {
                 await e.Interaction.DeferAsync(ephemeral: true);
+                var value = e.Values[0];
+
+
+
+                var shard = Program._databaseService?.GetShard(e.Guild, 1);
+                if (shard[$"{e.Guild.Id}"]
+                        ["partner"]
+                        ["selected"] == value)
+                {
+                    await e.Interaction.CreateFollowupMessageAsync(
+                        new DiscordFollowupMessageBuilder()
+                            .WithContent("Essa embed já está selecionada!")
+                            .AsEphemeral(true)
+                    );
+                    return;
+                }
+
+
+
+                var SelectedEmbed = shard[$"{e.Guild.Id}"]
+                        ["partner"]
+                        ["configs"]
+                        ["embeds"]
+                        [value.ToString()];
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.selected", value);
+                await collection.UpdateOneAsync(shard, update);
+
+
+
                 await e.Interaction.CreateFollowupMessageAsync(
                     new DiscordFollowupMessageBuilder()
-                        .AsEphemeral(true)
-                        .WithContent("Ops, você não pode interferir nos comandos dos outros!")
+                    .WithContent($"Bip bup bip! A embed **{value}** foi selecionada com sucesso!")
+                    .AsEphemeral(true)
                 );
+            }
+            // ========== DELETE EMBED:
+            else if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_EDDelete")
+            {
+                await e.Interaction.DeferAsync(ephemeral: true);
+                var value = e.Values[0];
+
+
+
+                var shard = Program._databaseService?.GetShard(e.Guild, 1);
+
+
+
+                if (shard[$"{e.Guild.Id}"]
+                        ["partner"]
+                        ["selected"] == value)
+                {
+                    await e.Interaction.CreateFollowupMessageAsync(
+                        new DiscordFollowupMessageBuilder()
+                            .WithContent("<Você não pode deletar uma embed em uso!")
+                            .AsEphemeral(true)
+                    );
+                    return;
+                }
+                if (value == "default")
+                {
+                    await e.Interaction.CreateFollowupMessageAsync(
+                        new DiscordFollowupMessageBuilder()
+                            .WithContent("Você não pode deletar a embed pedrão!")
+                            .AsEphemeral(true)
+                    );
+                    return;
+                }
+
+
+
+
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Unset($"{e.Guild.Id}.partner.configs.embeds.{value}");
+                await collection.UpdateOneAsync(shard, update);
+
+
+
+                await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent($"Okay! A embed **{value}** foi **deletada**!")
+                        .AsEphemeral(true)
+                );
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+    // ========== BUILDER INTERACTION::
+    public static async Task PartershipEmbedBuilder(DiscordClient sender, ComponentInteractionCreateEventArgs e)
+    {
+        try
+        {
+            // ========== EMBED BULDER:
+            if (e.Interaction.Data.CustomId.Contains(e.Interaction.User.Id.ToString() + "_EBMN_"))
+            {
+                var t = e.Interaction.Data.CustomId.Split('_');
+
+
+
+                var modal = new DiscordInteractionResponseBuilder()
+                .WithTitle("Embed builder")
+                .WithCustomId($"{e.Interaction.User.Id}_EBMB_{t[2]}")
+                .AddComponents(new TextInputComponent(
+                    "Title:", "title_input", "The title of the embed.", style: TextInputStyle.Short
+                ))
+                .AddComponents(new TextInputComponent(
+                    "Description", "desc_input", "The description of the embed.", style: TextInputStyle.Paragraph
+                ))
+                .AddComponents(new TextInputComponent(
+                    "Footer", "foot_input", "The footer of the embed.", style: TextInputStyle.Short, required: false
+                ))
+                .AddComponents(new TextInputComponent(
+                    "Color HEX", "color_input", "The color of the embed. [ Only HEX colors, Ex: #7e67ff ]", style: TextInputStyle.Short
+                ))
+                .AddComponents(new TextInputComponent(
+                    "Image", "image_input", "The image of the embed. [ Only HTTPS ]", style: TextInputStyle.Paragraph, required: false
+                ));
+                await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
+            }
+            // ========== EMBED BUILDER DELETE:
+            else if (e.Interaction.Data.CustomId.Contains(e.Interaction.User.Id.ToString() + "_PDDelet"))
+            {
+                await e.Interaction.DeferAsync(true);
+
+
+
+                var content = e.Interaction.Data.CustomId.Split('_');
+                var Guild = e.Interaction.Guild;
+                var shard = Program._databaseService?.GetShard(Guild, 1);
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Unset($"{Guild.Id}.partner.configs.embeds.{content[2]}");
+                await collection.UpdateOneAsync(shard, update);
+
+
+
+                var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Close");
+                await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent($"Okay! A embed **{content[2]}** foi deletada.")
+                        .AsEphemeral(true)
+                );
+                var u = await e.Interaction.Channel.GetMessagesAsync(2);
+                await e.Interaction.Channel.DeleteMessageAsync(u[1]);
+            }
+            // ========== EMBED BUILDER EDIT:
+            else if (e.Interaction.Data.CustomId.Contains(e.Interaction.User.Id.ToString() + "_PDEditT"))
+            {
+
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+    // ========== BUILDER MODA:
+    public static async Task PartnershipEmbedBulderModal(DiscordClient sender, ModalSubmitEventArgs e)
+    {
+        try
+        {
+            // ========== EMBED BUILDER NAME:
+            if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_EBModalName")
+            {
+                await e.Interaction.DeferAsync();
+                var content = e.Values["name_input"];
+
+
+
+
+                var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+
+
+
+                var embed = new DiscordEmbedBuilder()
+                {
+                    Description = "O nome foi salvo com sucesso, quer prosseguir?",
+                    Color = new DiscordColor("7e67ff")
+                };
+
+
+
+                var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Close");
+                var button1 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_EBMN_{content}", "Build embed");
+
+
+                await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent(content)
+                        .AddEmbed(embed)
+                        .AddComponents(button, button1)
+                );
+            }
+            // ========== EMBED BUILDER MODAL:
+            else if (e.Interaction.Data.CustomId.Contains(e.Interaction.User.Id.ToString() + "_EBMB"))
+            {
+                await e.Interaction.DeferAsync();
+                var p = e.Interaction.Data.CustomId.Split('_');
+                var t = p[2];
+
+
+
+                var title = e.Values["title_input"];
+                var description = e.Values["desc_input"];
+                var footer = e.Values["foot_input"];
+                dynamic footer2 = 0;
+                var color = e.Values["color_input"];
+                var image = e.Values["image_input"];
+                dynamic image2 = 0;
+
+
+
+                var embed2 = new DiscordEmbedBuilder()
+                {
+                    Description = "Nice! A embed foi criada e salva no meu **banco de dados**!",
+                    Color = new DiscordColor("7e67ff")
+                };
+                var embed = new DiscordEmbedBuilder()
+                {
+                    Title = SwitchOrResponse.SwitchVariables(title, e.Interaction),
+                    Description = SwitchOrResponse.SwitchVariables(description, e.Interaction),
+                };
+
+
+
+
+                // VERIFY COLOR:
+                if (!e.Values["color_input"].StartsWith('#'))
+                {
+                    await e.Interaction.CreateFollowupMessageAsync(
+                        new DiscordFollowupMessageBuilder()
+                            .WithContent($"A cor **HEX** precisa começar com `#`!")
+                            .AsEphemeral(true)
+                        );
+                    return;
+                }
+                if (!uint.TryParse(e.Values["color_input"].AsSpan(1), System.Globalization.NumberStyles.HexNumber, null, out uint Color))
+                {
+                    await e.Interaction.CreateFollowupMessageAsync(
+                        new DiscordFollowupMessageBuilder()
+                            .WithContent($"A cor **HEX** fornecida é inválida! Por favor, forneça uma cor válida.\n- Siga o exemplo: `#c67bff`")
+                            .AsEphemeral(true)
+                        );
+                    return;
+                }
+                embed.WithColor(new DiscordColor(color.ToString()));
+
+
+
+
+                // VERIFY FOOTER:
+                if (string.IsNullOrEmpty(e.Values["foot_input"]))
+                {
+                    footer2 = 0;
+                }
+                else
+                {
+                    embed.WithFooter(
+                        SwitchOrResponse.SwitchVariables(footer, e.Interaction)
+                    );
+                    footer2 = footer;
+                }
+
+
+
+
+                // VERIFY IMAGE:
+                if (!string.IsNullOrEmpty(image))
+                {
+                    if (image[..5] != "https")
+                    {
+                        await e.Interaction.CreateFollowupMessageAsync(
+                            new DiscordFollowupMessageBuilder()
+                                .WithContent($"A imagem fornecida é inválida!")
+                                .AsEphemeral(true)
+                            );
+                        return;
+                    }
+                    else
+                    {
+                        embed.WithImageUrl(image.ToString());
+                        image2 = image;
+                    }
+                }
+                else
+                {
+                    image2 = 0;
+                }
+
+
+
+
+                var Guild = e.Interaction.Guild;
+                var shard = Program._databaseService?.GetShard(Guild, 1);
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var content = new BsonDocument
+                            {
+                                { "title", title },
+                                { "description", description },
+                                { "footer", footer2 },
+                                { "color", color },
+                                { "image", image2 },
+                                { "thumb", 0 },
+                                { "author", 0 }
+                            };
+                var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.partner.configs.embeds.{t}", content);
+#pragma warning disable CS8602
+                await collection.UpdateOneAsync(shard, update);
+
+
+
+
+                var button = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_PAexit", "Close");
+                var button1 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_PDEditT_", "Edit embed");
+                var button2 = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PDDelet_{t}", "Delete embed");
+
+
+
+
+                // await e.Interaction.CreateFollowupMessageAsync(
+                //     new DiscordFollowupMessageBuilder()
+                //         .WithContent($"{t}")
+                //         .AddEmbed(embed2)
+                //         .AddEmbed(embed)
+                //         .AddComponents(button, button1, button2)
+                // );
+
+
+
+                var msgs = await e.Interaction.Channel.GetMessagesAsync(30);
+                var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(t) && m.Author.Id == Program.Rezet.CurrentUser.Id).Id);
+                await msgg.ModifyAsync(
+                    builder: new DiscordMessageBuilder()
+                        .WithContent($"{t}")
+                        .AddEmbed(embed2)
+                        .AddEmbed(embed)
+                        .AddComponents(button, button1, button2),
+                    suppressEmbeds: true
+                );
+                var u = await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent("Embed criada!")
+                );
+                await Task.Delay(2000);
+                await u.DeleteAsync();
             }
         }
         catch (Exception ex)
