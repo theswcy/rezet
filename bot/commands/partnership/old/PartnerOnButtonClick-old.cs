@@ -1110,6 +1110,21 @@ public class PartnerDashboard
 
 
 
+                var embed2 = new DiscordEmbedBuilder()
+                {
+                    Description = "Nice! A embed foi criada e salva no meu **banco de dados**!",
+                    Color = new DiscordColor("7e67ff")
+                };
+                var embed = new DiscordEmbedBuilder()
+                {
+                    Title = SwitchOrResponse.SwitchVariables(title, e.Interaction),
+                    Description = SwitchOrResponse.SwitchVariables(description, e.Interaction),
+                };
+
+
+
+
+                // VERIFY COLOR:
                 if (!e.Values["color_input"].StartsWith('#'))
                 {
                     await e.Interaction.CreateFollowupMessageAsync(new DiscordFollowupMessageBuilder()
@@ -1126,6 +1141,7 @@ public class PartnerDashboard
                     await e.Interaction.DeleteOriginalResponseAsync();
                     return;
                 }
+                // VERIFY IMAGE:
                 if (!string.IsNullOrEmpty(e.Values["image_input"]))
                 {
                     if (e.Values["image_input"].Substring(0, 5) != "https")
@@ -1138,28 +1154,27 @@ public class PartnerDashboard
                         return;
                     }
                 }
+                embed.WithColor(new DiscordColor(color.ToString()));
 
 
 
-
-                var embed2 = new DiscordEmbedBuilder()
+                
+                // VERIFY FOOTER:
+                if (string.IsNullOrEmpty(e.Values["foot_input"]))
                 {
-                    Description = "Nice! A embed foi criada e salva no meu **banco de dados**!",
-                    Color = new DiscordColor("7e67ff")
-                };
-                var embed = new DiscordEmbedBuilder()
+    
+                }
+                else
                 {
-                    Title = SwitchOrResponse.SwitchVariables(title, e.Interaction),
-                    Description = SwitchOrResponse.SwitchVariables(description, e.Interaction),
-                    Color = new DiscordColor(color.ToString())
-                };
-                embed.WithFooter(
-                    SwitchOrResponse.SwitchVariables(footer, e.Interaction)
-                );
+                    embed.WithFooter(
+                        SwitchOrResponse.SwitchVariables(footer, e.Interaction)
+                    );
+                }
 
 
 
 
+                // VERIFY IMAGE:
                 if (!string.IsNullOrEmpty(image))
                 {
                     if (image.Substring(0, 5) != "https")
