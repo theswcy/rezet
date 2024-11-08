@@ -54,7 +54,6 @@ public class PartnershipCommands : ApplicationCommandModule
                     new DiscordSelectComponentOption("Edit embed", "edit", "Edit an embed.", emoji: emoji),
                     new DiscordSelectComponentOption("Set embed", "set", "Set an embed.", emoji: emoji),
                     new DiscordSelectComponentOption("Delete embed", "delete", "Delete an embed.", emoji: emoji),
-                    new DiscordSelectComponentOption("Import embed", "import", "Import an embed from another community.", emoji: emoji),
                     new DiscordSelectComponentOption("Preview embed", "preview", "The preview of the selected embed.", emoji: emoji3)
                 };
                 var options2 = new[]
