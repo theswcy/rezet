@@ -35,7 +35,7 @@ public class PartnershipDashboardPrimaryButtons
                     suppressEmbeds: true
                 );
             }
-            // UNACTIVATE FUNCTION:
+            // UNACTIVATE PARTNERSHIP FUNCTION:
             else if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_PAuna")
             {
                 var shard = Program._databaseService?.GetShard(e.Guild, 1);
