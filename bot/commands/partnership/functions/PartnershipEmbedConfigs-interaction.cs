@@ -435,6 +435,14 @@ public class PartnershipEmbedConfigs
             {
                 await e.Interaction.DeferAsync();
                 var content = e.Values["name_input"];
+                if (content.Length > 7)
+                {
+                    await e.Interaction.CreateFollowupMessageAsync(
+                        new DiscordFollowupMessageBuilder()
+                            .WithContent("Ops! O nome da embed deve ter no máximo **7 caracteres**!")
+                    );
+                    return;
+                }
 
 
 
@@ -638,8 +646,8 @@ public class PartnershipEmbedConfigs
 
             var embed = new DiscordEmbedBuilder()
             {
-                Title = $"{SelectedEmbed["title"]}",
-                Description = $"",
+                Title = $"{SwitchOrResponse.SwitchVariables(SelectedEmbed["title"].AsString, e.Interaction)}",
+                Description = $"{SwitchOrResponse.SwitchVariables(SelectedEmbed["description"].AsString, e.Interaction)}",
                 Color = new DiscordColor(SelectedEmbed["color"].ToString())
             };
 
@@ -660,13 +668,13 @@ public class PartnershipEmbedConfigs
             // VERIFY FOOTER:
             if (!SelectedEmbed["footer"].IsInt32)
             {
-                embed.WithFooter(SelectedEmbed["footer"].AsString);
+                embed.WithFooter(SwitchOrResponse.SwitchVariables(SelectedEmbed["footer"].AsString, e.Interaction));
             }
 
 
 
             // VERIFY AUTHOR:
-            if (!SelectedEmbed["author"].IsInt32)
+            if (SelectedEmbed["author"] != 0)
             {
                 if (e.Guild.IconUrl != null) { embed.WithAuthor(name: e.Guild.Name, iconUrl: e.Guild.IconUrl); }
             }
@@ -691,21 +699,22 @@ public class PartnershipEmbedConfigs
             // BUILDER SELECT MENU:
             var emoji = new DiscordComponentEmoji("📝");
             var OptionsToEditEmbed = new[]
-            {
+                {
                     new DiscordSelectComponentOption("Title", "title", "Edit the title.", emoji: emoji),
                     new DiscordSelectComponentOption("Description", "desc", "Edit the description.", emoji: emoji),
                     new DiscordSelectComponentOption("Footer", "footer", "Edit the footer.", emoji: emoji),
-                    new DiscordSelectComponentOption("Author", "author", "Edit the author.", emoji: emoji),
+                    new DiscordSelectComponentOption("Author", "author", "Add an author.", emoji: emoji),
                 };
             var OptionsToEditEmbed1 = new[]
-            {
+                {
                     new DiscordSelectComponentOption("Color", "color", "Edit the color.", emoji: emoji),
-                    new DiscordSelectComponentOption("Image", "title", "Edit the Image.", emoji: emoji),
-                    new DiscordSelectComponentOption("Thumbnail", "thum", "Edit the thumbnail.", emoji: emoji),
+                    new DiscordSelectComponentOption("Image", "image", "Edit the Image.", emoji: emoji),
+                    new DiscordSelectComponentOption("Thumbnail", "thumb", "Edit the thumbnail.", emoji: emoji),
                 };
             var OptionsToEditEmbedSelectMenu1 = new DiscordSelectComponent($"{e.Interaction.User.Id}_EB2_{name}", "More options to edit the Embed!", OptionsToEditEmbed1);
             var OptionsToEditEmbedSelectMenu = new DiscordSelectComponent($"{e.Interaction.User.Id}_EB_{name}", "Options to edit the Embed!", OptionsToEditEmbed);
             var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Close");
+            var button2 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_PAS", "Save");
 
 
 
@@ -714,7 +723,7 @@ public class PartnershipEmbedConfigs
                 builder: new DiscordMessageBuilder()
                     .WithContent($"{name}")
                     .AddEmbed(embed)
-                    .AddComponents(button)
+                    .AddComponents(button, button2)
                     .AddComponents(OptionsToEditEmbedSelectMenu)
                     .AddComponents(OptionsToEditEmbedSelectMenu1)
             );
@@ -725,16 +734,318 @@ public class PartnershipEmbedConfigs
             Console.WriteLine(ex);
         }
     }
+    // ========== EMBED EDIT FOR MODAL:
+    public static async Task PartnershipEmbedEditForModal(DiscordClient sender, ModalSubmitEventArgs e, string name)
+    {
+        try
+        {
+            var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+            var SelectedEmbed = shard[$"{e.Interaction.Guild.Id}"]
+                    ["partner"]
+                    ["configs"]
+                    ["embeds"]
+                    [name]
+                    .AsBsonDocument;
+
+
+
+            var embed = new DiscordEmbedBuilder()
+            {
+                Title = $"{SwitchOrResponse.SwitchVariables(SelectedEmbed["title"].AsString, e.Interaction)}",
+                Description = $"{SwitchOrResponse.SwitchVariables(SelectedEmbed["description"].AsString, e.Interaction)}",
+                Color = new DiscordColor(SelectedEmbed["color"].ToString())
+            };
+
+
+
+            // VERIFY THUMBNAIL:
+            if (SelectedEmbed["thumb"].IsInt32)
+            {
+                if (SelectedEmbed["thumb"] == 1 && e.Interaction.Guild.IconUrl != null) { embed.WithThumbnail(e.Interaction.Guild.IconUrl); }
+            }
+            else if (SelectedEmbed["thumb"].IsString)
+            {
+                embed.WithThumbnail(SelectedEmbed["thumb"].AsString);
+            }
+
+
+
+            // VERIFY FOOTER:
+            if (!SelectedEmbed["footer"].IsInt32)
+            {
+                embed.WithFooter(SwitchOrResponse.SwitchVariables(SelectedEmbed["footer"].AsString, e.Interaction));
+            }
+
+
+
+            // VERIFY AUTHOR:
+            if (SelectedEmbed["author"] != 0)
+            {
+                if (e.Interaction.Guild.IconUrl != null) { embed.WithAuthor(name: e.Interaction.Guild.Name, iconUrl: e.Interaction.Guild.IconUrl); }
+            }
+
+
+
+            // VERIFY IMAGE:
+            if (SelectedEmbed["image"].IsInt32)
+            {
+                // GUILD SPLASH:
+                if (SelectedEmbed["image"] == 1 && e.Interaction.Guild.SplashUrl != null) { embed.WithImageUrl(e.Interaction.Guild.SplashHash); }
+                // GUILD BANNER:
+                else if (SelectedEmbed["image"] == 2 && e.Interaction.Guild.BannerUrl != null) { embed.WithImageUrl(e.Interaction.Guild.BannerUrl); }
+            }
+            else if (SelectedEmbed["image"].IsString)
+            {
+                embed.WithImageUrl(SelectedEmbed["image"].AsString);
+            }
+
+
+
+            // BUILDER SELECT MENU:
+            var emoji = new DiscordComponentEmoji("📝");
+            var OptionsToEditEmbed = new[]
+                {
+                    new DiscordSelectComponentOption("Title", "title", "Edit the title.", emoji: emoji),
+                    new DiscordSelectComponentOption("Description", "desc", "Edit the description.", emoji: emoji),
+                    new DiscordSelectComponentOption("Footer", "footer", "Edit the footer.", emoji: emoji),
+                    new DiscordSelectComponentOption("Author", "author", "Add an author.", emoji: emoji),
+                };
+            var OptionsToEditEmbed1 = new[]
+                {
+                    new DiscordSelectComponentOption("Color", "color", "Edit the color.", emoji: emoji),
+                    new DiscordSelectComponentOption("Image", "image", "Edit the Image.", emoji: emoji),
+                    new DiscordSelectComponentOption("Thumbnail", "thumb", "Edit the thumbnail.", emoji: emoji),
+                };
+            var OptionsToEditEmbedSelectMenu1 = new DiscordSelectComponent($"{e.Interaction.User.Id}_EB2_{name}", "More options to edit the Embed!", OptionsToEditEmbed1);
+            var OptionsToEditEmbedSelectMenu = new DiscordSelectComponent($"{e.Interaction.User.Id}_EB_{name}", "Options to edit the Embed!", OptionsToEditEmbed);
+            var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Close");
+            var button2 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_PAS", "Save");
+
+
+
+
+            var msgs = await e.Interaction.Channel.GetMessagesAsync(30);
+            var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(name) && m.Author.Id == Program.Rezet.CurrentUser.Id).Id);
+            await msgg.ModifyAsync(
+                builder: new DiscordMessageBuilder()
+                    .WithContent($"{name}")
+                    .AddEmbed(embed)
+                    .AddComponents(button, button2)
+                    .AddComponents(OptionsToEditEmbedSelectMenu)
+                    .AddComponents(OptionsToEditEmbedSelectMenu1)
+            );
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
     // ========== EMBED EDIT FUNCTIONS:
     public static async Task PartnershipEmbedEditGo(DiscordClient sender, ComponentInteractionCreateEventArgs e)
     {
+        try
+        {
+            // ========== SAVE THE EMBED:
+            if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_PAS")
+            {
+                await e.Interaction.DeferAsync(true);
+                await e.Message.DeleteAsync();
+                await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent("Embed salva!")
+                );
+            }
 
+
+
+
+            // ========== EMBED EDIT - BUILDER 1:
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EB_"))
+            {
+                // TITLE:
+                if (e.Values[0] == "title")
+                {
+                    var t = e.Interaction.Data.CustomId.Split('_');
+
+                    var modal = new DiscordInteractionResponseBuilder()
+                    .WithTitle($"Edit: [ {t[2]} ]")
+                    .WithCustomId($"{e.Interaction.User.Id}_EE-T_{t[2]}")
+                    .AddComponents(new TextInputComponent(
+                        "Title:", "title_input", "The embed's title.", style: TextInputStyle.Short
+                    ));
+                    await e.Interaction.CreateResponseAsync(
+                        InteractionResponseType.Modal, modal
+                    );
+                }
+                // DESCRIPTION:
+                else if (e.Values[0] == "desc")
+                {
+                    var t = e.Interaction.Data.CustomId.Split('_');
+
+                    var modal = new DiscordInteractionResponseBuilder()
+                    .WithTitle($"Edit: [ {t[2]} ]")
+                    .WithCustomId($"{e.Interaction.User.Id}_EE-D_{t[2]}")
+                    .AddComponents(new TextInputComponent(
+                        "Description:", "desc_input", "The embed's description.", style: TextInputStyle.Paragraph
+                    ));
+                    await e.Interaction.CreateResponseAsync(
+                        InteractionResponseType.Modal, modal
+                    );
+                }
+                // FOOTER:
+                else if (e.Values[0] == "footer")
+                {
+                    var t = e.Interaction.Data.CustomId.Split('_');
+
+                    var modal = new DiscordInteractionResponseBuilder()
+                    .WithTitle($"Edit: [ {t[2]} ]")
+                    .WithCustomId($"{e.Interaction.User.Id}_EE-F_{t[2]}")
+                    .AddComponents(new TextInputComponent(
+                        "Footer", "footer_input", "The embed's footer.", style: TextInputStyle.Short, required: false
+                    ));
+                    await e.Interaction.CreateResponseAsync(
+                        InteractionResponseType.Modal, modal
+                    );
+                }
+                // AUTHOR:
+                else if (e.Values[0] == "author")
+                {
+                    var t = e.Interaction.Data.CustomId.Split('_');
+                    var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    if (shard[$"{e.Guild.Id}"]["partner"]["configs"]["embeds"][$"{t[2]}"]["author"] == 0)
+                    {
+                        var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t[2]}.author", 1);
+                        await collection.UpdateOneAsync(shard, update);
+                        await PartnershipEmbedEdit(sender, e, t[2]);
+                    }
+                    else
+                    {
+                        var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t[2]}.author", 0);
+                        await collection.UpdateOneAsync(shard, update);
+                        await PartnershipEmbedEdit(sender, e, t[2]);
+                    }
+                }
+            }
+            // ========== EMBED EDIT - BUILDER 2:
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EB_"))
+            {
+                // COLOR:
+                if (e.Values[0] == "color")
+                {
+                    var t = e.Interaction.Data.CustomId.Split('_');
+
+                    var modal = new DiscordInteractionResponseBuilder()
+                    .WithTitle($"Edit: [ {t[2]} ]")
+                    .WithCustomId($"{e.Interaction.User.Id}_EE-C_{t[2]}")
+                    .AddComponents(new TextInputComponent(
+                        "Footer", "footer_input", "The embed's footer.", style: TextInputStyle.Short, required: false
+                    ));
+                    await e.Interaction.CreateResponseAsync(
+                        InteractionResponseType.Modal, modal
+                    );
+                }
+                // IMAGE:
+                else if (e.Values[0] == "image")
+                {
+
+                }
+                // THUMBNAIL:
+                else if (e.Values[0] == "thumb")
+                {
+
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
     // ========== EMBED EDIT MODAL:
     public static async Task PartnershipEmbedEditModal(DiscordClient sender, ModalSubmitEventArgs e)
     {
         try
         {
+            // ========== EMBED EDIT - TITLE:
+            if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EE-T_"))
+            {
+                await e.Interaction.DeferAsync();
+                var j = await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent("Modificando...")
+                );
+                var p = e.Interaction.Data.CustomId.Split('_');
+                var t = p[2];
+
+
+
+                var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.title", e.Values["title_input"]);
+                await collection.UpdateOneAsync(shard, update);
+                await PartnershipEmbedEditForModal(sender, e, t);
+
+
+
+                await j.DeleteAsync();
+            }
+            // ========== EMBED EDIT - DESCRIPTION:
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EE-D_"))
+            {
+                await e.Interaction.DeferAsync();
+                var j = await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent("Modificando...")
+                );
+                var p = e.Interaction.Data.CustomId.Split('_');
+                var t = p[2];
+
+
+
+                var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.description", e.Values["desc_input"]);
+                await collection.UpdateOneAsync(shard, update);
+                await PartnershipEmbedEditForModal(sender, e, t);
+
+
+
+                await j.DeleteAsync();
+            }
+            // ========== EMBED EDIT - FOOTER:
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EE-F_"))
+            {
+                await e.Interaction.DeferAsync();
+                var j = await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent("Modificando...")
+                );
+                var p = e.Interaction.Data.CustomId.Split('_');
+                var t = p[2];
+
+
+
+                if (!string.IsNullOrEmpty(e.Values["footer_input"]))
+                {
+                    var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.footer", e.Values["footer_input"]);
+                    await collection.UpdateOneAsync(shard, update);
+                }
+                else
+                {
+                    var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.footer", 0);
+                    await collection.UpdateOneAsync(shard, update);
+                }
+                await PartnershipEmbedEditForModal(sender, e, t);
+
+
+
+                await j.DeleteAsync();
+            }
 
         }
         catch (Exception ex)
