@@ -250,37 +250,63 @@ public static class PartnershipGoMessage
                 {
                     var inviteRegex = new Regex(@"discord(?:app\.com\/invite|\.gg)\/([\w-]+)", RegexOptions.IgnoreCase);
                     var match = inviteRegex.Match(e.Message.Content);
-                    var g = await Program.Rezet.GetInviteByCodeAsync(match.Groups[1].Value);
-                    if (!g.IsRevoked)
+                    try
                     {
+                        var g = await Program.Rezet.GetInviteByCodeAsync(match.Groups[1].Value);
+                        if (!g.IsRevoked)
+                        {
+                            embed.WithTitle(
+                                SwitchOrResponse.SwitchVariables2(
+                                    $"{embedConfigs["title"]}", e, e.Message.MentionedUsers[0], points, ranking, g.Guild.Name
+                                )
+                            );
+                            embed.WithDescription(
+                                SwitchOrResponse.SwitchVariables2(
+                                    $"{embedConfigs["description"]}", e, e.Message.MentionedUsers[0], points, ranking, g.Guild.Name
+                                )
+                            );
+                            if (!embedConfigs["footer"].IsInt32)
+                            {
+                                embed.WithFooter(
+                                    text: SwitchOrResponse.SwitchVariables2(
+                                        $"{embedConfigs["footer"]}", e, e.Message.MentionedUsers[0], points, ranking, g.Guild.Name
+                                    )
+                                );
+                            }
+                            var buttonLink = new DiscordLinkButtonComponent(
+                                $"https://discord.gg/{match.Groups[1].Value}", "Entrar no servidor", false
+                            );
+                            BuilderMessage.AddComponents(buttonLink);
+                        }
+                        else
+                        {
+                            var u = await e.Message.RespondAsync("Hey! O convite fornecido não é válido!");
+                            await Task.Delay(2000); await u.DeleteAsync();
+                            return;
+                        }
+                    }
+                    catch
+                    {
+                        var g = e.Guild;
+
                         embed.WithTitle(
                             SwitchOrResponse.SwitchVariables2(
-                                $"{embedConfigs["title"]}", e, e.Message.MentionedUsers[0], points, ranking, g.Guild.Name
+                                $"{embedConfigs["title"]}", e, e.Author, points, ranking, g.Name
                             )
                         );
                         embed.WithDescription(
                             SwitchOrResponse.SwitchVariables2(
-                                $"{embedConfigs["description"]}", e, e.Message.MentionedUsers[0], points, ranking, g.Guild.Name
+                                $"{embedConfigs["description"]}", e, e.Author, points, ranking, g.Name
                             )
                         );
                         if (!embedConfigs["footer"].IsInt32)
                         {
                             embed.WithFooter(
                                 text: SwitchOrResponse.SwitchVariables2(
-                                    $"{embedConfigs["footer"]}", e, e.Message.MentionedUsers[0], points, ranking, g.Guild.Name
+                                    $"{embedConfigs["footer"]}", e, e.Author, points, ranking, g.Name
                                 )
                             );
                         }
-                        var buttonLink = new DiscordLinkButtonComponent(
-                            $"https://discord.gg/{match.Groups[1].Value}", "Entrar no servidor", false
-                        );
-                        BuilderMessage.AddComponents(buttonLink);
-                    }
-                    else
-                    {
-                        var u = await e.Message.RespondAsync("Hey! O convite fornecido não é válido!");
-                        await Task.Delay(2000); await u.DeleteAsync();
-                        return;
                     }
                 }
                 else
@@ -302,37 +328,63 @@ public static class PartnershipGoMessage
                 {
                     var inviteRegex = new Regex(@"discord(?:app\.com\/invite|\.gg)\/([\w-]+)", RegexOptions.IgnoreCase);
                     var match = inviteRegex.Match(e.Message.Content);
-                    var g = await Program.Rezet.GetInviteByCodeAsync(match.Groups[1].Value);
-                    if (!g.IsRevoked)
+                    try
                     {
+                        var g = await Program.Rezet.GetInviteByCodeAsync(match.Groups[1].Value);
+                        if (!g.IsRevoked)
+                        {
+                            embed.WithTitle(
+                                SwitchOrResponse.SwitchVariables2(
+                                    $"{embedConfigs["title"]}", e, e.Author, points, ranking, g.Guild.Name
+                                )
+                            );
+                            embed.WithDescription(
+                                SwitchOrResponse.SwitchVariables2(
+                                    $"{embedConfigs["description"]}", e, e.Author, points, ranking, g.Guild.Name
+                                )
+                            );
+                            if (!embedConfigs["footer"].IsInt32)
+                            {
+                                embed.WithFooter(
+                                    text: SwitchOrResponse.SwitchVariables2(
+                                        $"{embedConfigs["footer"]}", e, e.Author, points, ranking, g.Guild.Name
+                                    )
+                                );
+                            }
+                            var buttonLink = new DiscordLinkButtonComponent(
+                                $"https://discord.gg/{match.Groups[1].Value}", "Entrar no servidor", false
+                            );
+                            BuilderMessage.AddComponents(buttonLink);
+                        }
+                        else
+                        {
+                            var u = await e.Message.RespondAsync("Hey! O convite fornecido não é válido!");
+                            await Task.Delay(2000); await u.DeleteAsync();
+                            return;
+                        }
+                    }
+                    catch
+                    {
+                        var g = e.Guild;
+
                         embed.WithTitle(
                             SwitchOrResponse.SwitchVariables2(
-                                $"{embedConfigs["title"]}", e, e.Author, points, ranking, g.Guild.Name
+                                $"{embedConfigs["title"]}", e, e.Author, points, ranking, g.Name
                             )
                         );
                         embed.WithDescription(
                             SwitchOrResponse.SwitchVariables2(
-                                $"{embedConfigs["description"]}", e, e.Author, points, ranking, g.Guild.Name
+                                $"{embedConfigs["description"]}", e, e.Author, points, ranking, g.Name
                             )
                         );
                         if (!embedConfigs["footer"].IsInt32)
                         {
                             embed.WithFooter(
                                 text: SwitchOrResponse.SwitchVariables2(
-                                    $"{embedConfigs["footer"]}", e, e.Author, points, ranking, g.Guild.Name
+                                    $"{embedConfigs["footer"]}", e, e.Author, points, ranking, g.Name
                                 )
                             );
                         }
-                        var buttonLink = new DiscordLinkButtonComponent(
-                            $"https://discord.gg/{match.Groups[1].Value}", "Entrar no servidor", false
-                        );
-                        BuilderMessage.AddComponents(buttonLink);
-                    }
-                    else
-                    {
-                        var u = await e.Message.RespondAsync("Hey! O convite fornecido não é válido!");
-                        await Task.Delay(2000); await u.DeleteAsync();
-                        return;
                     }
                 }
                 else
