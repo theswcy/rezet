@@ -266,6 +266,21 @@ public class PartnershipEmbedConfigs
             else if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_EDEdit")
             {
                 await PartnershipEmbedEdit(sender, e, e.Values[0]);
+                await Task.Delay(120000);
+                var msgs = await e.Interaction.Channel.GetMessagesAsync(30);
+                var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(e.Values[0]) && m.Author.Id == Program.Rezet.CurrentUser.Id).Id);
+                try
+                {
+                    await msgg.ModifyAsync(
+                        builder: new DiscordMessageBuilder()
+                            .WithContent("Editor de embed fechado!"),
+                        suppressEmbeds: true
+                    );
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             }
             // ========== SET EMBED:
             else if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_EDSet")
@@ -418,6 +433,21 @@ public class PartnershipEmbedConfigs
             {
                 var t = e.Interaction.Data.CustomId.Split('_');
                 await PartnershipEmbedEdit(sender, e, t[2]);
+                await Task.Delay(120000);
+                var msgs = await e.Interaction.Channel.GetMessagesAsync(30);
+                var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(t[2]) && m.Author.Id == Program.Rezet.CurrentUser.Id).Id);
+                try
+                {
+                    await msgg.ModifyAsync(
+                        builder: new DiscordMessageBuilder()
+                            .WithContent("Editor de embed fechado!"),
+                        suppressEmbeds: true
+                    );
+                }
+                catch (Exception)
+                {
+                    return;
+                }
             }
         }
         catch (Exception ex)
