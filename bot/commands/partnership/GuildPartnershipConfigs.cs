@@ -38,7 +38,7 @@ public class PartnershipCommands : ApplicationCommandModule
             if (shard[$"{Guild.Id}"]["partner"]["option"].AsInt32 == 0)
             {
                 await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                    .WithContent("<:rezet_dred:1147164215837208686> Essa comunidade não possui a função **Partnership** ativada! Use o comando `/partnership setup` para ativar.")
+                    .WithContent("Essa comunidade não possui a função **Partnership** ativada! Use o comando `/partnership setup` para ativar.")
                 );
                 return;
             }
@@ -47,6 +47,7 @@ public class PartnershipCommands : ApplicationCommandModule
                 var emoji = new DiscordComponentEmoji("🪛");
                 var emoji2 = new DiscordComponentEmoji("📘");
                 var emoji3 = new DiscordComponentEmoji("📗");
+                var emoji4 = new DiscordComponentEmoji("📝");
                 var options1 = new[]
                 {
                     new DiscordSelectComponentOption("Variables", "variables", "See available variables!", emoji: emoji2),
@@ -60,7 +61,8 @@ public class PartnershipCommands : ApplicationCommandModule
                 {
                     new DiscordSelectComponentOption("Reset ranking", "reset", "Reset the ranking's score.", emoji: emoji),
                     new DiscordSelectComponentOption("Unactivate local ranked", "unactivate", "Unactivate the local ranked.", emoji: emoji),
-                    new DiscordSelectComponentOption("Ranking patents", "patents", "The ranking's patents.", emoji: emoji2)
+                    new DiscordSelectComponentOption("Ranking patents", "patents", "The ranking's patents.", emoji: emoji2),
+                    new DiscordSelectComponentOption("Invite Link", "invite", "Modify the guild invite.", emoji: emoji4)
                 };
                 var options3 = new[]
                 {
@@ -227,7 +229,7 @@ public class PartnershipCommands : ApplicationCommandModule
             if (!channel.Guild.CurrentMember.Permissions.HasPermission(Permissions.SendMessages))
             {
                 await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                    .WithContent($"<:rezet_dred:1147164215837208686> Eu não tenho permissão para enviar mensagens no canal {channel.Mention}!"));
+                    .WithContent($"Eu não tenho permissão para enviar mensagens no canal {channel.Mention}!"));
                 return;
             }
 
@@ -239,7 +241,7 @@ public class PartnershipCommands : ApplicationCommandModule
             if (role.Position >= highestBotRole?.Position)
             {
                 await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                .WithContent($"<:rezet_dred:1147164215837208686> Eu não posso atribuir um cargo maior que o meu maior cargo atual!"));
+                .WithContent($"Eu não posso atribuir um cargo maior que o meu maior cargo atual!"));
                 return;
             }
 
@@ -248,13 +250,6 @@ public class PartnershipCommands : ApplicationCommandModule
 
             // DATABASE:
             var shard = Program._databaseService?.GetShard(Guild, 1);
-            if (shard == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                Console.ResetColor();
-                return;
-            }
             var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
             var tropical = new BsonDocument
                     {

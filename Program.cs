@@ -57,7 +57,7 @@ namespace Rezet
             Console.ForegroundColor = ConsoleColor.Blue;
             Console.WriteLine($"O [  {y}  |  REZET  ] {Rezet.CurrentUser.Username} is ready!!!!!!!!!!.");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine($"V [  {y}  ]  SHARP  ] Version: Sharp 1.0 | PTB R-0023");
+            Console.WriteLine($"V [  {y}  ]  SHARP  ] Version: Sharp 1.0 | PTB R-0025");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("CNTRL ===================================================");
             Console.ResetColor();

@@ -132,14 +132,14 @@ public class Moderators : ApplicationCommandModule
             if (t != 0)
             {
                 embed.AddField(
-                    "<:rezet_3_act:1189936284379119726> Mod Logs: <:rezet_beta:1165999715633090620>",
+                    "<:rezet_3_act:1189936284379119726> Mod Logs: [ em breve! ]",
                     $"> Canais de registro da moderação: **{t}**."
                 );
             }
             else
             {
                 embed.AddField(
-                    "<:rezet_3_nact:1189936390113341601> Mod Logs: <:rezet_beta:1165999715633090620>",
+                    "<:rezet_3_nact:1189936390113341601> Mod Logs: [ em breve! ]",
                     "> Nenhum canal possui a função de registros."
                 );
                 AutomaticActions.RemoveAll(action => action.Value == "modlogs");

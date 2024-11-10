@@ -7,6 +7,7 @@ using MongoDB.Driver;
 
 
 
+#pragma warning disable CS8602
 [SlashCommandGroup("partner", "Community Partner.")]
 public class CommunityPartnerMore : ApplicationCommandModule
 {
@@ -25,14 +26,6 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
                 var shard = Program._databaseService?.GetShard(Guild, 1);
-                if (shard == null)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                    Console.ResetColor();
-                    return;
-                }
-
 
 
 
@@ -128,13 +121,6 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
                 var shard = Program._databaseService?.GetShard(Guild, 1);
-                if (shard == null)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                    Console.ResetColor();
-                    return;
-                }
 
 
 

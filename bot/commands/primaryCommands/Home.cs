@@ -34,7 +34,7 @@ public class RezetGets : ApplicationCommandModule
         );
         embed.AddField(
             "<:rezet_shine:1147368423475658882> Development:",
-            "> **My version**: `Sharp 1.0 / PTB R-00023`" +
+            "> **My version**: `Sharp 1.0 / PTB R-00025`" +
             "\n> **Language**: `CSharp. [ C# 12 ]`" +
             "\n> **Library**: `D#+ [ DSharpPlus ]`"  +
             "\n> **Framework**: `.NET 8.0`" +
