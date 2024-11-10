@@ -713,8 +713,6 @@ public class PartnershipEmbedConfigs
                 };
             var OptionsToEditEmbedSelectMenu1 = new DiscordSelectComponent($"{e.Interaction.User.Id}_EB2_{name}", "More options to edit the Embed!", OptionsToEditEmbed1);
             var OptionsToEditEmbedSelectMenu = new DiscordSelectComponent($"{e.Interaction.User.Id}_EB_{name}", "Options to edit the Embed!", OptionsToEditEmbed);
-            var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Close");
-            var button2 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_PAS", "Save");
 
 
 
@@ -723,7 +721,6 @@ public class PartnershipEmbedConfigs
                 builder: new DiscordMessageBuilder()
                     .WithContent($"{name}")
                     .AddEmbed(embed)
-                    .AddComponents(button, button2)
                     .AddComponents(OptionsToEditEmbedSelectMenu)
                     .AddComponents(OptionsToEditEmbedSelectMenu1)
             );
@@ -818,8 +815,6 @@ public class PartnershipEmbedConfigs
                 };
             var OptionsToEditEmbedSelectMenu1 = new DiscordSelectComponent($"{e.Interaction.User.Id}_EB2_{name}", "More options to edit the Embed!", OptionsToEditEmbed1);
             var OptionsToEditEmbedSelectMenu = new DiscordSelectComponent($"{e.Interaction.User.Id}_EB_{name}", "Options to edit the Embed!", OptionsToEditEmbed);
-            var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Close");
-            var button2 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_PAS", "Save");
 
 
 
@@ -830,7 +825,6 @@ public class PartnershipEmbedConfigs
                 builder: new DiscordMessageBuilder()
                     .WithContent($"{name}")
                     .AddEmbed(embed)
-                    .AddComponents(button, button2)
                     .AddComponents(OptionsToEditEmbedSelectMenu)
                     .AddComponents(OptionsToEditEmbedSelectMenu1)
             );
@@ -901,7 +895,7 @@ public class PartnershipEmbedConfigs
                     .WithTitle($"Edit: [ {t[2]} ]")
                     .WithCustomId($"{e.Interaction.User.Id}_EE-F_{t[2]}")
                     .AddComponents(new TextInputComponent(
-                        "Footer", "footer_input", "The embed's footer.", style: TextInputStyle.Short, required: false
+                        "Footer:", "footer_input", "The embed's footer.", style: TextInputStyle.Short, required: false
                     ));
                     await e.Interaction.CreateResponseAsync(
                         InteractionResponseType.Modal, modal
@@ -928,18 +922,19 @@ public class PartnershipEmbedConfigs
                 }
             }
             // ========== EMBED EDIT - BUILDER 2:
-            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EB_"))
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EB2_"))
             {
                 // COLOR:
                 if (e.Values[0] == "color")
                 {
                     var t = e.Interaction.Data.CustomId.Split('_');
 
+
                     var modal = new DiscordInteractionResponseBuilder()
                     .WithTitle($"Edit: [ {t[2]} ]")
                     .WithCustomId($"{e.Interaction.User.Id}_EE-C_{t[2]}")
                     .AddComponents(new TextInputComponent(
-                        "Footer", "footer_input", "The embed's footer.", style: TextInputStyle.Short, required: false
+                        "Color:", "color_input", "The embed's color.", style: TextInputStyle.Short
                     ));
                     await e.Interaction.CreateResponseAsync(
                         InteractionResponseType.Modal, modal
@@ -948,13 +943,111 @@ public class PartnershipEmbedConfigs
                 // IMAGE:
                 else if (e.Values[0] == "image")
                 {
+                    var t = e.Interaction.Data.CustomId.Split('_');
 
+
+                    var modal = new DiscordInteractionResponseBuilder()
+                    .WithTitle($"Edit: [ {t[2]} ]")
+                    .WithCustomId($"{e.Interaction.User.Id}_EE-I_{t[2]}")
+                    .AddComponents(new TextInputComponent(
+                        "Image:", "image_input", "The embed's image.", style: TextInputStyle.Paragraph, required: false
+                    ));
+                    await e.Interaction.CreateResponseAsync(
+                        InteractionResponseType.Modal, modal
+                    );
                 }
                 // THUMBNAIL:
                 else if (e.Values[0] == "thumb")
                 {
+                    await e.Interaction.DeferAsync();
+                    var t = e.Interaction.Data.CustomId.Split('_');
+                    var shard = Program._databaseService?.GetShard(e.Guild, 1);
+                    var y = shard[$"{e.Guild.Id}"]["partner"]["configs"]["embeds"][$"{t[2]}"]["thumb"];
 
+
+                    var button1 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_EE-1_{t[2]}", "Unactivate");
+                    var button2 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_EE-2_{t[2]}", "Use community icon");
+                    var button3 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_EE-3_{t[2]}", "Personalize");
+                    if (y.IsString)
+                    {
+                        await e.Interaction.CreateFollowupMessageAsync(
+                            new DiscordFollowupMessageBuilder()
+                                .WithContent("Hoyo! Selecione uma opção.")
+                                .AddComponents(button1, button2, button3)
+                        );
+                    }
+                    else if (y.IsInt32)
+                    {
+                        if (y == 1)
+                        {
+                            await e.Interaction.CreateFollowupMessageAsync(
+                            new DiscordFollowupMessageBuilder()
+                                .WithContent("Hoyo! Selecione uma opção.")
+                                .AddComponents(button1, button2, button3)
+                            );
+                        }
+                        else
+                        {
+                            await e.Interaction.CreateFollowupMessageAsync(
+                            new DiscordFollowupMessageBuilder()
+                                .WithContent("Hoyo! Selecione uma opção.")
+                                .AddComponents(button2, button3)
+                            );
+                        }
+                    }
                 }
+            }
+
+
+
+
+            // ========== EMBED EDIT THUMBNAIL - UNACTIVATE:
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EE-1_"))
+            {
+                var t = e.Interaction.Data.CustomId.Split('_');
+                var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t[2]}.thumb", 0);
+                await collection.UpdateOneAsync(shard, update);
+                await PartnershipEmbedEdit(sender, e, t[2]);
+            }
+            // ========== EMBED EDIT THUMBNAIL - USE COMMUNITY ICON:
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EE-2_"))
+            {
+                var t = e.Interaction.Data.CustomId.Split('_');
+                if (e.Guild.IconUrl == null)
+                {
+                    await e.Interaction.DeferAsync(true);
+                    await e.Interaction.EditOriginalResponseAsync(
+                        new DiscordWebhookBuilder()
+                            .WithContent("Ei! A comunidade não tem icon.")
+                    );
+                    return;
+                }
+                else
+                {
+                    var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t[2]}.thumb", 1);
+                    await collection.UpdateOneAsync(shard, update);
+                    await PartnershipEmbedEdit(sender, e, t[2]);
+                }
+            }
+            // ========== EMBED EDIT THUMBNAIL - PERSONALIZE:
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EE-3_"))
+            {
+                var t = e.Interaction.Data.CustomId.Split('_');
+
+
+                var modal = new DiscordInteractionResponseBuilder()
+                    .WithTitle($"Edit: [ {t[2]} ]")
+                    .WithCustomId($"{e.Interaction.User.Id}_EE-Y_{t[2]}")
+                    .AddComponents(new TextInputComponent(
+                        "Thumbnail:", "thumb_input", "Only HTTPS.", style: TextInputStyle.Paragraph
+                    ));
+                await e.Interaction.CreateResponseAsync(
+                    InteractionResponseType.Modal, modal
+                );
             }
         }
         catch (Exception ex)
@@ -1046,7 +1139,131 @@ public class PartnershipEmbedConfigs
 
                 await j.DeleteAsync();
             }
+            // ========== EMBED EDIT - COLOR:
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EE-C_"))
+            {
+                await e.Interaction.DeferAsync();
+                var j = await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent("Modificando...")
+                );
+                if (!e.Values["color_input"].StartsWith('#'))
+                {
+                    await j.ModifyAsync(
+                        builder: new DiscordMessageBuilder()
+                            .WithContent($"A cor **HEX** precisa começar com `#`!")
+                        );
+                    return;
+                }
+                if (!uint.TryParse(e.Values["color_input"].AsSpan(1), System.Globalization.NumberStyles.HexNumber, null, out uint Color))
+                {
+                    await j.ModifyAsync(
+                        builder: new DiscordMessageBuilder()
+                            .WithContent($"A cor **HEX** fornecida é inválida! Por favor, forneça uma cor válida.\n- Siga o exemplo: `#c67bff`")
+                        );
+                    return;
+                }
 
+
+
+                var p = e.Interaction.Data.CustomId.Split('_');
+                var t = p[2];
+                var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.color", e.Values["color_input"]);
+                await collection.UpdateOneAsync(shard, update);
+                await PartnershipEmbedEditForModal(sender, e, t);
+
+
+
+                await j.DeleteAsync();
+            }
+            // =========== EMBED EDIT - IMAGE:
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EE-I_"))
+            {
+                var p = e.Interaction.Data.CustomId.Split('_');
+                var t = p[2];
+                await e.Interaction.DeferAsync();
+                var j = await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent("Modificando...")
+                );
+
+
+
+                if (!string.IsNullOrEmpty(e.Values["image_input"]))
+                {
+                    if (e.Values["image_input"][..5] != "https")
+                    {
+                        await j.ModifyAsync(
+                            builder: new DiscordMessageBuilder()
+                                .WithContent($"A imagem fornecida é inválida!")
+                        );
+                        return;
+                    }
+                    var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.image", e.Values["image_input"]);
+                    await collection.UpdateOneAsync(shard, update);
+                    await PartnershipEmbedEditForModal(sender, e, t);
+
+
+
+                    await j.DeleteAsync();
+                }
+                else
+                {
+                    var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.image", 0);
+                    await collection.UpdateOneAsync(shard, update);
+                    await PartnershipEmbedEditForModal(sender, e, t);
+
+
+
+                    await j.DeleteAsync();
+                }
+            }
+            // ========== EMBED EDIT - THUMBNAIL:
+            else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EE-Y_"))
+            {
+                var p = e.Interaction.Data.CustomId.Split('_');
+                var t = p[2];
+                await e.Interaction.DeferAsync();
+                var j = await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent("Modificando...")
+                );
+
+
+
+                if (!string.IsNullOrEmpty(e.Values["thumb_input"]))
+                {
+                    if (e.Values["thumb_input"][..5] != "https")
+                    {
+                        await j.ModifyAsync(
+                            builder: new DiscordMessageBuilder()
+                                .WithContent($"A imagem fornecida é inválida!")
+                        );
+                        return;
+                    }
+                    var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.thumb", e.Values["thumb_input"]);
+                    await collection.UpdateOneAsync(shard, update);
+                    await PartnershipEmbedEditForModal(sender, e, t);
+
+
+
+                    var msgs = await e.Interaction.Channel.GetMessagesAsync(30);
+                    var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains("Hoyo!") && m.Author.Id == Program.Rezet.CurrentUser.Id).Id);
+                    await msgg.DeleteAsync();
+
+
+
+                    await j.DeleteAsync();
+                }
+            }
         }
         catch (Exception ex)
         {
