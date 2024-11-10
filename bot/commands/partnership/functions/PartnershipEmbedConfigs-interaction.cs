@@ -30,17 +30,26 @@ public class PartnershipEmbedConfigs
                         Color = new DiscordColor("7e67ff")
                     };
                     embed.AddField(
-                        "<:rezet_shine:1147368423475658882> Staff variables",
+                        "<:rezet_shine:1147368423475658882> Staff:",
                         "> `@[staff.name]`: Nome do funcionário." +
                         "\n> `@[staff.mention]`: Menção do funcionário. ( Disponível apenas na descrição da embed )" +
-                        "\n> `@[staff.id]`: Id do funcionário." +
-                        "\n> `@[staff.points]`: Total de pontos do funcionário. ( Apenas se o módulo **ranking** estiver ativada. )"
+                        "\n> `@[staff.id]`: Id do funcionário." + 
+                        "\n>  ( <:rezet_exclamation:1164417019303702570> Variáveis abaixo apenas se o módulo **ranking** estiver ativado. )" +
+                        "\n> `@[staff.points]`: Total de pontos do funcionário." +
+                        "\n> `@[staff.rank]`: Total de pontos do funcionário."
                     );
                     embed.AddField(
-                        "<:rezet_shine:1147368423475658882> Guild variables",
+                        "<:rezet_shine:1147368423475658882> Guild:",
                         "> `@[guild.name]`: Nome da comunidade." +
                         "\n> `@[guild.id]`: Id da comunidade." +
                         "\n> `@[guild.owner]`: Nome do **dono** da comunidade."
+                    );
+                    embed.AddField(
+                        "<:rezet_shine:1147368423475658882> Partner:",
+                        "> `@[partner.name]`: Nome da comunidade parceira." +
+                        "\n> `@[rep.name]`: Nome do representante." +
+                        "\n> `@[rep.id]`: Id do representante." +
+                        "\n> `@[rep.mention]`: Mencionar o representante."
                     );
                     var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Exit");
 
@@ -239,14 +248,7 @@ public class PartnershipEmbedConfigs
 
 
                     // VERIFY IMAGE:
-                    if (SelectedEmbed["image"].IsInt32)
-                    {
-                        // GUILD SPLASH:
-                        if (SelectedEmbed["image"] == 1 && e.Guild.SplashUrl != null) { embed.WithImageUrl(e.Guild.SplashHash); }
-                        // GUILD BANNER:
-                        else if (SelectedEmbed["image"] == 2 && e.Guild.BannerUrl != null) { embed.WithImageUrl(e.Guild.BannerUrl); }
-                    }
-                    else if (SelectedEmbed["image"].IsString)
+                    if (!SelectedEmbed["image"].IsString)
                     {
                         embed.WithImageUrl(SelectedEmbed["image"].AsString);
                     }
@@ -712,14 +714,7 @@ public class PartnershipEmbedConfigs
 
 
             // VERIFY IMAGE:
-            if (SelectedEmbed["image"].IsInt32)
-            {
-                // GUILD SPLASH:
-                if (SelectedEmbed["image"] == 1 && e.Guild.SplashUrl != null) { embed.WithImageUrl(e.Guild.SplashHash); }
-                // GUILD BANNER:
-                else if (SelectedEmbed["image"] == 2 && e.Guild.BannerUrl != null) { embed.WithImageUrl(e.Guild.BannerUrl); }
-            }
-            else if (SelectedEmbed["image"].IsString)
+            if (SelectedEmbed["image"].IsString)
             {
                 embed.WithImageUrl(SelectedEmbed["image"].AsString);
             }
@@ -814,14 +809,7 @@ public class PartnershipEmbedConfigs
 
 
             // VERIFY IMAGE:
-            if (SelectedEmbed["image"].IsInt32)
-            {
-                // GUILD SPLASH:
-                if (SelectedEmbed["image"] == 1 && e.Interaction.Guild.SplashUrl != null) { embed.WithImageUrl(e.Interaction.Guild.SplashHash); }
-                // GUILD BANNER:
-                else if (SelectedEmbed["image"] == 2 && e.Interaction.Guild.BannerUrl != null) { embed.WithImageUrl(e.Interaction.Guild.BannerUrl); }
-            }
-            else if (SelectedEmbed["image"].IsString)
+            if (SelectedEmbed["image"].IsString)
             {
                 embed.WithImageUrl(SelectedEmbed["image"].AsString);
             }
