@@ -93,7 +93,7 @@ public class AutoPingSettings : ApplicationCommandModule
                 };
                 embed.AddField(
                     "<:rezet_settings1:1147163366561955932> Configurations:",
-                    $"> Ping: @{Ping.Mention} | `{Ping.Id}`\n> Message:\n> ```{Message}```"
+                    $"> Ping: {Ping.Mention} | `{Ping.Id}`\n> Message:\n> ```{Message}```"
                 );
 
 
