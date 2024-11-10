@@ -25,6 +25,8 @@ namespace Rezet.Events
             client.ComponentInteractionCreated += PartnershipDashboardPrimaryButtons.PrimaryButtons;
             client.ComponentInteractionCreated += PartnershipEmbedConfigs.DashboardSelectMenu;
             client.ComponentInteractionCreated += PartnershipEmbedConfigs.PartershipEmbedBuilder;
+            client.ComponentInteractionCreated += PartnershipEmbedConfigs.PartnershipEmbedEditGo;
+            client.ModalSubmitted += PartnershipEmbedConfigs.PartnershipEmbedEditModal;
             client.ComponentInteractionCreated += PartnershipOthersConfigs.PartnershipMoreOptions;
             client.ModalSubmitted += PartnershipEmbedConfigs.PartnershipEmbedBulderModal;
             client.ComponentInteractionCreated += PartnershipRanked.PartnerRankingSelectMenu;
