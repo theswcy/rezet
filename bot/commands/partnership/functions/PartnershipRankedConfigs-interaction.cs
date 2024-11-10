@@ -4,6 +4,7 @@ using DSharpPlus.Entities;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using Rezet;
+using System.Text.RegularExpressions;
 
 
 
@@ -100,6 +101,55 @@ public class PartnershipRanked
                             .AddComponents(button)
                     );
                 }
+                // INVITE LINK
+                else if (e.Values[0] == "invite")
+                {
+                    var modal = new DiscordInteractionResponseBuilder()
+                    .WithTitle("Guild Link")
+                    .WithCustomId($"{e.Interaction.User.Id}_RCIL")
+                    .AddComponents(
+                        new TextInputComponent(
+                            "Link:", "invite_input", "Only HTTPS!", style: TextInputStyle.Paragraph
+                        )
+                    );
+                    await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+    public static async Task PartnerrankingModifyInvite(DiscordClient sender, ModalSubmitEventArgs e)
+    {
+        try
+        {
+            if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}_RCIL")
+            {
+                await e.Interaction.DeferAsync(true);
+                var content = e.Values["invite_input"];
+                var inviteRegex = new Regex(@"discord(?:app\.com\/invite|\.gg)\/([\w-]+)", RegexOptions.IgnoreCase);
+                var match = inviteRegex.Match(content);
+                if (!match.Success)
+                {
+                    await e.Interaction.CreateFollowupMessageAsync(
+                        new DiscordFollowupMessageBuilder()
+                            .WithContent("Ops! o Convite fornecido é inválido!")
+                    );
+                    return;
+                }
+                var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.leaderboard.invite", match.Groups[1].Value);
+                await collection.UpdateOneAsync(shard, update);
+
+
+
+                await e.Interaction.CreateFollowupMessageAsync(
+                    new DiscordFollowupMessageBuilder()
+                        .WithContent("Nice! O link de convite foi atualizado com sucesso!")
+                );
             }
         }
         catch (Exception ex)
