@@ -29,6 +29,7 @@ namespace Rezet.Events
             client.ModalSubmitted += PartnershipEmbedConfigs.PartnershipEmbedEditModal;
             client.ComponentInteractionCreated += PartnershipOthersConfigs.PartnershipMoreOptions;
             client.ModalSubmitted += PartnershipEmbedConfigs.PartnershipEmbedBulderModal;
+            client.ModalSubmitted += PartnershipRanked.PartnerrankingModifyInvite;
             client.ComponentInteractionCreated += PartnershipRanked.PartnerRankingSelectMenu;
 
 
