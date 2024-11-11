@@ -33,7 +33,7 @@
 
 
 <h1>
-    🪛 / Commands
+    🪛 / Commands.
 </h1>
 <h3>Slash [ / ]</h3>
 <li>🟢 | <code>basic about</code> [ complete ]</li>
@@ -86,10 +86,10 @@
 
 
 <h1>
-    🪛 / Modules
+    🪛 / Modules.
 </h1>
 <h3>
-    Partnership
+    Partnership.
 </h3>
 <li>🟢 | <code>partnership announcement</code> [ complete ]</li>
 <li>🟢 | <code>partnership logs</code> [ complete ]</li>
@@ -97,7 +97,7 @@
 <li>🟢 | <code>delete on everyone/here mention</code> [ complete ]</li>
 <br>
 <h3>
-    Automatic Tools
+    Automatic Tools.
 </h3>
 <li>🟢 | <code>autorole</code> [ complete ]</li>
 <li>🟢 | <code>autoping</code> [ complete ]</li>
@@ -105,7 +105,7 @@
 
 
 <h1>
-    Links:
+    Links.
 </h1>
 📘 - <a href="https://horizon-witwicky.gitbook.io/rezet">
     <strong>Gitbook</strong>
