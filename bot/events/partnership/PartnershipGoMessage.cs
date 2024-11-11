@@ -427,7 +427,7 @@ public static class PartnershipGoMessage
 
 
             await e.Message.RespondAsync(
-                builder: BuilderMessage.AddEmbed(embed).WithContent($"✨ {Role.Mention}")
+                builder: BuilderMessage.AddEmbed(embed).WithContent($"✨ {Ping.Mention}")
             );
         }
         catch (Exception ex)
