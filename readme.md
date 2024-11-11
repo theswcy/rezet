@@ -1,14 +1,40 @@
+<br>
+<div align=center>
+  <img src="assets/icon.png" style="width: 110px;">
+</div>
 <h1 align=center>
     Rezet Sharp 1
 </h1>
-<br>
+<h3 align=center>
+  Public Beta Test R-0025. / Developed by: <a href="https://github.com/theswcy">Horizon Witwicky</a>.
+</h3>
+<br><br>
+
+
+<h1>
+  🧬 / Technical Information.
+</h1>
 <p>
-    Version: <strong>Sharp 1 - Public Test Build R-0025</strong>.
+  Hosting: <strong><a href="https://squarecloud.app">SquareCloud</a></strong>.<br>
+  Engine: <strong>Microsoft .NET 8.0</strong>.<br>
+  Language: <strong>C# 12</strong>.<br>
+  Database: <strong>MongoDB</strong>.
+</p>
+<br>
 
 
-<h2>
-    Commands
-</h2>
+<h1>
+  📜 / Changelogs.
+</h1>
+<pre>
+  Aguardando...
+</pre>
+<br>
+
+
+<h1>
+    🪛 / Commands
+</h1>
 <h3>Slash [ / ]</h3>
 <li>🟢 | <code>basic about</code> [ complete ]</li>
 <li>🟢 | <code>chat clear</code> [ complete ]</li>
@@ -55,13 +81,13 @@
     Prefix [ -r or @rezet ]
 </h3>
 <li>🟣 | <code>mute</code> [ monitoring ]</li>
-<br>
+<br><br>
 
 
 
-<h2>
-    Modules
-</h2>
+<h1>
+    🪛 / Modules
+</h1>
 <h3>
     Partnership
 </h3>
@@ -75,13 +101,12 @@
 </h3>
 <li>🟢 | <code>autorole</code> [ complete ]</li>
 <li>🟢 | <code>autoping</code> [ complete ]</li>
+<hr><br><br>
 
 
-<hr>
-<br>
-<h2>
+<h1>
     Links:
-</h2>
+</h1>
 📘 - <a href="https://horizon-witwicky.gitbook.io/rezet">
     <strong>Gitbook</strong>
 </a>
