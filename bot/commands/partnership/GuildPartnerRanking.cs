@@ -107,8 +107,6 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-
-
         [SlashCommand("global", "🎋 | The global community ranking's leaderboard")]
         public static async Task Global(InteractionContext ctx)
         {
@@ -200,8 +198,6 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-
-
     [SlashCommandGroup("points", "Cotrol points")]
     public class Points : ApplicationCommandModule
     {
@@ -251,8 +247,6 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 Console.WriteLine(ex);
             }
         }
-
-
 
 
 
