@@ -30,6 +30,7 @@ namespace Rezet.Commands
             // PARTNERSHIP:
             slash.RegisterCommands<PartnershipCommands>(null);
             slash.RegisterCommands<CommunityPartnerMore>(null);
+            slash.RegisterCommands<PartnershipTickets>(null);
 
             // MODERATION:
             // slash.RegisterCommands<ToModerationBasic_slash>(null);
