@@ -10,8 +10,6 @@ using Rezet;
 [SlashCommandGroup("partnership", "Partnership's commands")]
 public class PartnershipCommands : ApplicationCommandModule
 {
-    // Comando finalizado!
-
     [SlashCommand("dashboard", "🎋 | Partnership's dashboard!")]
     public static async Task Dashboard(InteractionContext ctx)
     {
@@ -152,18 +150,15 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
 
+
+                var DashboardBuilder = new DiscordWebhookBuilder();
                 if (shard[$"{Guild.Id}"]["partner"]["leaderboard"]["option"] == 1)
                 {
-                    await ctx.EditResponseAsync(
-                        new DiscordWebhookBuilder()
-                            .WithContent("Bip bup bip!")
-                            .AddEmbed(embed)
-                            .AddComponents(buttons[0], buttons[1])
-                            .AddComponents(selectMenu1)
-                            .AddComponents(selectMenu2)
-                            .AddComponents(selectMenu3)
-                    );
-                    return;
+                    DashboardBuilder
+                        .AddComponents(buttons[0], buttons[1])
+                        .AddComponents(selectMenu1)
+                        .AddComponents(selectMenu2)
+                        .AddComponents(selectMenu3);
                 }
                 else
                 {
@@ -171,16 +166,63 @@ public class PartnershipCommands : ApplicationCommandModule
                     {
                         new DiscordButtonComponent(ButtonStyle.Success, $"{ctx.User.Id}_ALB", "Activate local ranked")
                     };
-                    await ctx.EditResponseAsync(
-                        new DiscordWebhookBuilder()
-                            .WithContent("Bip bup bip!")
-                            .AddEmbed(embed)
-                            .AddComponents(buttons[0], buttons[1], buttonALB[0])
-                            .AddComponents(selectMenu1)
-                            .AddComponents(selectMenu3)
-                    );
-                    return;
+                    DashboardBuilder
+                        .AddComponents(buttons[0], buttons[1], buttonALB[0])
+                        .AddComponents(selectMenu1)
+                        .AddComponents(selectMenu3);
                 }
+
+
+
+                if (shard[$"{Guild.Id}"]["partner"]["ticket"]["option"] == 1)
+                {
+                    embed.AddField(
+                        "<:rezet_3_act:1189936284379119726> Ticket configurations:",
+                        "> Automatic: **coming soon**." +
+                        $"\n> Ticket Channel: <#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["channel"].AsInt64}>" +
+                        $"\n> Ticket Category: **<#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["category"].AsInt64}>**" +
+                        $"\n> Support Role: **<@&{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["support"].AsInt64}>**"
+                    );
+
+
+
+                    var emoji5 = new DiscordComponentEmoji("🔖");
+                    var emoji6 = new DiscordComponentEmoji("🔔");
+                    var options4 = new[]
+                    {
+                        // new DiscordSelectComponentOption("View ticket", "1_view", "View ticket.", emoji: emoji5),
+                        // new DiscordSelectComponentOption("Add ticket", "1_add", "Add ticket", emoji: emoji5),
+                        // new DiscordSelectComponentOption("Edit ticket", "1_edit", "Edit ticket.", emoji: emoji5),
+                        new DiscordSelectComponentOption("Edit tickets", "1_del", "Delete ticket.", emoji: emoji5),
+                        new DiscordSelectComponentOption("Order tickets", "1_ord", "Order tickets.", emoji: emoji5),
+                        new DiscordSelectComponentOption("Ticket's button", "1_butt", "Ticket's button.", emoji: emoji5),
+                        // new DiscordSelectComponentOption("View ticket message", "1_view", "View the ticket's message", emoji: emoji6),
+                        // new DiscordSelectComponentOption("Edit ticket message", "1_edit", "Edit the ticket's message.", emoji: emoji6)
+                    };
+                    var selectMenu4 = new DiscordSelectComponent($"{ctx.User.Id}_PTICptio", "Ticket Options", options4);
+
+                    DashboardBuilder.AddComponents(selectMenu4);
+                }
+                else
+                {
+                    embed.AddField(
+                        "<:rezet_3_nact:1189936390113341601> Ticket configurations:",
+                        "> Unactivated."
+                    );
+
+
+
+                    var buttonTicket = new DiscordButtonComponent(ButtonStyle.Success, $"{ctx.User.Id}_TicketACT", "Activate ticket");
+                    DashboardBuilder.AddComponents(buttonTicket);
+                }
+
+
+
+                await ctx.EditResponseAsync(
+                    DashboardBuilder
+                        .WithContent("Bip bup bip!")
+                        .AddEmbed(embed)
+                );
             }
         }
         catch (Exception ex)
@@ -193,11 +235,6 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
 
-
-
-
-
-    // Comando finalizado!
 
     [SlashCommand("setup", "🎋 | Setup partnership function")]
     public static async Task Activate(InteractionContext ctx,
