@@ -193,8 +193,7 @@ public class PartnershipCommands : ApplicationCommandModule
                         // new DiscordSelectComponentOption("View ticket", "1_view", "View ticket.", emoji: emoji5),
                         // new DiscordSelectComponentOption("Add ticket", "1_add", "Add ticket", emoji: emoji5),
                         // new DiscordSelectComponentOption("Edit ticket", "1_edit", "Edit ticket.", emoji: emoji5),
-                        new DiscordSelectComponentOption("Edit tickets", "1_del", "Delete ticket.", emoji: emoji5),
-                        new DiscordSelectComponentOption("Order tickets", "1_ord", "Order tickets.", emoji: emoji5),
+                        new DiscordSelectComponentOption("Tickets Builder", "1_edit", "Builder a ticket.", emoji: emoji5),
                         new DiscordSelectComponentOption("Ticket's button", "1_butt", "Ticket's button.", emoji: emoji5),
                         // new DiscordSelectComponentOption("View ticket message", "1_view", "View the ticket's message", emoji: emoji6),
                         // new DiscordSelectComponentOption("Edit ticket message", "1_edit", "Edit the ticket's message.", emoji: emoji6)
