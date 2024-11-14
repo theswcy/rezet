@@ -3,38 +3,50 @@
   <img src="assets/icon.png" style="width: 110px;">
 </div>
 <h1 align=center>
-    Rezet Sharp 1
+    Rezet Sharp 1.5
 </h1>
 <h3 align=center>
-  Public Beta Test R-0025. / Developed by: <a href="https://github.com/theswcy">Horizon Witwicky</a>.
+  Public Test Repository. / Developed by: <a href="https://github.com/theswcy">Horizon Witwicky</a>.
 </h3>
+<p>
+  Essa versão no Github, <strong>Black Cat</strong>, é de repositório público e versão dedicada a vários testes antes de ser passado
+  para a versão final <strong>Sharp</strong>. O nome no topo, <strong>"Rezet Sharp"</strong> refere-se a versão que está sendo
+  e preparada para se tornar estável.
+</p>
 <br><br>
 
 
 <h1>
   🧬 / Technical Information.
 </h1>
+<h3>
+  Stable Version Informations:
+</h3>
 <p>
+  Version: <strong>Sharp 1.0 / Public Beta Test <code>R-0025</code></strong>.<br>
   Hosting: <strong><a href="https://squarecloud.app">SquareCloud</a></strong>.<br>
   Engine: <strong>Microsoft .NET 8.0</strong>.<br>
   Language: <strong>C# 12</strong>.<br>
   Database: <strong>MongoDB</strong>.
 </p>
-<br>
+<h3>
+  Black Cat Informations:
+</h3>
+<p>
+  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 26.1</code></strong>.<br>
+  Hosting: <code>null</code>.
+</p>
+<br><br>
 
 
-<h1>
-  📜 / Changelogs.
-</h1>
-<pre>
-  Aguardando...
-</pre>
-<br>
+
 
 
 <h1>
     🪛 / Commands.
 </h1>
+<details>
+  <summary>📖 <strong>Clique aqui para ver os comandos!</strong></summary>
 <h3>Slash [ / ]</h3>
 <li>🟢 | <code>basic about</code> [ complete ]</li>
 <li>🟢 | <code>chat clear</code> [ complete ]</li>
@@ -82,12 +94,15 @@
 </h3>
 <li>🟣 | <code>mute</code> [ monitoring ]</li>
 <br><br>
+</details>
 
 
 
 <h1>
     🪛 / Modules.
 </h1>
+<details>
+  <summary>📖 <strong>Clique aqui para ver os módulos!</strong></summary>
 <h3>
     Partnership.
 </h3>
@@ -101,14 +116,16 @@
 </h3>
 <li>🟢 | <code>autorole</code> [ complete ]</li>
 <li>🟢 | <code>autoping</code> [ complete ]</li>
-<hr><br><br>
+<hr>
+</details>
+<br><br>
 
 
 <h1>
-    Links.
+    🐬 / Links.
 </h1>
-📘 - <a href="https://horizon-witwicky.gitbook.io/rezet">
-    <strong>Gitbook</strong>
+📘 - <a href="https://discord.gg/CMfXSM4zXB">
+    <strong>Sharp Workstation</strong>
 </a>
 <br>
 🪛 - <a href="https://discord.com/oauth2/authorize?client_id=889388725719683082">
