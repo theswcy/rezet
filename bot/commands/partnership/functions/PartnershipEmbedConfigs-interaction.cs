@@ -375,7 +375,7 @@ public class PartnershipEmbedConfigs
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     // ========== BUILDER INTERACTION:
@@ -454,7 +454,7 @@ public class PartnershipEmbedConfigs
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     // ========== BUILDER MODAL:
@@ -657,7 +657,7 @@ public class PartnershipEmbedConfigs
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Interaction.Guild.Name} ( {e.Interaction.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Interaction.User.Username} ( {e.Interaction.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     // ========== EMBED EDIT:
@@ -753,7 +753,7 @@ public class PartnershipEmbedConfigs
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     // ========== EMBED EDIT FOR MODAL:
@@ -849,7 +849,7 @@ public class PartnershipEmbedConfigs
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Interaction.Guild.Name} ( {e.Interaction.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Interaction.User.Username} ( {e.Interaction.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     // ========== EMBED EDIT FUNCTIONS:
@@ -1070,7 +1070,7 @@ public class PartnershipEmbedConfigs
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     // ========== EMBED EDIT MODAL:
@@ -1285,7 +1285,7 @@ public class PartnershipEmbedConfigs
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Interaction.Guild.Name} ( {e.Interaction.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Interaction.User.Username} ( {e.Interaction.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
 }

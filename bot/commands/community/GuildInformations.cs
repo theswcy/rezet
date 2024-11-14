@@ -91,7 +91,7 @@ public class CommunityCommands : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"<:rezet_dred:1147164215837208686> Erro: `{ex}`"));
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
         }
     }
 
@@ -123,7 +123,7 @@ public class CommunityCommands : ApplicationCommandModule
             if (description.Length > 120)
             {
                 await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                .WithContent($"<:rezet_dred:1147164215837208686> Máximo `120` caracteres!"));
+                .WithContent($"Máximo `120` caracteres!"));
                 return;
             }
 

@@ -16,6 +16,7 @@ public static class PartnershipGoMessage
     {
         try
         {
+            // IF EVERYONE OR HERE:
             if (e.Message.Content.Contains("@everyone") || e.Message.Content.Contains("@here"))
             {
                 if (shard[$"{e.Guild.Id}"]["partner"]["anti-eh"] == 1)
@@ -41,7 +42,7 @@ public static class PartnershipGoMessage
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Author.Username} ( {e.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
 
@@ -161,7 +162,7 @@ public static class PartnershipGoMessage
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Author.Username} ( {e.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     // ========== GO MESSAGE:
@@ -244,8 +245,10 @@ public static class PartnershipGoMessage
                 Color = new DiscordColor(embedConfigs["color"].ToString())
             };
             var BuilderMessage = new DiscordMessageBuilder();
+            int ooo = 0;
             if (e.Message.MentionedUsers.Any())
             {
+                ooo++;
                 if (e.Message.Content.Contains("discord.gg/") || e.Message.Content.Contains("discord.com/invite/"))
                 {
                     var inviteRegex = new Regex(@"discord(?:app\.com\/invite|\.gg)\/([\w-]+)", RegexOptions.IgnoreCase);
@@ -314,12 +317,6 @@ public static class PartnershipGoMessage
                     var u = await e.Message.RespondAsync("Hey! O convite de parcerias deve estar no formato `discord.gg/` ou `discord.com/invite/`!");
                     await Task.Delay(3000); await u.DeleteAsync();
                     return;
-                }
-                var rep = e.Message.MentionedUsers;
-                foreach (var i in rep)
-                {
-                    var p = await e.Guild.GetMemberAsync(i.Id);
-                    await p.GrantRoleAsync(Role);
                 }
             }
             else
@@ -429,10 +426,20 @@ public static class PartnershipGoMessage
             await e.Message.RespondAsync(
                 builder: BuilderMessage.AddEmbed(embed).WithContent($"✨ {Ping.Mention}")
             );
+            // IF MENTIONS:
+            if (ooo != 0)
+            {
+                var rep = e.Message.MentionedUsers;
+                foreach (var i in rep)
+                {
+                    var p = await e.Guild.GetMemberAsync(i.Id);
+                    await p.GrantRoleAsync(Role);
+                }
+            }
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Author.Username} ( {e.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
 }

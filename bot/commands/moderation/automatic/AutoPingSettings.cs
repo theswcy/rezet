@@ -22,18 +22,23 @@ public class AutoPingSettings : ApplicationCommandModule
         {
             await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
             var Guild = ctx.Guild;
-            var shard = Program._databaseService?.GetShard(Guild, 1);
-            if (shard == null)
+
+
+
+            if (!Channel.IsCategory)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                Console.ResetColor();
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent("Você deve selecionar um canal de **texto**!")
+                );
                 return;
             }
 
 
+
             await CheckPermi.CheckMemberPermissions(ctx, 3);
             await CheckPermi.CheckBotPermissions(ctx, 3);
+
 
 
             if (Message.Length > 100)
@@ -53,7 +58,9 @@ public class AutoPingSettings : ApplicationCommandModule
                 return;
             }
 
+            
 
+            var shard = Program._databaseService?.GetShard(Guild, 1);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
             {
                 if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"].AsBsonDocument.Contains($"{Channel.Id}"))
@@ -141,7 +148,11 @@ public class AutoPingSettings : ApplicationCommandModule
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+            );
+            return;
         }
     }
 
@@ -153,61 +164,78 @@ public class AutoPingSettings : ApplicationCommandModule
         [Option("channel", "The channel that will be removed.")] DiscordChannel Channel
     )
     {
-        await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
-        var Guild = ctx.Guild;
-        var shard = Program._databaseService?.GetShard(Guild, 1);
-        if (shard == null)
+        try
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-            Console.ResetColor();
-            return;
+            await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
+            var Guild = ctx.Guild;
+
+
+
+            if (!Channel.IsCategory)
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent("Você deve selecionar um canal de **texto**!")
+                );
+                return;
+            }
+
+
+
+            await CheckPermi.CheckMemberPermissions(ctx, 3);
+            await CheckPermi.CheckBotPermissions(ctx, 3);
+
+
+
+            var shard = Program._databaseService?.GetShard(Guild, 1);
+            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] == BsonNull.Value)
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent("Ops! Não há nenhum canal com a função **Autoping**.")
+                );
+                return;
+            }
+            else if (!shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"].AsBsonDocument.Contains($"{Channel.Id}"))
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Ops! O canal {Channel.Mention} não possui a função **Autoping**.")
+                );
+                return;
+            }
+            else if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"].AsBsonDocument.Count() == 1)
+            {
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_ping", BsonNull.Value);
+                await collection.UpdateOneAsync(shard, update);
+
+
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Nice! O canal {Channel.Mention} teve a função **Autoping** removida.")
+                );
+            }
+            else
+            {
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var update = Builders<BsonDocument>.Update.Unset($"{Guild.Id}.moderation.auto_actions.auto_ping.{Channel.Id}");
+                await collection.UpdateOneAsync(shard, update);
+
+
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Nice! O canal {Channel.Mention} teve a função **Autoping** removida.")
+                );
+            }
         }
-
-
-        await CheckPermi.CheckMemberPermissions(ctx, 3);
-        await CheckPermi.CheckBotPermissions(ctx, 3);
-
-
-        if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] == BsonNull.Value)
+        catch (Exception ex)
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent("Ops! Não há nenhum canal com a função **Autoping**.")
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
             );
             return;
-        }
-        else if (!shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"].AsBsonDocument.Contains($"{Channel.Id}"))
-        {
-            await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Ops! O canal {Channel.Mention} não possui a função **Autoping**.")
-            );
-            return;
-        }
-        else if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"].AsBsonDocument.Count() == 1)
-        {
-            var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
-            var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_ping", BsonNull.Value);
-            await collection.UpdateOneAsync(shard, update);
-
-
-            await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Nice! O canal {Channel.Mention} teve a função **Autoping** removida.")
-            );
-        }
-        else
-        {
-            var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
-            var update = Builders<BsonDocument>.Update.Unset($"{Guild.Id}.moderation.auto_actions.auto_ping.{Channel.Id}");
-            await collection.UpdateOneAsync(shard, update);
-
-
-            await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Nice! O canal {Channel.Mention} teve a função **Autoping** removida.")
-            );
         }
     }
 
@@ -221,20 +249,13 @@ public class AutoPingSettings : ApplicationCommandModule
         {
             await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
             var Guild = ctx.Guild;
-            var shard = Program._databaseService?.GetShard(Guild, 1);
-            if (shard == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                Console.ResetColor();
-                return;
-            }
 
 
 
             // PERMISSIONS:
             await CheckPermi.CheckMemberPermissions(ctx, 3);
             await CheckPermi.CheckBotPermissions(ctx, 3);
+            var shard = Program._databaseService?.GetShard(Guild, 1);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] == BsonNull.Value)
             {
                 await ctx.EditResponseAsync(
@@ -258,7 +279,11 @@ public class AutoPingSettings : ApplicationCommandModule
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+            );
+            return;
         }
     }
 }

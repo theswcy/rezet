@@ -174,46 +174,46 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
 
-                if (shard[$"{Guild.Id}"]["partner"]["ticket"]["option"] == 1)
-                {
-                    embed.AddField(
-                        "<:rezet_3_act:1189936284379119726> Ticket configurations:",
-                        "> Automatic: **coming soon**." +
-                        $"\n> Ticket Channel: <#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["channel"].AsInt64}>" +
-                        $"\n> Ticket Category: **<#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["category"].AsInt64}>**" +
-                        $"\n> Support Role: **<@&{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["support"].AsInt64}>**"
-                    );
+                // if (shard[$"{Guild.Id}"]["partner"]["ticket"]["option"] == 1)
+                // {
+                //     embed.AddField(
+                //         "<:rezet_3_act:1189936284379119726> Ticket configurations:",
+                //         "> Automatic: **coming soon**." +
+                //         $"\n> Ticket Channel: <#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["channel"].AsInt64}>" +
+                //         $"\n> Ticket Category: **<#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["category"].AsInt64}>**" +
+                //         $"\n> Support Role: **<@&{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["support"].AsInt64}>**"
+                //     );
 
 
 
-                    var emoji5 = new DiscordComponentEmoji("🔖");
-                    var emoji6 = new DiscordComponentEmoji("🔔");
-                    var options4 = new[]
-                    {
-                        // new DiscordSelectComponentOption("View ticket", "1_view", "View ticket.", emoji: emoji5),
-                        // new DiscordSelectComponentOption("Add ticket", "1_add", "Add ticket", emoji: emoji5),
-                        // new DiscordSelectComponentOption("Edit ticket", "1_edit", "Edit ticket.", emoji: emoji5),
-                        new DiscordSelectComponentOption("Tickets Builder", "1_edit", "Builder a ticket.", emoji: emoji5),
-                        new DiscordSelectComponentOption("Ticket's button", "1_butt", "Ticket's button.", emoji: emoji5),
-                        // new DiscordSelectComponentOption("View ticket message", "1_view", "View the ticket's message", emoji: emoji6),
-                        // new DiscordSelectComponentOption("Edit ticket message", "1_edit", "Edit the ticket's message.", emoji: emoji6)
-                    };
-                    var selectMenu4 = new DiscordSelectComponent($"{ctx.User.Id}_PTICptio", "Ticket Options", options4);
+                //     var emoji5 = new DiscordComponentEmoji("🔖");
+                //     var emoji6 = new DiscordComponentEmoji("🔔");
+                //     var options4 = new[]
+                //     {
+                //         // new DiscordSelectComponentOption("View ticket", "1_view", "View ticket.", emoji: emoji5),
+                //         // new DiscordSelectComponentOption("Add ticket", "1_add", "Add ticket", emoji: emoji5),
+                //         // new DiscordSelectComponentOption("Edit ticket", "1_edit", "Edit ticket.", emoji: emoji5),
+                //         new DiscordSelectComponentOption("Tickets Builder", "1_edit", "Builder a ticket.", emoji: emoji5),
+                //         new DiscordSelectComponentOption("Ticket's button", "1_butt", "Ticket's button.", emoji: emoji5),
+                //         // new DiscordSelectComponentOption("View ticket message", "1_view", "View the ticket's message", emoji: emoji6),
+                //         // new DiscordSelectComponentOption("Edit ticket message", "1_edit", "Edit the ticket's message.", emoji: emoji6)
+                //     };
+                //     var selectMenu4 = new DiscordSelectComponent($"{ctx.User.Id}_PTICptio", "Ticket Options", options4);
 
-                    DashboardBuilder.AddComponents(selectMenu4);
-                }
-                else
-                {
-                    embed.AddField(
-                        "<:rezet_3_nact:1189936390113341601> Ticket configurations:",
-                        "> Unactivated."
-                    );
+                //     DashboardBuilder.AddComponents(selectMenu4);
+                // }
+                // else
+                // {
+                //     embed.AddField(
+                //         "<:rezet_3_nact:1189936390113341601> Ticket configurations:",
+                //         "> Unactivated."
+                //     );
 
 
 
-                    var buttonTicket = new DiscordButtonComponent(ButtonStyle.Success, $"{ctx.User.Id}_TicketACT", "Activate ticket");
-                    DashboardBuilder.AddComponents(buttonTicket);
-                }
+                //     var buttonTicket = new DiscordButtonComponent(ButtonStyle.Success, $"{ctx.User.Id}_TicketACT", "Activate ticket");
+                //     DashboardBuilder.AddComponents(buttonTicket);
+                // }
 
 
 
@@ -226,7 +226,11 @@ public class PartnershipCommands : ApplicationCommandModule
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+            );
+            return;
         }
     }
 
@@ -354,7 +358,11 @@ public class PartnershipCommands : ApplicationCommandModule
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+            );
+            return;
         }
     }
 }

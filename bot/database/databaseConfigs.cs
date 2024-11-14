@@ -19,16 +19,20 @@ public class DatabaseService
             var client = new MongoClient(connectionString);
             // FIND DATABASE BY NAME:
             database = client.GetDatabase(databaseName);
+            Console.ResetColor();
+            Console.Write("    ➜  ");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"O [  {y}  |  DATABASE  ] Connected to MongoDB.");
+            Console.Write($"  {y}  |  DBASE  ⚯   Connected to MongoDB.\n");
             Console.ResetColor();
         }
         catch (Exception ex)
         {
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
+            Console.ResetColor();
+            Console.Write("    ➜  ");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"X [  {y}  |  DATABASE  ] Error connecting to MongoDB: [ {ex.Message} ]");
+            Console.Write($"  {y}  |  DBASE  ⚯   Error connecting to MongoDB: [ {ex.Message} ]\n");
             Console.ResetColor();
         }
     }
@@ -74,9 +78,7 @@ public class DatabaseService
                     }
                     else
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine($"X [  {y}  |  DATABASE  ] The guild ( {Guild.Name} / {Guild.Id} ) don't have a database in shard {shard}.");
-                        Console.ResetColor();
+                        Console.WriteLine($"    ➜  {y}  |  Database Shard\n       The guild {Guild.Name} / {Guild.Id} don't have a database in shard {shard}.");
                     }
                 }
                 else if (Option == 2) // RETURN SHARD WITHOUT GUILD TO ADD.
@@ -85,9 +87,7 @@ public class DatabaseService
                     {
                         if (SelectedShard.ElementCount >= 100)
                         {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine($"X [  {y}  |  DATABASE  ] The shard {shard} is full.");
-                            Console.ResetColor();
+                            Console.WriteLine($"    ➜  {y}  |  Database Shard\n       The shard {shard} is full!");
                         }
                         else
                         {
@@ -102,9 +102,7 @@ public class DatabaseService
         {
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"X [  {y}  |  DATABASE  ] Error in shard select: [ {ex.Message} ]");
-            Console.ResetColor();
+            Console.WriteLine($"    ➜  {y}  |  Database Shard\n       Error in shard select:\n       {ex.Message}");
             return null;
         }
     }

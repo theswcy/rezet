@@ -17,16 +17,10 @@ public static class OnJoinOrQuit
             var Guild = e.Guild;
             var shard = Program._databaseService?.GetShard(Guild, 1);
             var Member = e.Member;
-            if (shard == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                Console.ResetColor();
-                return;
-            }
-            
 
 
+
+#pragma warning disable CS8602
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
             {
                 var RolesDict = shard
@@ -51,7 +45,7 @@ public static class OnJoinOrQuit
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
 
@@ -65,13 +59,6 @@ public static class OnJoinOrQuit
             var Guild = e.Guild;
             var shard = Program._databaseService?.GetShard(Guild, 1);
             var Member = e.Member;
-            if (shard == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                Console.ResetColor();
-                return;
-            }
 
 
 
@@ -111,7 +98,7 @@ public static class OnJoinOrQuit
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
 }

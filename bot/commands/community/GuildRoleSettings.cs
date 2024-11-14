@@ -34,7 +34,7 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"<:rezet_dred:1147164215837208686> Eu não posso atribuir um cargo maior que o meu maior cargo atual!"));
+                        .WithContent($"Eu não posso atribuir um cargo maior que o meu maior cargo atual!"));
                 return;
             }
             var highestMemberRole = ctx.Member.Roles.OrderByDescending(r => r.Position).FirstOrDefault();
@@ -42,7 +42,7 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"<:rezet_dred:1147164215837208686> Você não pode atribuir um cargo maior que o seu maior cargo atual!"));
+                        .WithContent($"Você não pode atribuir um cargo maior que o seu maior cargo atual!"));
                 return;
             }
 
@@ -52,14 +52,14 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"<:rezet_dred:1147164215837208686> Você não pode atribuir um cargo a si mesmo!"));
+                        .WithContent($"Você não pode atribuir um cargo a si mesmo!"));
                 return;
             }
             if (Member.Roles.Any(r => r.Id == role.Id))
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"<:rezet_dred:1147164215837208686> O membro seleconado ja possui este cargo!"));
+                        .WithContent($"O membro seleconado ja possui este cargo!"));
                 return;
             }
 
@@ -86,7 +86,7 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"Erro: `{ex}`"));
+                        .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
                 return;
             }
         }
@@ -94,7 +94,7 @@ public class CommunityRole : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Erro: `{ex}`"));
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
             return;
         }
 
@@ -136,7 +136,7 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"<:rezet_dred:1147164215837208686> Eu não posso atribuir um cargo maior que o meu maior cargo atual!"));
+                        .WithContent($"Eu não posso atribuir um cargo maior que o meu maior cargo atual!"));
                 return;
             }
             var highestMemberRole = ctx.Member.Roles.OrderByDescending(r => r.Position).FirstOrDefault();
@@ -144,7 +144,7 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"<:rezet_dred:1147164215837208686> Você não pode atribuir um cargo maior que o seu maior cargo atual!"));
+                        .WithContent($"Você não pode atribuir um cargo maior que o seu maior cargo atual!"));
                 return;
             }
 
@@ -155,14 +155,14 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"<:rezet_dred:1147164215837208686> Você não pode remover um cargo de si mesmo!"));
+                        .WithContent($"Você não pode remover um cargo de si mesmo!"));
                 return;
             }
             if (!Member.Roles.Any(r => r.Id == role.Id))
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"<:rezet_dred:1147164215837208686> O membro seleconado não possui este cargo!"));
+                        .WithContent($"O membro seleconado não possui este cargo!"));
                 return;
             }
 
@@ -174,7 +174,7 @@ public class CommunityRole : ApplicationCommandModule
 
                 var embed = new DiscordEmbedBuilder
                 {
-                    Description = $"<:rezet_dgreen:1147164307889586238> O cargo **[ {role.Name} ]** foi removido com sucesso do usuário **[ {member.Mention} ]**!",
+                    Description = $"O cargo **[ {role.Name} ]** foi removido com sucesso do usuário **[ {member.Mention} ]**!",
                     Color = new DiscordColor("#60ed7c")
                 };
 
@@ -188,7 +188,7 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"Erro: `{ex}`"));
+                        .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
                 return;
             }
         }
@@ -196,7 +196,7 @@ public class CommunityRole : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Erro: `{ex}`"));
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
             return;
         }
     }
@@ -259,7 +259,7 @@ public class CommunityRole : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Erro: `{ex}`"));
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
             return;
         }
     }

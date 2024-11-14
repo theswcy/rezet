@@ -30,15 +30,17 @@ public class ModdingLogs : ApplicationCommandModule
             {
                 await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
                 var Guild = ctx.Guild;
-                var shard = Program._databaseService?.GetShard(Guild, 1);
-                if (shard == null)
+
+
+
+                if (!Channel.IsCategory)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                    Console.ResetColor();
+                    await ctx.EditResponseAsync(
+                        new DiscordWebhookBuilder()
+                            .WithContent("Você deve selecionar um canal de **texto**!")
+                    );
                     return;
                 }
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
 
 
 
@@ -88,7 +90,14 @@ public class ModdingLogs : ApplicationCommandModule
                         y = "`Guild Name Change`\n`Guild Description Change`\n`Guild Icon Change`\n`Guild Splash Change`\n`Guild Banner Change`\n`Guild Bot Add`\n`Guild Bot Remove`";
                         break;
                 }
+
+
+
+
+
                 // NEW BUILD:
+                var shard = Program._databaseService?.GetShard(Guild, 1);
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
                 if (shard[$"{Guild.Id}"]["moderation"]["mod_logs"][$"{ConfigLog}"] != BsonNull.Value)
                 {
                     var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.mod_logs.{ConfigLog}", Channel.Id);
@@ -122,7 +131,11 @@ public class ModdingLogs : ApplicationCommandModule
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+            );
+                return;
             }
         }
 
@@ -145,15 +158,6 @@ public class ModdingLogs : ApplicationCommandModule
             {
                 await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
                 var Guild = ctx.Guild;
-                var shard = Program._databaseService?.GetShard(Guild, 1);
-                if (shard == null)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                    Console.ResetColor();
-                    return;
-                }
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
 
 
 
@@ -192,6 +196,11 @@ public class ModdingLogs : ApplicationCommandModule
                         r = "Guild management";
                         break;
                 }
+
+
+
+                var shard = Program._databaseService?.GetShard(Guild, 1);
+                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
                 if (shard[$"{Guild.Id}"]["moderation"]["mod_logs"][$"{ConfigLog}"] == BsonNull.Value)
                 {
                     await ctx.EditResponseAsync(
@@ -204,7 +213,7 @@ public class ModdingLogs : ApplicationCommandModule
                 await collection.UpdateOneAsync(shard, update);
 
 
-                
+
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
                         .WithContent($"Okay! O Modding Logs `{r}` foi desativado.")
@@ -212,7 +221,11 @@ public class ModdingLogs : ApplicationCommandModule
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+            );
+                return;
             }
         }
     }

@@ -17,14 +17,6 @@ public class Moderators : ApplicationCommandModule
         {
             await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
             var Guild = ctx.Guild;
-            var shard = Program._databaseService?.GetShard(Guild, 1);
-            if (shard == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                Console.ResetColor();
-                return;
-            }
 
 
             await CheckPermi.CheckMemberPermissions(ctx, 2);
@@ -51,6 +43,8 @@ public class Moderators : ApplicationCommandModule
                 new("View mod logs channel", "modlogs", "View channels with mod logs function.", emoji: emoji)
             };
             // SHOW THE AUTOROLE CONFIGS:
+            var shard = Program._databaseService?.GetShard(Guild, 1);
+#pragma warning disable CS8602
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
             {
                 var RolesDict = shard
@@ -163,7 +157,11 @@ public class Moderators : ApplicationCommandModule
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+            );
+            return;
         }
     }
 }

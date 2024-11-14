@@ -30,7 +30,7 @@ namespace Rezet.Commands
             // PARTNERSHIP:
             slash.RegisterCommands<PartnershipCommands>(null);
             slash.RegisterCommands<CommunityPartnerMore>(null);
-            slash.RegisterCommands<PartnershipTickets>(null);
+            // slash.RegisterCommands<PartnershipTickets>(null);
 
             // MODERATION:
             // slash.RegisterCommands<ToModerationBasic_slash>(null);
@@ -46,8 +46,15 @@ namespace Rezet.Commands
 
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
+            Console.ResetColor();
+            Console.Write("    ➜  ");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"O [  {y}  |  REZET  ] All commands synchronized!");
+            Console.Write($"  {y}  |  REZET  ⚯   All slash-commands synchronized!\n");
+            Console.ResetColor();
+            Console.ResetColor();
+            Console.Write("    ➜  ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.Write($"  {y}  |  REZET  ⚯   All prefix-commands synchronized!\n");
             Console.ResetColor();
         }
     }

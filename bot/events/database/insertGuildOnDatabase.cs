@@ -17,7 +17,7 @@ public static class InsertGuildDB
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     public static async Task CreateGuild(DiscordGuild e)
@@ -202,9 +202,7 @@ public static class InsertGuildDB
             var shard = Program._databaseService?.GetShard(e, 2);
             if (shard == null)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  {y}  |  GUILD CREATE ] Failed to acess guild ( {e.Name} / {e.Id} )");
-                Console.ResetColor();
+                Console.WriteLine($"    ⌬  {y}  |  GUILD CREATE\n    ➜  Failed to acess guild: {e.Name} / {e.Id}\n\n\n");
                 return;
             }
             var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
@@ -213,24 +211,18 @@ public static class InsertGuildDB
 
             if (result.ModifiedCount > 0)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"O [  {y}  |  GUILD CREATE  ] Added new guild ( {e.Name} )");
-                Console.ResetColor();
+                Console.WriteLine($"    ⌬  {y}  |  GUILD CREATE\n    ➜  Added new guild: {e.Name} / {e.Id}\n\n\n");
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  {y}  |  GUILD CREATE  ] Failed to add guild ( {e.Name} / {e.Id} ) in database.");
-                Console.ResetColor();
+                Console.WriteLine($"    ⌬  {y}  |  GUILD CREATE\n    ➜  Failed to add guild: {e.Name} / {e.Id}\n\n\n");
             }
         }
         catch (Exception ex)
         {
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"X [  {y}  |  GUILD CREATE  ] Error adding guild to database: [ {ex.Message} ]");
-            Console.ResetColor();
+            Console.WriteLine($"    ⌬  {y}  |  GUILD CREATE\n    ➜  Error adding guild to database.\n    ➜  Error: {ex.Message}\n{ex.StackTrace}\n\n\n");
         }
     }
 }

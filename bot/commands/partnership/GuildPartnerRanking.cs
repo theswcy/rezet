@@ -26,9 +26,6 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
                 var shard = Program._databaseService?.GetShard(Guild, 1);
-
-
-
                 if (shard[Guild.Id.ToString()]["partner"]["option"].AsInt32 == 0)
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
@@ -101,7 +98,11 @@ public class CommunityPartnerMore : ApplicationCommandModule
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                );
+                return;
             }
         }
 
@@ -190,7 +191,11 @@ public class CommunityPartnerMore : ApplicationCommandModule
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                );
+                return;
             }
         }
     }
@@ -244,7 +249,11 @@ public class CommunityPartnerMore : ApplicationCommandModule
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                );
+                return;
             }
         }
 
@@ -304,7 +313,11 @@ public class CommunityPartnerMore : ApplicationCommandModule
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                );
+                return;
             }
         }
     }

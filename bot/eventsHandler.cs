@@ -31,7 +31,7 @@ namespace Rezet.Events
             client.ModalSubmitted += PartnershipEmbedConfigs.PartnershipEmbedBulderModal;
             client.ModalSubmitted += PartnershipRanked.PartnerrankingModifyInvite;
             client.ComponentInteractionCreated += PartnershipRanked.PartnerRankingSelectMenu;
-            client.ComponentInteractionCreated += PartnershipTicketConfigs.EditTicketDashboard;
+            // client.ComponentInteractionCreated += PartnershipTicketConfigs.EditTicketDashboard;
 
 
 
@@ -51,8 +51,10 @@ namespace Rezet.Events
 
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
+            Console.ResetColor();
+            Console.Write("    ➜  ");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine($"O [  {y}  |  REZET  ] All events synchronized!");
+            Console.Write($"  {y}  |  REZET  ⚯   All events synchronized!\n");
             Console.ResetColor();
         }
 

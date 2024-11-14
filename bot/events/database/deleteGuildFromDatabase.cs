@@ -18,7 +18,7 @@ public static class DeleteGuildDB
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     public static async Task DeleteGuild(DiscordGuild e)
@@ -30,9 +30,7 @@ public static class DeleteGuildDB
             var shard = Program._databaseService?.GetShard(e, 1);
             if (shard == null)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  {y}  |  GUILDE REMOVE  ] Failed to acess guild ( {e.Name} / {e.Id} ): The guild has no database.");
-                Console.ResetColor();
+                Console.WriteLine($"    ⌬  {y}  |  GUILDE REMOVE\n    ➜  Failed to acess guild: {e.Name} / {e.Id}\n\n\n");
                 return;
             }
             var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
@@ -41,24 +39,18 @@ public static class DeleteGuildDB
 
             if (result.ModifiedCount > 0)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine($"O [  {y}  |  GUILD REMOVE  ] Removed guild ( {e.Name} )");
-                Console.ResetColor();
+                Console.WriteLine($"    ⌬  {y}  |  GUILD REMOVE\n    ➜  Removed guild: {e.Name} / {e.Id}\n\n\n");
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  {y}  |  GUILD REMOVE  ] Failed to remove guild ( {e.Name} / {e.Id} ) in database.");
-                Console.ResetColor();
+                Console.WriteLine($"    ⌬  {y}  |  GUILD REMOVE\n    ➜  Failed to remove guild {e.Name} / {e.Id}\n\n\n");
             }
         }
         catch (Exception ex)
         {
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"X [  {y}  |  GUILD DELETE  ] Error removing guild from databse: [ {ex.Message} ]");
-            Console.ResetColor();
+            Console.WriteLine($"    ⌬  {y}  |  GUILD CREATE\n    ➜  Error adding guild to database.\n    ➜  Error: {ex.Message}\n{ex.StackTrace}\n\n\n");
         }
     }
 }

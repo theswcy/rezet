@@ -20,14 +20,6 @@ public class AutoRoleSettings : ApplicationCommandModule
         {
             await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
             var Guild = ctx.Guild;
-            var shard = Program._databaseService?.GetShard(Guild, 1);
-            if (shard == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                Console.ResetColor();
-                return;
-            }
 
 
 
@@ -54,6 +46,7 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
+            var shard = Program._databaseService?.GetShard(Guild, 1);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
             {
                 if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Contains($"{Role.Id}"))
@@ -106,7 +99,11 @@ public class AutoRoleSettings : ApplicationCommandModule
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+            );
+            return;
         }
     }
 
@@ -121,14 +118,6 @@ public class AutoRoleSettings : ApplicationCommandModule
         {
             await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
             var Guild = ctx.Guild;
-            var shard = Program._databaseService?.GetShard(Guild, 1);
-            if (shard == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                Console.ResetColor();
-                return;
-            }
 
 
 
@@ -137,6 +126,8 @@ public class AutoRoleSettings : ApplicationCommandModule
             await CheckPermi.CheckBotPermissions(ctx, 4);
 
 
+
+            var shard = Program._databaseService?.GetShard(Guild, 1);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] == BsonNull.Value)
             {
                 await ctx.EditResponseAsync(
@@ -180,7 +171,11 @@ public class AutoRoleSettings : ApplicationCommandModule
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+            );
+            return;
         }
     }
 
@@ -193,20 +188,16 @@ public class AutoRoleSettings : ApplicationCommandModule
         {
             await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
             var Guild = ctx.Guild;
-            var shard = Program._databaseService?.GetShard(Guild, 1);
-            if (shard == null)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"X [  GUILD PARTNER  ] Failed to acess guild ( {Guild.Name} / {Guild.Id})");
-                Console.ResetColor();
-                return;
-            }
 
 
 
             // PERMISSIONS:
             await CheckPermi.CheckMemberPermissions(ctx, 4);
             await CheckPermi.CheckBotPermissions(ctx, 4);
+
+
+
+            var shard = Program._databaseService?.GetShard(Guild, 1);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] == BsonNull.Value)
             {
                 await ctx.EditResponseAsync(
@@ -230,7 +221,11 @@ public class AutoRoleSettings : ApplicationCommandModule
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+            );
+            return;
         }
     }
 }

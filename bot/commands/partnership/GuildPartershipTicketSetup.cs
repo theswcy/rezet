@@ -39,6 +39,7 @@ public class PartnershipTickets : ApplicationCommandModule
 
 
 
+
                 if (Channel.IsCategory)
                 {
                     await ctx.EditResponseAsync(
@@ -192,7 +193,11 @@ public class PartnershipTickets : ApplicationCommandModule
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                await ctx.EditResponseAsync(
+                new DiscordWebhookBuilder()
+                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                );
+                return;
             }
         }
     }
