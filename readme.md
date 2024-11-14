@@ -17,10 +17,10 @@
 
 
 <h1>
-  🧬 / Technical Information.
+  🧬 / Technical Informations.
 </h1>
 <h3>
-  Stable Version Informations:
+  Stable Version:
 </h3>
 <p>
   Version: <strong>Sharp 1.0 / Public Beta Test <code>R-0025</code></strong>.<br>
@@ -30,7 +30,7 @@
   Database: <strong>MongoDB</strong>.
 </p>
 <h3>
-  Black Cat Informations:
+  Black Cat:
 </h3>
 <p>
   Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 26.2</code></strong>.<br>
