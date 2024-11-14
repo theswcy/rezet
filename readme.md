@@ -33,7 +33,7 @@
   Black Cat Informations:
 </h3>
 <p>
-  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 26.1</code></strong>.<br>
+  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 26.2</code></strong>.<br>
   Hosting: <code>null</code>.
 </p>
 <br><br>
