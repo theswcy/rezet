@@ -12,15 +12,15 @@ using System.Text.RegularExpressions;
 #pragma warning disable CS8602
 public class PartnershipTicketConfigs
 {
-    // ========== EDIT TICKET CONFIGURATIONS:
+    // ========== MANAGE TICKET CONFIGURATIONS:
     public static async Task EditTicketDashboard(DiscordClient sender, ComponentInteractionCreateEventArgs e)
     {
         try
         {
-            // ========== EDIT TICKET DASHBORD:
+            // ========== MANAGE TICKET DASHBORD:
             if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_PTICptio")
             {
-                // EDIT TICKET SELECT BUTTONS:
+                // TICKET BUILDER SELECT BUTTONS:
                 if (e.Values[0] == "1_edit")
                 {
                     await e.Interaction.DeferAsync();
@@ -31,7 +31,8 @@ public class PartnershipTicketConfigs
 
                     var embedBuilder = new DiscordEmbedBuilder()
                     {
-                        Description = "## Ticket Builder!\nConfigurações dos ticket!\n⠀\n> **Dica**: quer **setar** uma ou mais embeds no ticket? Basta colocar o nome da embed salva no modal! Exemplo:\n> ```embed_1 embed_2 embed_3```\n⠀",
+                        Description = 
+                            "## <:rezet_plant:1308125160577962004> Partnership Ticket __Builder__!",
                         Color = new DiscordColor("#7e67ff")
                     };
                     var SelectedTickets = "";
@@ -48,7 +49,7 @@ public class PartnershipTicketConfigs
                     }
                     else { SelectedTickets = $"> `1.` - {SelectedTickets1}"; }
                     embedBuilder.AddField(
-                        "<:rezet_settings1:1147163366561955932> Selected Embeds:",
+                        "<:rezet_channels:1308125117875752961> Selected Embeds:",
                         SelectedTickets
                     );
 
@@ -79,6 +80,52 @@ public class PartnershipTicketConfigs
                             .AddEmbed(embedBuilder)
                             .AddComponents(selectMenu1)
                             .AddComponents(selectMenu2)
+                    );
+                }
+                // EDIT TICKET BUTTON:
+                else if (e.Values[0] == "1_butt")
+                {
+                    await e.Interaction.DeferAsync();
+
+
+                    
+                    // BUTTON SHARD:
+                    var shard = Program._databaseService?.GetShard(e.Guild, 1);
+                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var ButtonSettings = shard[$"{e.Guild.Id}"]["partner"]["ticket"]["button"].AsBsonDocument;
+
+
+
+                    var BStyle = ButtonStyle.Primary;
+                    if (ButtonSettings["color"] == "gray") { BStyle = ButtonStyle.Secondary; }
+                    else if (ButtonSettings["color"] == "red") { BStyle = ButtonStyle.Danger; }
+                    else if (ButtonSettings["color"] == "green") { BStyle = ButtonStyle.Success; }
+                    var Button = new DiscordButtonComponent(BStyle, "example_button", $"{ButtonSettings["text"]}");
+
+
+
+                    var emoji1 = new DiscordComponentEmoji("📝");
+                    var BlueColor = new DiscordComponentEmoji("🔵");
+                    var GrayColor = new DiscordComponentEmoji("⚪");
+                    var RedColor = new DiscordComponentEmoji("🔴");
+                    var GreenColor = new DiscordComponentEmoji("🟢");
+                    var options1 = new[]
+                    {
+                        new DiscordSelectComponentOption("Edit text", "4_text", "Edit the button text.", emoji: emoji1),
+                        new DiscordSelectComponentOption("Color blue", "4_blue", "Set blue color.", emoji: BlueColor),
+                        new DiscordSelectComponentOption("Color gray", "4_gray", "Set gray color.", emoji: GrayColor),
+                        new DiscordSelectComponentOption("Color red", "4_red", "Set red color.", emoji: RedColor),
+                        new DiscordSelectComponentOption("Color green", "4_green", "Set green color.", emoji: GreenColor),
+                    };
+                    var selectMenu1 = new DiscordSelectComponent($"{e.Interaction.User.Id}_PTBO", "Ticket Button Options", options1);
+
+
+
+                    await e.Interaction.CreateFollowupMessageAsync(
+                        new DiscordFollowupMessageBuilder()
+                            .WithContent("Preview do botão abaixo:")
+                            .AddComponents(Button)
+                            .AddComponents(selectMenu1)
                     );
                 }
             }
