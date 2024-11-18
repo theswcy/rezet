@@ -31,7 +31,7 @@ namespace Rezet.Events
             client.ModalSubmitted += PartnershipEmbedConfigs.PartnershipEmbedBulderModal;
             client.ModalSubmitted += PartnershipRanked.PartnerrankingModifyInvite;
             client.ComponentInteractionCreated += PartnershipRanked.PartnerRankingSelectMenu;
-            // client.ComponentInteractionCreated += PartnershipTicketConfigs.EditTicketDashboard;
+            client.ComponentInteractionCreated += PartnershipTicketConfigs.EditTicketDashboard;
 
 
 
@@ -62,7 +62,11 @@ namespace Rezet.Events
         {
             try
             {
-                if (!e.Interaction.Data.CustomId.Contains(e.Interaction.User.Id.ToString()))
+                if (e.Interaction.Data.CustomId.Contains("example_button"))
+                {
+                    return;
+                }
+                else if (!e.Interaction.Data.CustomId.Contains(e.Interaction.User.Id.ToString()))
                 {
                     await e.Interaction.DeferAsync(ephemeral: true);
                     await e.Interaction.CreateFollowupMessageAsync(
