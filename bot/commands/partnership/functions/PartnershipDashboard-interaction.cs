@@ -31,7 +31,7 @@ public class PartnershipDashboardPrimaryButtons
 
                 await e.Message.ModifyAsync(
                     builder: new DiscordMessageBuilder()
-                        .WithContent("Nice, a função **Partnership** foi ativada!"),
+                        .WithContent("Nice, a função **partnership** foi ativada!"),
                     suppressEmbeds: true
                 );
             }
@@ -46,7 +46,7 @@ public class PartnershipDashboardPrimaryButtons
 
                 await e.Message.ModifyAsync(
                     builder: new DiscordMessageBuilder()
-                        .WithContent("Coma poeira! A função **Partnership** foi desativada!"),
+                        .WithContent("Coma poeira! A função **partnership** foi desativada!"),
                     suppressEmbeds: true
                 );
             }
