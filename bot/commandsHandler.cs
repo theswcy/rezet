@@ -2,6 +2,10 @@ using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using Rezet;
 
+
+
+
+
 namespace Rezet.Commands
 {
     public static class CommandHandler
@@ -30,7 +34,7 @@ namespace Rezet.Commands
             // PARTNERSHIP:
             slash.RegisterCommands<PartnershipCommands>(null);
             slash.RegisterCommands<CommunityPartnerMore>(null);
-            // slash.RegisterCommands<PartnershipTickets>(null);
+            slash.RegisterCommands<PartnershipTickets>(null);
 
             // MODERATION:
             // slash.RegisterCommands<ToModerationBasic_slash>(null);
