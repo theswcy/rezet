@@ -36,7 +36,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 if (shard[Guild.Id.ToString()]["partner"]["leaderboard"]["option"].AsInt32 == 0)
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> Essa comunidade não possui a função **Partnership local ranked** ativada!")
+                        .WithContent("<:rezet_dred:1147164215837208686> Essa comunidade não possui a função **Partnership ranked** ativada!")
                     );
                     return;
                 }
