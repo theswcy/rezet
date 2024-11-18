@@ -67,13 +67,13 @@ public class PartnershipCommands : ApplicationCommandModule
                     new DiscordSelectComponentOption("Delete on everyone/here", "everyone", "Delete on mention everyone/here.", emoji: emoji),
                     new DiscordSelectComponentOption("Delete on partner quit", "delete", "Delete if the partner quit.", emoji: emoji)
                 };
-                var selectMenu1 = new DiscordSelectComponent($"{ctx.User.Id}_PEOptions", "Embed options", options1);
-                var selectMenu2 = new DiscordSelectComponent($"{ctx.User.Id}_PERanking", "Ranking options", options2);
-                var selectMenu3 = new DiscordSelectComponent($"{ctx.User.Id}_PEConfigs", "Others configurations", options3);
+                var selectMenu1 = new DiscordSelectComponent($"{ctx.User.Id}_PEOptions", "Embed Options", options1);
+                var selectMenu2 = new DiscordSelectComponent($"{ctx.User.Id}_PERanking", "Ranking Options", options2);
+                var selectMenu3 = new DiscordSelectComponent($"{ctx.User.Id}_PEConfigs", "Others Configurations", options3);
                 var buttons = new DiscordComponent[]
                 {
-                    new DiscordButtonComponent(ButtonStyle.Danger, $"{ctx.User.Id}_PAexit", "Exit"),
-                    new DiscordButtonComponent(ButtonStyle.Secondary, $"{ctx.User.Id}_PAuna", "Unactivate function")
+                    new DiscordButtonComponent(ButtonStyle.Primary, $"{ctx.User.Id}_PAexit", "Close", emoji: new DiscordComponentEmoji(id: 1308125206883078225)),
+                    new DiscordButtonComponent(ButtonStyle.Secondary, $"{ctx.User.Id}_PAuna", "Unactivate Function", emoji: new DiscordComponentEmoji(id: 1308125081339432971))
                 };
 
 
@@ -106,13 +106,13 @@ public class PartnershipCommands : ApplicationCommandModule
                 var embed = new DiscordEmbedBuilder()
                 {
                     Description =
-                        "## Partnership Dashboard!" +
+                        "## <:rezet_plant:1308125160577962004> Partnership __Dashboard__!" +
                         "\nBem vindo(a) a **dashboard** da função **partnership**.",
                     Color = new DiscordColor("7e67ff")
                 };
                 var Opti = shard[$"{Guild.Id}"]["partner"]["configs"]["options"];
                 embed.AddField(
-                    "<:rezet_settings1:1147163366561955932> Configurations:",
+                    "<:rezet_channels:1308125117875752961> Setup:",
                     $"> <:rezet_3_act:1189936284379119726> **Role**: <@&{Opti["role"]}>" +
                     $"\n> <:rezet_3_act:1189936284379119726> **Ping**: <@&{Opti["ping"]}>" +
                     $"\n> <:rezet_3_act:1189936284379119726> **Channel**: <#{Opti["channel"]}>" +
@@ -140,13 +140,23 @@ public class PartnershipCommands : ApplicationCommandModule
                         o = $"https://discord.gg/{shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}\n> [ <:rezet_exclamation:1164417019303702570> convite inválido! ]";
                     }
                 }
-                embed.AddField(
-                    "<:rezet_shine:1147368423475658882> Partnership ranked:",
-                    $"> **Partnerships**: `{shard[$"{Guild.Id}"]["partner"]["ps"]}`" +
-                    $"\n> **Partner XP**: `{shard[$"{Guild.Id}"]["partner"]["xp"]}`" +
-                    $"\n> **Ranking**: {rbxp}" +
-                    $"\n> **Invite**: {o}"
-                );
+                if (shard[$"{Guild.Id}"]["partner"]["leaderboard"]["option"] == 1)
+                {
+                    embed.AddField(
+                        "<:rezet_channels:1308125117875752961> Ranked:",
+                        $"> **Partnerships**: `{shard[$"{Guild.Id}"]["partner"]["ps"]}`" +
+                        $"\n> **Partner XP**: `{shard[$"{Guild.Id}"]["partner"]["xp"]}`" +
+                        $"\n> **Ranking**: {rbxp}" +
+                        $"\n> **Invite**: {o}"
+                    );
+                }
+                else
+                {
+                    embed.AddField(
+                        "<:rezet_channels:1308125117875752961> Ranked:",
+                        $"> <:rezet_3_nact:1189936390113341601> **Unactivated**."
+                    );
+                }
 
 
 
@@ -162,58 +172,56 @@ public class PartnershipCommands : ApplicationCommandModule
                 }
                 else
                 {
-                    var buttonALB = new DiscordComponent[]
-                    {
-                        new DiscordButtonComponent(ButtonStyle.Success, $"{ctx.User.Id}_ALB", "Activate local ranked")
-                    };
+                    var buttonALB = new DiscordButtonComponent(ButtonStyle.Primary, $"{ctx.User.Id}_ALB", "Activate local ranked", emoji: new DiscordComponentEmoji(id: 1308125039534674033));
                     DashboardBuilder
-                        .AddComponents(buttons[0], buttons[1], buttonALB[0])
+                        .AddComponents(buttons[0],buttonALB , buttons[1])
                         .AddComponents(selectMenu1)
                         .AddComponents(selectMenu3);
                 }
 
 
 
-                // if (shard[$"{Guild.Id}"]["partner"]["ticket"]["option"] == 1)
-                // {
-                //     embed.AddField(
-                //         "<:rezet_3_act:1189936284379119726> Ticket configurations:",
-                //         "> Automatic: **coming soon**." +
-                //         $"\n> Ticket Channel: <#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["channel"].AsInt64}>" +
-                //         $"\n> Ticket Category: **<#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["category"].AsInt64}>**" +
-                //         $"\n> Support Role: **<@&{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["support"].AsInt64}>**"
-                //     );
+                if (shard[$"{Guild.Id}"]["partner"]["ticket"]["option"] == 1)
+                {
+                    embed.AddField(
+                        "<:rezet_3_act:1189936284379119726> Tickets:",
+                        "> **Automatic**: coming soon." +
+                        $"\n> **Tickets Total**: `{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["count"].AsInt32}`" +
+                        $"\n> **Ticket Channel**: <#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["channel"].AsInt64}>" +
+                        $"\n> **Ticket Category**: <#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["category"].AsInt64}>" +
+                        $"\n> **Support Role**: <@&{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["support"].AsInt64}>"
+                    );
 
 
 
-                //     var emoji5 = new DiscordComponentEmoji("🔖");
-                //     var emoji6 = new DiscordComponentEmoji("🔔");
-                //     var options4 = new[]
-                //     {
-                //         // new DiscordSelectComponentOption("View ticket", "1_view", "View ticket.", emoji: emoji5),
-                //         // new DiscordSelectComponentOption("Add ticket", "1_add", "Add ticket", emoji: emoji5),
-                //         // new DiscordSelectComponentOption("Edit ticket", "1_edit", "Edit ticket.", emoji: emoji5),
-                //         new DiscordSelectComponentOption("Tickets Builder", "1_edit", "Builder a ticket.", emoji: emoji5),
-                //         new DiscordSelectComponentOption("Ticket's button", "1_butt", "Ticket's button.", emoji: emoji5),
-                //         // new DiscordSelectComponentOption("View ticket message", "1_view", "View the ticket's message", emoji: emoji6),
-                //         // new DiscordSelectComponentOption("Edit ticket message", "1_edit", "Edit the ticket's message.", emoji: emoji6)
-                //     };
-                //     var selectMenu4 = new DiscordSelectComponent($"{ctx.User.Id}_PTICptio", "Ticket Options", options4);
+                    var emoji5 = new DiscordComponentEmoji("🔖");
+                    var emoji6 = new DiscordComponentEmoji("🔔");
+                    var options4 = new[]
+                    {
+                        // new DiscordSelectComponentOption("View ticket", "1_view", "View ticket.", emoji: emoji5),
+                        // new DiscordSelectComponentOption("Add ticket", "1_add", "Add ticket", emoji: emoji5),
+                        // new DiscordSelectComponentOption("Edit ticket", "1_edit", "Edit ticket.", emoji: emoji5),
+                        new DiscordSelectComponentOption("Tickets Builder", "1_edit", "Builder a ticket.", emoji: emoji5),
+                        new DiscordSelectComponentOption("Ticket's button", "1_butt", "Ticket's button.", emoji: emoji5),
+                        // new DiscordSelectComponentOption("View ticket message", "1_view", "View the ticket's message", emoji: emoji6),
+                        // new DiscordSelectComponentOption("Edit ticket message", "1_edit", "Edit the ticket's message.", emoji: emoji6)
+                    };
+                    var selectMenu4 = new DiscordSelectComponent($"{ctx.User.Id}_PTICptio", "Ticket Options", options4);
 
-                //     DashboardBuilder.AddComponents(selectMenu4);
-                // }
-                // else
-                // {
-                //     embed.AddField(
-                //         "<:rezet_3_nact:1189936390113341601> Ticket configurations:",
-                //         "> Unactivated."
-                //     );
+                    DashboardBuilder.AddComponents(selectMenu4);
+                }
+                else
+                {
+                    embed.AddField(
+                        "<:rezet_3_nact:1189936390113341601> Tickets:",
+                        "> Unactivated."
+                    );
 
 
 
-                //     var buttonTicket = new DiscordButtonComponent(ButtonStyle.Success, $"{ctx.User.Id}_TicketACT", "Activate ticket");
-                //     DashboardBuilder.AddComponents(buttonTicket);
-                // }
+                    var buttonTicket = new DiscordButtonComponent(ButtonStyle.Success, $"{ctx.User.Id}_TicketACT", "Activate ticket");
+                    DashboardBuilder.AddComponents(buttonTicket);
+                }
 
 
 
@@ -239,7 +247,7 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
 
-    [SlashCommand("setup", "🎋 | Setup partnership function")]
+    [SlashCommand("setup", "🎋 | Setup partnership function.")]
     public static async Task Activate(InteractionContext ctx,
         [Option("channel", "The partnership's channel.")] DiscordChannel channel,
         [Option("ping", "The partnership's ping.")] DiscordRole ping,
@@ -302,6 +310,7 @@ public class PartnershipCommands : ApplicationCommandModule
 #pragma warning disable CS8602
                 var update = Builders<BsonDocument>.Update
                         .Set($"{Guild.Id}.partner.configs.options", tropical)
+                        .Set($"{Guild.Id}.partner.option", 1)
                         .Set($"{Guild.Id}.partner.log", (long)logs.Id);
                 await collection.UpdateOneAsync(shard, update);
             }
@@ -309,6 +318,7 @@ public class PartnershipCommands : ApplicationCommandModule
             {
                 var update = Builders<BsonDocument>.Update
                         .Set($"{Guild.Id}.partner.configs.options", tropical)
+                        .Set($"{Guild.Id}.partner.option", 1)
                         .Set($"{Guild.Id}.partner.log", BsonNull.Value);
                 await collection.UpdateOneAsync(shard, update);
             }
@@ -327,34 +337,23 @@ public class PartnershipCommands : ApplicationCommandModule
             var t = "<:rezet_3_nact:1189936390113341601> **Logs**: Unactivated.";
             if (logs != null) { t = $"<:rezet_3_act:1189936284379119726> **Logs**: {logs.Mention}"; }
             embed.AddField(
-                "<:rezet_settings1:1147163366561955932> Configurations:",
+                "<:rezet_channels:1308125117875752961> Setup:",
                 $"> <:rezet_3_act:1189936284379119726> **Channel**: {channel.Mention}" +
                 $"\n> <:rezet_3_act:1189936284379119726> **Role**: {role.Mention}" +
                 $"\n> <:rezet_3_act:1189936284379119726> **Ping**: {ping.Mention}" +
                 $"\n> {t}"
             );
-            var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{ctx.User.Id}_PAexit", "Close");
+            var button = new DiscordButtonComponent(ButtonStyle.Primary, $"{ctx.User.Id}_PAexit", "Close", emoji: new DiscordComponentEmoji(id: 1308125206883078225));
 
 
 
 
-            if (shard.GetValue($"{Guild.Id}")?.AsBsonDocument.GetValue("partner")?.AsBsonDocument.GetValue("option") == 0)
-            {
-                var button2 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{ctx.User.Id}_APFB", "Activate partnership function");
-                await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                    .WithContent("Bip bup bip!")
-                    .AddEmbed(embed)
-                    .AddComponents(button, button2)
-                );
-            }
-            else
-            {
-                await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                    .WithContent("Bip bup bip!")
-                    .AddEmbed(embed)
-                    .AddComponents(button)
-                );
-            }
+
+            await ctx.EditResponseAsync(new DiscordWebhookBuilder()
+                .WithContent("Bip bup bip!")
+                .AddEmbed(embed)
+                .AddComponents(button)
+            );
         }
         catch (Exception ex)
         {
