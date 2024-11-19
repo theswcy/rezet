@@ -30,7 +30,7 @@ public class Moderators : ApplicationCommandModule
                 Color = new DiscordColor("#7e67ff")
             };
             if (Guild.IconUrl != null) { embed.WithThumbnail(Guild.IconUrl); }
-            var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{ctx.User.Id}_PAexit", "Exit");
+            var button = new DiscordButtonComponent(ButtonStyle.Primary, $"{ctx.User.Id}_PAexit", "Exit", emoji: new DiscordComponentEmoji(id: 1308125206883078225));
 
 
 
