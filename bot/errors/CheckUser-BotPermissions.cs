@@ -133,7 +133,7 @@ public static class CheckPermi
                 if (!ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.Administrator))
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> eu não possuo a permissão `ADMINISTRATOR` para usar esse comando!")
+                        .WithContent("eu não possuo a permissão `ADMINISTRATOR` para usar esse comando!")
                     );
                     throw new UnauthorizedAccessException();
                 }
@@ -142,7 +142,7 @@ public static class CheckPermi
                 if (!ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.ManageGuild))
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> eu não possuo a permissão `MANAGE GUILD` para usar esse comando!")
+                        .WithContent("eu não possuo a permissão `MANAGE GUILD` para usar esse comando!")
                     );
                     throw new UnauthorizedAccessException();
                 }
@@ -151,7 +151,7 @@ public static class CheckPermi
                 if (!ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.ManageChannels))
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> eu não possuo a permissão `MANAGE CHANNELS` para usar esse comando!")
+                        .WithContent("eu não possuo a permissão `MANAGE CHANNELS` para usar esse comando!")
                     );
                     throw new UnauthorizedAccessException();
                 }
@@ -160,7 +160,7 @@ public static class CheckPermi
                 if (!ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.ManageRoles))
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> eu não possuo a permissão `MANAGE ROLES` para usar esse comando!")
+                        .WithContent("eu não possuo a permissão `MANAGE ROLES` para usar esse comando!")
                     );
                     throw new UnauthorizedAccessException();
                 }
@@ -169,7 +169,7 @@ public static class CheckPermi
                 if (!ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.ViewAuditLog))
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> eu não possuo a permissão `VIEW AUDIT LOGS` para usar esse comando!")
+                        .WithContent("eu não possuo a permissão `VIEW AUDIT LOGS` para usar esse comando!")
                     );
                     throw new UnauthorizedAccessException();
                 }
@@ -184,7 +184,7 @@ public static class CheckPermi
                 if (!ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.KickMembers))
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> eu não possuo a permissão `KICK MEMBERS` para usar esse comando!")
+                        .WithContent("eu não possuo a permissão `KICK MEMBERS` para usar esse comando!")
                     );
                     throw new UnauthorizedAccessException();
                 }
@@ -193,7 +193,7 @@ public static class CheckPermi
                 if (!ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.BanMembers))
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> eu não possuo a permissão `BAN MEMBERS` para usar esse comando!")
+                        .WithContent("eu não possuo a permissão `BAN MEMBERS` para usar esse comando!")
                     );
                     throw new UnauthorizedAccessException();
                 }
@@ -202,7 +202,7 @@ public static class CheckPermi
                 if (!ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.MuteMembers))
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> eu não possuo a permissão `TIMEOUT MEMBERS` para usar esse comando!")
+                        .WithContent("eu não possuo a permissão `TIMEOUT MEMBERS` para usar esse comando!")
                     );
                     throw new UnauthorizedAccessException();
                 }
@@ -211,7 +211,7 @@ public static class CheckPermi
                 if (!ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.ManageMessages))
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> eu não possuo a permissão `MANAGE MESSAGES` para usar esse comando!")
+                        .WithContent("eu não possuo a permissão `MANAGE MESSAGES` para usar esse comando!")
                     );
                     throw new UnauthorizedAccessException();
                 }
