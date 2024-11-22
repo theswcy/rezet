@@ -54,6 +54,7 @@
     [ 20/novembro/2024 ] - Desenvolvimento da próxima versão Sharp 1.5 iniciada.
   </pre>
 </details>
+<br><br>
 
 
 
