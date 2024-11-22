@@ -4,7 +4,6 @@ using DSharpPlus.SlashCommands;
 
 
 
-
 // ANOTAÇÕES:
 //   > Apenas os tipos principais:
 
