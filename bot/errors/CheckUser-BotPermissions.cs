@@ -4,6 +4,7 @@ using DSharpPlus.SlashCommands;
 
 
 
+
 // ANOTAÇÕES:
 //   > Apenas as principais permissões vão ser checadas.
 
@@ -17,7 +18,7 @@ using DSharpPlus.SlashCommands;
 //        > ( 6 ) KICK MEMBERS.
 //        > ( 7 ) BAN MEMBERS.
 //        > ( 8 ) TIMEOUT MEMBERS.
-//        > ( 9 ) MANAGE MESSAGES;
+//        > ( 9 ) MANAGE MESSAGES.
 
 
 
