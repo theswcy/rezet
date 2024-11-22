@@ -46,7 +46,7 @@
   📜 / Changelogs.
 </h1>
 <h3>
-  Apenas as alterações consideradas importantes são documentadas aqui.
+  Apenas as alterações consideradas importantes são mostradas aqui.
 </h3>
 <details>
   <summary>📂 Clique aqui para ver as changelogs!</summary>
