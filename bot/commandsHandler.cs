@@ -24,7 +24,8 @@ namespace Rezet.Commands
 
 
             var slash = client.UseSlashCommands(null);
-            slash.RegisterCommands<RezetGets>(null);
+            // slash.RegisterCommands<RezetGets>(null);
+            slash.RegisterCommands<RezetSystems>(null);
 
             // COMMUNITY:
             slash.RegisterCommands<CommunityCommands>(null);
