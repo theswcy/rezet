@@ -10,11 +10,11 @@ using System.Threading.Channels;
 [SlashCommandGroup("chat", "Chat Settings")]
 public class CommunityChats : ApplicationCommandModule
 {
-    [SlashCommand("clear", "💭 | Clear the chat!")]
+    [SlashCommand("clear", "💭 | Apagar mensagens!")]
     public static async Task Clear(InteractionContext ctx,
-        [Option("amount", "Amount of messages. [ max: 100 ]")] long amount,
-        [Option("channel", "In a specific chat.")] DiscordChannel? channel = null,
-        [Option("member", "From a specific member.")] DiscordUser? member = null
+        [Option("amount", "Quantidade de mensagens. [ max: 100 ]")] long amount,
+        [Option("channel", "Deletar mensagens de um canal específico.")] DiscordChannel? channel = null,
+        [Option("member", "Deletar mensagens de um membro específico..")] DiscordUser? member = null
     )
     {
         try
@@ -29,18 +29,6 @@ public class CommunityChats : ApplicationCommandModule
 
 
 
-            if (!channel.IsCategory)
-            {
-                await ctx.EditResponseAsync(
-                    new DiscordWebhookBuilder()
-                        .WithContent("Ops! Você deve selecionar um canal de **texto**!")
-                );
-                return;
-            }
-
-
-
-
             await CheckPermi.CheckMemberPermissions(ctx, 9);
             await CheckPermi.CheckBotPermissions(ctx, 9);
 
@@ -49,14 +37,16 @@ public class CommunityChats : ApplicationCommandModule
 
             if (amount > 100)
             {
-                await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                    .WithContent($"Máximo **100** mensagens!"));
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Máximo **100** mensagens!"));
                 return;
             }
             if (amount == 1)
             {
-                await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                    .WithContent($"Mínimo **2** mensagens!"));
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Mínimo **2** mensagens!"));
                 return;
             }
 
@@ -67,6 +57,8 @@ public class CommunityChats : ApplicationCommandModule
             {
                 if (channel != null)
                 {
+                    await CheckChannelType.CheckType(ctx, 1, channel);
+                    await CheckChannelPermissions.CheckMemberPermissions(ctx, 10, channel);
                     if (member != null)
                     {
                         var messages = await channel.GetMessagesAsync(100);
@@ -85,6 +77,8 @@ public class CommunityChats : ApplicationCommandModule
                 }
                 else
                 {
+                    await CheckChannelType.CheckType(ctx, 1, ctx.Channel);
+                    await CheckChannelPermissions.CheckMemberPermissions(ctx, 10, ctx.Channel);
                     if (member != null)
                     {
                         var messages = await ctx.Channel.GetMessagesAsync(100);
@@ -102,18 +96,14 @@ public class CommunityChats : ApplicationCommandModule
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando. Verifique minhas permissões!"));
-                return;
+                Console.WriteLine($"    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                .WithContent($"Falha ao executar o comando. Verifique minhas permissões!"));
-            return;
+            Console.WriteLine($"    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
 }
