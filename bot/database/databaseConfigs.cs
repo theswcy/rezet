@@ -85,7 +85,7 @@ public class DatabaseService
                 {
                     if (SelectedShard != null && SelectedShard.Contains(Guild.Id.ToString()) == false)
                     {
-                        if (SelectedShard.ElementCount >= 100)
+                        if (SelectedShard.ElementCount >= 1000)
                         {
                             Console.WriteLine($"    ➜  {y}  |  Database Shard\n       The shard {shard} is full!");
                         }
