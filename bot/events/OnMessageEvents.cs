@@ -1,9 +1,7 @@
 using DSharpPlus;
 using DSharpPlus.EventArgs;
-using DSharpPlus.Entities;
-using MongoDB.Driver;
 using MongoDB.Bson;
-using Rezet;
+using RezetSharp;
 
 
 
@@ -17,7 +15,7 @@ public static class OnMessageEvents
         try
         {
             var Guild = e.Guild;
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
 
 
 
