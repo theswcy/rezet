@@ -3,7 +3,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Rezet;
+using RezetSharp;
 
 
 
@@ -96,8 +96,8 @@ public class ModdingLogs : ApplicationCommandModule
 
 
                 // NEW BUILD:
-                var shard = Program._databaseService?.GetShard(Guild, 1);
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 if (shard[$"{Guild.Id}"]["moderation"]["mod_logs"][$"{ConfigLog}"] != BsonNull.Value)
                 {
                     var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.mod_logs.{ConfigLog}", Channel.Id);
@@ -199,8 +199,8 @@ public class ModdingLogs : ApplicationCommandModule
 
 
 
-                var shard = Program._databaseService?.GetShard(Guild, 1);
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 if (shard[$"{Guild.Id}"]["moderation"]["mod_logs"][$"{ConfigLog}"] == BsonNull.Value)
                 {
                     await ctx.EditResponseAsync(
