@@ -3,7 +3,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Rezet;
+using RezetSharp;
 
 
 
@@ -27,13 +27,13 @@ public static class DeleteGuildDB
         {
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-            var shard = Program._databaseService?.GetShard(e, 1);
+            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e);
             if (shard == null)
             {
                 Console.WriteLine($"    ⌬  {y}  |  GUILDE REMOVE\n    ➜  Failed to acess guild: {e.Name} / {e.Id}\n\n\n");
                 return;
             }
-            var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+            var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
             var update = Builders<BsonDocument>.Update.Unset($"{e.Id}");
             var result = await collection.UpdateOneAsync(shard, update);
 
