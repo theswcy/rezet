@@ -33,7 +33,7 @@
   Black Cat:
 </h3>
 <p>
-  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 27.1</code></strong>.<br>
+  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 27.2</code></strong>.<br>
   Hosting: <code>null</code>.
 </p>
 <br><br>
@@ -51,6 +51,7 @@
 <details>
   <summary>📂 Clique aqui para ver as changelogs!</summary>
   <pre>
+    [ 24/novembro/2024 ] - Novo banco de dados fragmentado e aprimorado, chamado de Herrscher, começou a ser desenvolvido.
     [ 20/novembro/2024 ] - Desenvolvimento da próxima versão Sharp 1.5 iniciada.
   </pre>
 </details>
