@@ -3,6 +3,7 @@ using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using Rezet;
 using MongoDB.Bson;
+using RezetSharp;
 
 
 
@@ -29,7 +30,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
             await CheckPermi.CheckMemberPermissions(ctx, 7);
             await CheckPermi.CheckBotPermissions(ctx, 7);
-            if (Member.Id == Program.Rezet?.CurrentUser.Id)
+            if (Member.Id == EngineV1.RezetRazor?.CurrentUser.Id)
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
@@ -115,7 +116,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
             await CheckPermi.CheckMemberPermissions(ctx, 8);
             await CheckPermi.CheckBotPermissions(ctx, 8);
-            if (Member.Id == Program.Rezet?.CurrentUser.Id)
+            if (Member.Id == EngineV1.RezetRazor?.CurrentUser.Id)
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
@@ -195,7 +196,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
             await CheckPermi.CheckMemberPermissions(ctx, 6);
             await CheckPermi.CheckBotPermissions(ctx, 6);
-            if (Member.Id == Program.Rezet?.CurrentUser.Id)
+            if (Member.Id == EngineV1.RezetRazor?.CurrentUser.Id)
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
@@ -230,7 +231,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
         {
             await CheckPermi.CheckMemberPermissions(ctx, 8);
             await CheckPermi.CheckMemberPermissions(ctx, 8);
-            if (User.Id == Program.Rezet?.CurrentUser.Id)
+            if (User.Id == EngineV1.RezetRazor?.CurrentUser.Id)
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
@@ -239,14 +240,14 @@ public class ToModerationBasic_slash : ApplicationCommandModule
                 return;
             }
             var Guild = ctx.Guild;
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor?.GetHerrscherDocument(Guild);
 
 
 
 #pragma warning disable CS8602
             if (shard[$"{Guild.Id}"]["moderation"]["warns"]["type_u"].AsBsonDocument.Contains($"{User.Id}"))
             {
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var h = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
 
             }
             else
