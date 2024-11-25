@@ -3,7 +3,7 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.Entities;
 using MongoDB.Driver;
 using MongoDB.Bson;
-using Rezet;
+using RezetSharp;
 
 
 
@@ -25,7 +25,7 @@ public class PartnershipOthersConfigs
 
 
 
-                    var shard = Program._databaseService?.GetShard(e.Guild, 1);
+                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
 
 
 
@@ -83,12 +83,12 @@ public class PartnershipOthersConfigs
 
 
 
-                    var shard = Program._databaseService?.GetShard(e.Guild, 1);
+                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
 
 
 
                     var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Exit");
-                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     if (shard[$"{e.Guild.Id}"]["partner"]["anti-qi"] == 0)
                     {
                         var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-qi", 1);
@@ -122,8 +122,8 @@ public class PartnershipOthersConfigs
             // MODE 0:
             else if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_OSMode0")
             {
-                var shard = Program._databaseService?.GetShard(e.Guild, 1);
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-eh", 0);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -140,8 +140,8 @@ public class PartnershipOthersConfigs
             // MODE 1:
             else if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_OSMode1")
             {
-                var shard = Program._databaseService?.GetShard(e.Guild, 1);
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-eh", 1);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -158,8 +158,8 @@ public class PartnershipOthersConfigs
             // MODE 2:
             else if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_OSMode2")
             {
-                var shard = Program._databaseService?.GetShard(e.Guild, 1);
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-eh", 2);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -176,8 +176,8 @@ public class PartnershipOthersConfigs
             // MODE 3:
             else if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_OSMode3")
             {
-                var shard = Program._databaseService?.GetShard(e.Guild, 1);
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-eh", 3);
                 await collection.UpdateOneAsync(shard, update);
 
