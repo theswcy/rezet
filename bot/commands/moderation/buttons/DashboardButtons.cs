@@ -3,8 +3,7 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.Entities;
 using MongoDB.Driver;
 using MongoDB.Bson;
-using Rezet;
-using DSharpPlus.SlashCommands;
+using RezetSharp;
 
 
 
@@ -20,7 +19,7 @@ public class ModeratorDashboard
             if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_AAOpti")
             {
                 var Guild = e.Guild;
-                var shard = Program._databaseService?.GetShard(Guild, 1);
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
                 if (e.Values[0] == "autorole")
                 {
                     await e.Interaction.DeferAsync();
@@ -47,7 +46,7 @@ public class ModeratorDashboard
                     foreach (var entry in RoleDict)
                     {
                         var r = Guild.GetRole((ulong)entry.Value);
-                        var botMember = await e.Guild.GetMemberAsync(Program.Rezet.CurrentUser.Id);
+                        var botMember = await e.Guild.GetMemberAsync(EngineV1.RezetRazor.CurrentUser.Id);
                         var highestBotRole = botMember.Roles.OrderByDescending(r => r.Position).FirstOrDefault();
 
                         // PERMISSIONS:
