@@ -2,7 +2,7 @@ using DSharpPlus.EventArgs;
 using DSharpPlus;
 using MongoDB.Driver;
 using MongoDB.Bson;
-using Rezet;
+using RezetSharp;
 using DSharpPlus.Entities;
 
 
@@ -23,8 +23,8 @@ public class PartnershipDashboardPrimaryButtons
             // ACTIVATE PARTNERSHIP FUNCTION:
             else if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_APFB")
             {
-                var shard = Program._databaseService?.GetShard(e.Interaction.Guild, 1);
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.option", 1);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -38,8 +38,8 @@ public class PartnershipDashboardPrimaryButtons
             // UNACTIVATE PARTNERSHIP FUNCTION:
             else if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_PAuna")
             {
-                var shard = Program._databaseService?.GetShard(e.Guild, 1);
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.option", 0);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -53,8 +53,8 @@ public class PartnershipDashboardPrimaryButtons
             // ACTIVATE RANKING:
             else if (e.Interaction.Data.CustomId == $"{e.Interaction.User.Id}" + "_ALB")
             {
-                var shard = Program._databaseService?.GetShard(e.Guild, 1);
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.leaderboard.option", 1);
                 await collection.UpdateOneAsync(shard, update);
 
