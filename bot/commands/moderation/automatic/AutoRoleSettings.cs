@@ -3,7 +3,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Rezet;
+using RezetSharp;
 
 
 
@@ -46,7 +46,7 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
             {
                 if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Contains($"{Role.Id}"))
@@ -69,7 +69,7 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_role.{Role.Id}", Role.Id);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -86,7 +86,7 @@ public class AutoRoleSettings : ApplicationCommandModule
                 {
                     { $"{Role.Id}", (long)Role.Id }
                 };
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_role", t);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -127,7 +127,7 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] == BsonNull.Value)
             {
                 await ctx.EditResponseAsync(
@@ -146,7 +146,7 @@ public class AutoRoleSettings : ApplicationCommandModule
             }
             else if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Count() == 1)
             {
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_role", BsonNull.Value);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -158,7 +158,7 @@ public class AutoRoleSettings : ApplicationCommandModule
             }
             else
             {
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Unset($"{Guild.Id}.moderation.auto_actions.auto_role.{Role.Id}");
                 await collection.UpdateOneAsync(shard, update);
 
@@ -197,7 +197,7 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] == BsonNull.Value)
             {
                 await ctx.EditResponseAsync(
@@ -209,7 +209,7 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-            var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+            var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
             var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_role", BsonNull.Value);
             await collection.UpdateOneAsync(shard, update);
 
