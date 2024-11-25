@@ -3,7 +3,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Rezet;
+using RezetSharp;
 
 
 
@@ -27,7 +27,7 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
 
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor?.GetHerrscherDocument(Guild);
 
 
 
@@ -125,7 +125,7 @@ public class PartnershipCommands : ApplicationCommandModule
                 {
                     try
                     {
-                        var inv = await Program.Rezet.GetInviteByCodeAsync(shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString);
+                        var inv = await EngineV1.RezetRazor.GetInviteByCodeAsync(shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString);
                         if (inv.Guild.Id != Guild.Id)
                         {
                             o = $"https://discord.gg/{shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}\n> [ <:rezet_exclamation:1164417019303702570> este convite pertence a outro servidor! ]";
@@ -297,8 +297,8 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
             // DATABASE:
-            var shard = Program._databaseService?.GetShard(Guild, 1);
-            var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
+            var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
             var tropical = new BsonDocument
                     {
                         { "role", (long)role.Id },
