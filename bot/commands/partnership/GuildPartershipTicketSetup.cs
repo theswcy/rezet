@@ -3,8 +3,7 @@ using DSharpPlus.SlashCommands;
 using DSharpPlus.Entities;
 using MongoDB.Driver;
 using MongoDB.Bson;
-using Rezet;
-using System.Threading.Channels;
+using RezetSharp;
 
 
 
@@ -67,7 +66,7 @@ public class PartnershipTickets : ApplicationCommandModule
 
 
 
-                var shard = Program._databaseService?.GetShard(ctx.Guild, 1);
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(ctx.Guild);
                 var SelectedEmbed = shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["embed_1"].AsString;
 
 
@@ -172,7 +171,7 @@ public class PartnershipTickets : ApplicationCommandModule
 
 
                 // UPDATE DATABASE:
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update
                     .Set($"{ctx.Guild.Id}.partner.ticket.configs.channel", Channel.Id)
                     .Set($"{ctx.Guild.Id}.partner.ticket.configs.support", SupportRole.Id)
