@@ -3,7 +3,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Rezet;
+using RezetSharp;
 
 
 
@@ -60,7 +60,7 @@ public class AutoPingSettings : ApplicationCommandModule
 
             
 
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
             {
                 if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"].AsBsonDocument.Contains($"{Channel.Id}"))
@@ -88,7 +88,7 @@ public class AutoPingSettings : ApplicationCommandModule
                     { "ping", (long)Ping.Id },
                     { "message", Message }
                 };
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_ping.{Channel.Id}", tropical);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -122,7 +122,7 @@ public class AutoPingSettings : ApplicationCommandModule
                         }
                     }
                 };
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_ping", tropical);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -187,7 +187,7 @@ public class AutoPingSettings : ApplicationCommandModule
 
 
 
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] == BsonNull.Value)
             {
                 await ctx.EditResponseAsync(
@@ -206,7 +206,7 @@ public class AutoPingSettings : ApplicationCommandModule
             }
             else if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"].AsBsonDocument.Count() == 1)
             {
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_ping", BsonNull.Value);
                 await collection.UpdateOneAsync(shard, update);
 
@@ -218,7 +218,7 @@ public class AutoPingSettings : ApplicationCommandModule
             }
             else
             {
-                var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Unset($"{Guild.Id}.moderation.auto_actions.auto_ping.{Channel.Id}");
                 await collection.UpdateOneAsync(shard, update);
 
@@ -255,7 +255,7 @@ public class AutoPingSettings : ApplicationCommandModule
             // PERMISSIONS:
             await CheckPermi.CheckMemberPermissions(ctx, 3);
             await CheckPermi.CheckBotPermissions(ctx, 3);
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] == BsonNull.Value)
             {
                 await ctx.EditResponseAsync(
@@ -267,7 +267,7 @@ public class AutoPingSettings : ApplicationCommandModule
 
 
 
-            var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+            var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
             var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_ping", BsonNull.Value);
             await collection.UpdateOneAsync(shard, update);
 
