@@ -3,7 +3,7 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.Entities;
 using MongoDB.Driver;
 using MongoDB.Bson;
-using Rezet;
+using RezetSharp;
 using System.Text.RegularExpressions;
 
 
@@ -24,8 +24,8 @@ public class PartnershipTicketConfigs
                 if (e.Values[0] == "1_edit")
                 {
                     await e.Interaction.DeferAsync();
-                    var shard = Program._databaseService?.GetShard(e.Guild, 1);
-                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
 
 
 
@@ -90,8 +90,8 @@ public class PartnershipTicketConfigs
 
                     
                     // BUTTON SHARD:
-                    var shard = Program._databaseService?.GetShard(e.Guild, 1);
-                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var ButtonSettings = shard[$"{e.Guild.Id}"]["partner"]["ticket"]["button"].AsBsonDocument;
 
 
