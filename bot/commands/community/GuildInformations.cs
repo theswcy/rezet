@@ -2,6 +2,7 @@ using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.Entities;
 using Rezet;
+using RezetSharp;
 
 
 
@@ -18,7 +19,7 @@ public class CommunityCommands : ApplicationCommandModule
 
 
 
-            var Guild = await Program.Rezet.GetGuildAsync(ctx.Guild.Id);
+            var Guild = await EngineV1.RezetRazor.GetGuildAsync(ctx.Guild.Id);
             await Guild.RequestMembersAsync();
             var Members = await Guild.GetAllMembersAsync();
             var Channels = await Guild.GetChannelsAsync();
@@ -111,7 +112,7 @@ public class CommunityCommands : ApplicationCommandModule
         try
         {
             await ctx.DeferAsync();
-            var Guild = await Program.Rezet.GetGuildAsync(ctx.Guild.Id);
+            var Guild = await EngineV1.RezetRazor.GetGuildAsync(ctx.Guild.Id);
             var Author = ctx.Member;
 
 
