@@ -2,7 +2,7 @@ using DSharpPlus;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Entities;
 using MongoDB.Bson;
-using Rezet;
+using RezetSharp;
 
 
 
@@ -15,7 +15,7 @@ public static class OnJoinOrQuit
         try
         {
             var Guild = e.Guild;
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor?.GetHerrscherDocument(Guild);
             var Member = e.Member;
 
 
@@ -57,7 +57,7 @@ public static class OnJoinOrQuit
         try
         {
             var Guild = e.Guild;
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
             var Member = e.Member;
 
 
