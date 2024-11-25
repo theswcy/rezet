@@ -1,6 +1,7 @@
 using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using Rezet;
+using RezetSharp;
 
 
 
@@ -13,7 +14,7 @@ namespace Rezet.Commands
         #pragma warning disable CS8602
         public static void RegisterCommands(DiscordClient client)
         {
-            var prefix = Program.commands;
+            var prefix = EngineV1.CommandsRazor;
 
             // PRIMARY:
             // prefix.RegisterCommands<ToModerationBasic_prefix>(); // !! EM TESTES
