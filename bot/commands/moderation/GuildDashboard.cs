@@ -4,6 +4,7 @@ using DSharpPlus.Entities;
 using Rezet;
 using MongoDB.Bson;
 using System.Collections;
+using RezetSharp;
 
 
 
@@ -43,7 +44,7 @@ public class Moderators : ApplicationCommandModule
                 new("View mod logs channel", "modlogs", "View channels with mod logs function.", emoji: emoji)
             };
             // SHOW THE AUTOROLE CONFIGS:
-            var shard = Program._databaseService?.GetShard(Guild, 1);
+            var shard = EngineV1.HerrscherRazor?.GetHerrscherDocument(Guild);
 #pragma warning disable CS8602
             if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
             {
