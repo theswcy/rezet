@@ -1,7 +1,7 @@
 using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.Entities;
-using Rezet;
+using RezetSharp;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -25,7 +25,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-                var shard = Program._databaseService?.GetShard(Guild, 1);
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
                 if (shard[Guild.Id.ToString()]["partner"]["option"].AsInt32 == 0)
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
@@ -119,7 +119,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-                var shard = Program._databaseService?.GetShard(Guild, 1);
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
 
 
 
@@ -172,7 +172,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 };
                 embed.WithFooter(
                     "Powered by Rezet Sharp!",
-                    Program.Rezet.CurrentUser.AvatarUrl
+                    EngineV1.RezetRazor.CurrentUser.AvatarUrl
                 );
                 embed.WithAuthor(
                     $"Top 1: {rankedGuild[0].Name}",
@@ -225,10 +225,10 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 await CheckPermi.CheckBotPermissions(ctx, 3);
 
 
-                var shard = Program._databaseService?.GetShard(Guild, 1);
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
                 if (shard[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                 {
-                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Inc($"{Guild.Id}.partner.leaderboard.ranking.{user.Id}", (uint)amount);
                     await collection.UpdateOneAsync(shard, update);
 
@@ -279,7 +279,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-                var shard = Program._databaseService?.GetShard(Guild, 1);
+                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
                 if (!shard[$"{Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.Contains(user.Id.ToString()))
                 {
                     await ctx.EditResponseAsync(
@@ -292,7 +292,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 if (amount >= p) { p = 0; } else { p -= amount; if (p <= 0) { p = 0; } }
                 if (shard[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                 {
-                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.partner.leaderboard.ranking.{user.Id}", (uint)p);
                     await collection.UpdateOneAsync(shard, update);
 
