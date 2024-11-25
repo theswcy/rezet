@@ -2,7 +2,7 @@ using DSharpPlus;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Entities;
 using MongoDB.Bson;
-using Rezet;
+using RezetSharp;
 using MongoDB.Driver;
 using System.Text.RegularExpressions;
 
@@ -198,7 +198,7 @@ public static class PartnershipGoMessage
                             ranking++;
                             if (ulong.Parse(entry.Key) == e.Author.Id) { break; }
                         }
-                        var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                        var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                         var update = Builders<BsonDocument>.Update
                             .Inc($"{e.Guild.Id}.partner.leaderboard.ranking.{e.Author.Id}", 1)
                             .Inc($"{e.Guild.Id}.partner.ps", 1)
@@ -215,7 +215,7 @@ public static class PartnershipGoMessage
                             ranking++;
                             if (ulong.Parse(entry.Key) == e.Author.Id) { break; }
                         }
-                        var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                        var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                         var update = Builders<BsonDocument>.Update
                             .Set($"{e.Guild.Id}.partner.leaderboard.ranking.{e.Author.Id}", 1)
                             .Inc($"{e.Guild.Id}.partner.ps", 1)
@@ -226,7 +226,7 @@ public static class PartnershipGoMessage
                 }
                 else
                 {
-                    var collection = Program._databaseService?.database?.GetCollection<BsonDocument>("guilds");
+                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update
                         .Set($"{e.Guild.Id}.partner.leaderboard.ranking.{e.Author.Id}", 1)
                         .Inc($"{e.Guild.Id}.partner.ps", 1)
@@ -255,7 +255,7 @@ public static class PartnershipGoMessage
                     var match = inviteRegex.Match(e.Message.Content);
                     try
                     {
-                        var g = await Program.Rezet.GetInviteByCodeAsync(match.Groups[1].Value);
+                        var g = await EngineV1.RezetRazor.GetInviteByCodeAsync(match.Groups[1].Value);
                         if (!g.IsRevoked)
                         {
                             embed.WithTitle(
@@ -327,7 +327,7 @@ public static class PartnershipGoMessage
                     var match = inviteRegex.Match(e.Message.Content);
                     try
                     {
-                        var g = await Program.Rezet.GetInviteByCodeAsync(match.Groups[1].Value);
+                        var g = await EngineV1.RezetRazor.GetInviteByCodeAsync(match.Groups[1].Value);
                         if (!g.IsRevoked)
                         {
                             embed.WithTitle(
