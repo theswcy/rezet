@@ -6,6 +6,7 @@ using Rezet;
 using MongoDB.Bson;
 using ZstdSharp.Unsafe;
 using DSharpPlus;
+using RezetSharp;
 
 
 
@@ -44,7 +45,7 @@ public class RezetSystems : ApplicationCommandModule
             "\n> **Engine**: `.NET 8.0`"
         );
         var t = proc.PrivateMemorySize64 / 1024 / 1024;
-        var ss = Program._databaseService?.database?.GetCollection<BsonDocument>("Guilds");
+        var ss = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("Guilds");
         var stats = ss.Database.RunCommand<BsonDocument>(new BsonDocument { { "dbStats", 1 } });
         var st = Convert.ToDouble(stats["dataSize"]) / (1024 * 1024);
         var pingEmoji = "<:rezet_1_goodping:1147907217593479179>";
@@ -53,12 +54,12 @@ public class RezetSystems : ApplicationCommandModule
         MachineInformations.AddField(
             "<:rezet_settings1:1147163366561955932> Machine:",
             $"> {pingEmoji} **Ping**: `{ctx.Client.Ping}ms`" +
-            $"\n> <:memory:1184559679406354432> **RAM**: `{t}MB / 2048MB`" +
+            $"\n> <:memory:1184559679406354432> **RAM**: `{t}MB / 4096MB`" +
             $"\n> <:ssd:1184559769697136730> **SSD**: `{fileSize:F2}MB`" +
             $"\n> <:database:1184560409005522965> **DB**: `{st:F2}MB / 512MB`"
         );
         MachineInformations.WithImageUrl("https://media.discordapp.net/attachments/1111358828282388532/1172043117294264350/IMG_20231109_020343.png");
-        MachineInformations.WithThumbnail(Program.Rezet.CurrentUser.AvatarUrl);
+        MachineInformations.WithThumbnail(EngineV1.RezetRazor.CurrentUser.AvatarUrl);
 
 
 
@@ -116,7 +117,7 @@ public class RezetSystems : ApplicationCommandModule
             Description = "## <a:rezet_loading:1147722017806762045> Database!",
             Color = new DiscordColor("#7e67ff")
         };
-        var Herrscher = Program._databaseService?.GetShard(ctx.Guild, 1);
+        var Herrscher = EngineV1.HerrscherRazor.GetHerrscherDocument(ctx.Guild);
         var GuildsInHerrscher = Herrscher.AsBsonDocument.ToDictionary();
         ShardedDatabaseInformations.AddField(
             "<:rezet_share:1147165266887856209> Herrscher 0",
