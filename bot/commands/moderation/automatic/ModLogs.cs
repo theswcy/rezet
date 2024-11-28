@@ -14,16 +14,16 @@ public class ModdingLogs : ApplicationCommandModule
     [SlashCommandGroup("logs", "Modding logs command.")]
     public class ModdingLogsCommands : ApplicationCommandModule
     {
-        [SlashCommand("setup", "📜 | Activate an modding logs channel.")]
+        [SlashCommand("add", "📜 | Adicionar um canal de logs.")]
         public static async Task Setup(InteractionContext ctx,
-            [Option("config", "The configuration type of modding logs channel.")]
+            [Option("config", "Configurações que serão registradas.")]
                 [Choice("Message delete / modify.", 1)]
                 [Choice("Moderation actions.", 2)]
                 [Choice("Roles add / remove / create / modify / delete.", 3)]
                 [Choice("Channels create / delete / modify.", 4)]
                 [Choice("Guild management.", 5)]
                 long Config,
-            [Option("channel", "The channel where Modding Logs will be sent.")] DiscordChannel Channel
+            [Option("channel", "Canal que será usado para enviar os registros.")] DiscordChannel Channel
         )
         {
             try
@@ -33,28 +33,17 @@ public class ModdingLogs : ApplicationCommandModule
 
 
 
-                if (!Channel.IsCategory)
-                {
-                    await ctx.EditResponseAsync(
-                        new DiscordWebhookBuilder()
-                            .WithContent("Você deve selecionar um canal de **texto**!")
-                    );
-                    return;
-                }
-
-
-
                 // PERMISSIONS:
                 await CheckPermi.CheckMemberPermissions(ctx, 5);
                 await CheckPermi.CheckBotPermissions(ctx, 5);
                 await CheckPermi.CheckMemberPermissions(ctx, 3);
                 await CheckPermi.CheckBotPermissions(ctx, 3);
-                if (!Channel.Guild.CurrentMember.Permissions.HasPermission(Permissions.SendMessages))
-                {
-                    await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent($"Eu não tenho permissão para enviar mensagens no canal {Channel.Mention}!"));
-                    return;
-                }
+                await CheckChannelType.CheckType(ctx, 1, Channel);
+                await CheckChannelPermissions.CheckMemberPermissions(ctx, 1, Channel);
+                await CheckChannelPermissions.CheckMemberPermissions(ctx, 2, Channel);
+                await CheckChannelPermissions.CheckMemberPermissions(ctx, 5, Channel);
+                await CheckChannelPermissions.CheckRezetPermissions(ctx, 1, Channel);
+                await CheckChannelPermissions.CheckRezetPermissions(ctx, 5, Channel);
 
 
 
@@ -143,7 +132,7 @@ public class ModdingLogs : ApplicationCommandModule
 
 
 
-        [SlashCommand("Unactivate", "📜 | Unactivate an modding logs channel.")]
+        [SlashCommand("Unactivate", "📜 | Desativar uma função de logs.")]
         public static async Task Unactivate(InteractionContext ctx,
             [Option("config", "The configuration type that will be uncativated.")]
                 [Choice("Message delete / modify.", 1)]

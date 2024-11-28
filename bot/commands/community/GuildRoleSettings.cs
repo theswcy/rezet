@@ -8,10 +8,11 @@ using DSharpPlus.Entities;
 [SlashCommandGroup("role", "Role Settings")]
 public class CommunityRole : ApplicationCommandModule
 {
-    [SlashCommand("add", "📗 | Add a role to a user.")]
+    [SlashCommand("add", "📗 | Adicionar um cargo a um usuário.")]
     public static async Task Add(InteractionContext ctx,
-        [Option("role", "Select the role.")] DiscordRole role,
-        [Option("member", "Select the member.")] DiscordUser member
+        [Option("role", "Selecione o cargo que será adicionado.")] DiscordRole role,
+        [Option("member", "Selecione o membro que receberá o cargo")] DiscordUser member,
+        [Option("reason", "Motivo do membro ter recebido o cargo.")] string? Reason = null
     )
     {
         try
@@ -24,6 +25,9 @@ public class CommunityRole : ApplicationCommandModule
 
             await CheckPermi.CheckMemberPermissions(ctx, 4);
             await CheckPermi.CheckBotPermissions(ctx, 4);
+            await CheckRoleType.CheckType(ctx, 1, role);
+            await CheckRoleType.CheckType(ctx, 2, role);
+            await CheckRoleType.CheckType(ctx, 3, role);
 
 
 
@@ -68,7 +72,7 @@ public class CommunityRole : ApplicationCommandModule
 
             try
             {
-                await Member.GrantRoleAsync(role);
+                await Member.GrantRoleAsync(role, Reason);
 
                 var embed = new DiscordEmbedBuilder
                 {
@@ -109,10 +113,11 @@ public class CommunityRole : ApplicationCommandModule
 
 
 
-    [SlashCommand("remove", "📗 | Remove role from a user.")]
+    [SlashCommand("remove", "📗 | Remover um cargo de um usuário.")]
     public static async Task Remove(InteractionContext ctx,
-        [Option("role", "Select the role.")] DiscordRole role,
-        [Option("member", "Select the member.")] DiscordUser member
+        [Option("role", "Selecione o cargo que será removido.")] DiscordRole role,
+        [Option("member", "Selecione o membro que perderá o cargo.")] DiscordUser member,
+        [Option("reason", "Motivo do membro ter perdido o cargo.")] string? Reason = null
     )
     {
         try
@@ -126,6 +131,9 @@ public class CommunityRole : ApplicationCommandModule
 
             await CheckPermi.CheckMemberPermissions(ctx, 4);
             await CheckPermi.CheckBotPermissions(ctx, 4);
+            await CheckRoleType.CheckType(ctx, 1, role);
+            await CheckRoleType.CheckType(ctx, 2, role);
+            await CheckRoleType.CheckType(ctx, 3, role);
 
 
 
@@ -170,7 +178,7 @@ public class CommunityRole : ApplicationCommandModule
 
             try
             {
-                await Member.RevokeRoleAsync(role);
+                await Member.RevokeRoleAsync(role, Reason);
 
                 var embed = new DiscordEmbedBuilder
                 {
@@ -209,9 +217,9 @@ public class CommunityRole : ApplicationCommandModule
 
 
 
-    [SlashCommand("info", "📗 | Info about the role!")]
+    [SlashCommand("info", "📗 | Mostrar as informações de um cargo!")]
     public static async Task Info(InteractionContext ctx,
-        [Option("role", "Select the role.")] DiscordRole role
+        [Option("role", "Selecione o cargo.")] DiscordRole role
     )
     {
         try
@@ -272,17 +280,17 @@ public class CommunityRole : ApplicationCommandModule
 
 
 
-    [SlashCommand("create", "📗 | Create a role!")]
+    [SlashCommand("create", "📗 | Criar um cargo!")]
     public static async Task Create(InteractionContext ctx,
-        [Option("name", "The name of the role.")] string name,
-        [Option("member", "Add the role to a member.")] DiscordUser? user = null,
-        [Option("color", "Add a color to the role. [ ex: #FF0000 ]")] string? colorhex = null,
-        [Option("perms", "Add permissions to the role.")]
+        [Option("name", "Nome do cargo.")] string name,
+        [Option("member", "Adicionar o cargo a um membro.")] DiscordUser? user = null,
+        [Option("color", "Cor do cargo. [ ex: #FF0000 ]")] string? colorhex = null,
+        [Option("perms", "Adicionar permissões ao cargo.")]
             [Choice("basics", 1)]
             [Choice("moderation", 2)]
             [Choice("manager", 3)]
             long perms = 0,
-        [Option("time", "Delete after.")]
+        [Option("time", "Deletar depois de um tempo.")]
             [Choice("1 minute", 1)]
             [Choice("5 minutes", 5)]
             [Choice("10 minutes", 10)]
@@ -304,29 +312,30 @@ public class CommunityRole : ApplicationCommandModule
 
 
 
+
+            await CheckPermi.CheckMemberPermissions(ctx, 4);
+            await CheckPermi.CheckBotPermissions(ctx, 4);
+
+
+
+
             if (colorhex != null)
             {
                 if (!colorhex.StartsWith("#"))
                 {
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
-                            .WithContent($"<:rezet_dred:1147164215837208686> A cor **HEX** precisa começar com `#`!"));
+                            .WithContent($"A cor **HEX** precisa começar com `#`!"));
                     return;
                 }
                 if (!uint.TryParse(colorhex.Substring(1), System.Globalization.NumberStyles.HexNumber, null, out uint color))
                 {
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
-                            .WithContent($"<:rezet_dred:1147164215837208686> A cor **HEX** fornecida é inválida! Por favor, forneça uma cor válida.\n- Siga o exemplo: `#c67bff`"));
+                            .WithContent($"A cor **HEX** fornecida é inválida! Por favor, forneça uma cor válida.\n- Siga o exemplo: `#c67bff`"));
                     return;
                 }
             }
-
-
-
-
-            await CheckPermi.CheckMemberPermissions(ctx, 4);
-            await CheckPermi.CheckBotPermissions(ctx, 4);
 
 
 
@@ -340,7 +349,7 @@ public class CommunityRole : ApplicationCommandModule
                     var embed = new DiscordEmbedBuilder()
                     {
                         Description =
-                        $"<:rezet_dgreen:1147164307889586238> Novo cargo criado com sucessso: {Role.Mention} !",
+                        $"Novo cargo criado com sucessso: {Role.Mention} !",
                         Color = new DiscordColor(Color)
                     };
                     if (user != null)
@@ -349,7 +358,7 @@ public class CommunityRole : ApplicationCommandModule
                         {
                             await ctx.EditResponseAsync(
                                 new DiscordWebhookBuilder()
-                                    .WithContent($"<:rezet_dred:1147164215837208686> Você não pode atribuir um cargo a si mesmo!"));
+                                    .WithContent($"Você não pode atribuir um cargo a si mesmo!"));
                             return;
                         }
                         DiscordMember Member = await ctx.Guild.GetMemberAsync(user.Id);
@@ -378,7 +387,7 @@ public class CommunityRole : ApplicationCommandModule
                     var embed = new DiscordEmbedBuilder()
                     {
                         Description =
-                        $"<:rezet_dgreen:1147164307889586238> Novo cargo criado com sucessso: {Role.Mention} !",
+                        $"Novo cargo criado com sucessso: {Role.Mention} !",
                         Color = new DiscordColor(Color)
                     };
                     if (user != null)
@@ -387,7 +396,7 @@ public class CommunityRole : ApplicationCommandModule
                         {
                             await ctx.EditResponseAsync(
                                 new DiscordWebhookBuilder()
-                                    .WithContent($"<:rezet_dred:1147164215837208686> Você não pode atribuir um cargo a si mesmo!"));
+                                    .WithContent($"Você não pode atribuir um cargo a si mesmo!"));
                             return;
                         }
                         DiscordMember Member = await ctx.Guild.GetMemberAsync(user.Id);
@@ -425,7 +434,7 @@ public class CommunityRole : ApplicationCommandModule
                     var embed = new DiscordEmbedBuilder()
                     {
                         Description =
-                        $"<:rezet_dgreen:1147164307889586238> Novo cargo criado com sucessso: {Role.Mention} !",
+                        $"Novo cargo criado com sucessso: {Role.Mention} !",
                         Color = new DiscordColor(Color)
                     };
                     if (user != null)
@@ -464,7 +473,7 @@ public class CommunityRole : ApplicationCommandModule
                     var embed = new DiscordEmbedBuilder()
                     {
                         Description =
-                        $"<:rezet_dgreen:1147164307889586238> Novo cargo criado com sucessso: {Role.Mention} !",
+                        $"Novo cargo criado com sucessso: {Role.Mention} !",
                         Color = new DiscordColor(Color)
                     };
                     if (user != null)
@@ -496,7 +505,7 @@ public class CommunityRole : ApplicationCommandModule
                     var embed = new DiscordEmbedBuilder()
                     {
                         Description =
-                        $"<:rezet_dgreen:1147164307889586238> Novo cargo criado com sucessso: {Role.Mention} !",
+                        $"Novo cargo criado com sucessso: {Role.Mention} !",
                         Color = new DiscordColor(Color)
                     };
                     if (user != null)

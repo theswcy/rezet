@@ -11,11 +11,11 @@ using RezetSharp;
 [SlashCommandGroup("autoping", "Autoping setup")]
 public class AutoPingSettings : ApplicationCommandModule
 {
-    [SlashCommand("activate", "🔔 | Activate an automatic message ping!")]
+    [SlashCommand("add", "🔔 | Adicionar ping automático!")]
     public static async Task Add(InteractionContext ctx,
-        [Option("channel", "The channel that the ping will be sent.")] DiscordChannel Channel,
-        [Option("ping", "The ping that will used.")] DiscordRole Ping,
-        [Option("message", "The message that will be sent with the ping.")] string Message
+        [Option("channel", "Canal em que os pings serão enviados.")] DiscordChannel Channel,
+        [Option("ping", "Ping que será usado.")] DiscordRole Ping,
+        [Option("message", "Mensagem que será usada o ping.")] string Message
     )
     {
         try
@@ -25,19 +25,14 @@ public class AutoPingSettings : ApplicationCommandModule
 
 
 
-            if (!Channel.IsCategory)
-            {
-                await ctx.EditResponseAsync(
-                    new DiscordWebhookBuilder()
-                        .WithContent("Você deve selecionar um canal de **texto**!")
-                );
-                return;
-            }
-
-
-
             await CheckPermi.CheckMemberPermissions(ctx, 3);
             await CheckPermi.CheckBotPermissions(ctx, 3);
+            await CheckChannelType.CheckType(ctx, 1, Channel);
+            await CheckChannelPermissions.CheckMemberPermissions(ctx, 1, Channel);
+            await CheckChannelPermissions.CheckMemberPermissions(ctx, 2, Channel);
+            await CheckChannelPermissions.CheckMemberPermissions(ctx, 5, Channel);
+            await CheckChannelPermissions.CheckRezetPermissions(ctx, 1, Channel);
+            await CheckChannelPermissions.CheckRezetPermissions(ctx, 5, Channel);
 
 
 
@@ -159,9 +154,9 @@ public class AutoPingSettings : ApplicationCommandModule
 
 
 
-    [SlashCommand("unactivate", "🔔 | Unactivate an automatic message ping save.")]
+    [SlashCommand("remove", "🔔 | Remover ping automático de um canal.")]
     public static async Task Remove(InteractionContext ctx,
-        [Option("channel", "The channel that will be removed.")] DiscordChannel Channel
+        [Option("channel", "Canal que téra o ping automático removido.")] DiscordChannel Channel
     )
     {
         try
@@ -171,19 +166,15 @@ public class AutoPingSettings : ApplicationCommandModule
 
 
 
-            if (!Channel.IsCategory)
-            {
-                await ctx.EditResponseAsync(
-                    new DiscordWebhookBuilder()
-                        .WithContent("Você deve selecionar um canal de **texto**!")
-                );
-                return;
-            }
-
-
-
             await CheckPermi.CheckMemberPermissions(ctx, 3);
             await CheckPermi.CheckBotPermissions(ctx, 3);
+            await CheckChannelType.CheckType(ctx, 1, Channel);
+            await CheckChannelPermissions.CheckMemberPermissions(ctx, 1, Channel);
+            await CheckChannelPermissions.CheckMemberPermissions(ctx, 2, Channel);
+            await CheckChannelPermissions.CheckMemberPermissions(ctx, 5, Channel);
+            await CheckChannelPermissions.CheckRezetPermissions(ctx, 1, Channel);
+            await CheckChannelPermissions.CheckRezetPermissions(ctx, 5, Channel);
+
 
 
 
@@ -242,7 +233,7 @@ public class AutoPingSettings : ApplicationCommandModule
 
 
 
-    [SlashCommand("clear", "🔔 | Clear all automatic message ping save.")]
+    [SlashCommand("clear", "🔔 | Remover todos os pings automáticos.")]
     public static async Task Clear(InteractionContext ctx)
     {
         try

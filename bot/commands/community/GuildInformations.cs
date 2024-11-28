@@ -10,7 +10,7 @@ using RezetSharp;
 [SlashCommandGroup("community", "Community commands")]
 public class CommunityCommands : ApplicationCommandModule
 {
-    [SlashCommand("informations", "📘 | About community.")]
+    [SlashCommand("informations", "📘 | Sobre a comunidade.")]
     public static async Task Informations(InteractionContext ctx)
     {
         try
@@ -106,7 +106,7 @@ public class CommunityCommands : ApplicationCommandModule
 
     [SlashCommand("description", "📘 | Alterar descrição da comunidade!")]
     public async Task description(InteractionContext ctx,
-    [Option("description", "The new description for the community!")] string description
+    [Option("description", "Nova descrição!")] string description
     )
     {
         try
@@ -153,7 +153,7 @@ public class CommunityCommands : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Ops! Não consegui fazer as alterações na descrição da comunidade. Verifique minhas permissões!"));
+                    .WithContent($"Ops! Não consegui fazer as alterações na descrição da comunidade. Verifique as configurações!"));
         }
     }
 }

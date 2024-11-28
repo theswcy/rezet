@@ -11,9 +11,9 @@ using RezetSharp;
 [SlashCommandGroup("autorole", "Autorole Setup.")]
 public class AutoRoleSettings : ApplicationCommandModule
 {
-    [SlashCommand("activate", "🎟️ | Activate an automatic join role!")]
+    [SlashCommand("add", "🎟️ | Adicionar um cargo automático!")]
     public static async Task Add(InteractionContext ctx,
-        [Option("role", "The role that will be given to the new member!")] DiscordRole Role
+        [Option("role", "Cargo que será dado a um membro novo!")] DiscordRole Role
     )
     {
         try
@@ -26,6 +26,12 @@ public class AutoRoleSettings : ApplicationCommandModule
             // PERMISSIONS:
             await CheckPermi.CheckMemberPermissions(ctx, 4);
             await CheckPermi.CheckBotPermissions(ctx, 4);
+            await CheckRoleType.CheckType(ctx, 1, Role);
+            await CheckRoleType.CheckType(ctx, 2, Role);
+            await CheckRoleType.CheckType(ctx, 3, Role);
+
+
+
             var botMember = await ctx.Guild.GetMemberAsync(ctx.Client.CurrentUser.Id);
             var highestBotRole = botMember.Roles.OrderByDescending(r => r.Position).FirstOrDefault();
             if (Role.Position >= highestBotRole.Position)
@@ -109,9 +115,9 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-    [SlashCommand("uncativate", "🎟️ | Uncativate an automatic role.")]
+    [SlashCommand("remove", "🎟️ | Remover um cargo automático.")]
     public static async Task Remove(InteractionContext ctx,
-        [Option("role", "The role that will be removed.")] DiscordRole Role
+        [Option("role", "Cargo que não será mais automático.")] DiscordRole Role
     )
     {
         try
@@ -124,6 +130,9 @@ public class AutoRoleSettings : ApplicationCommandModule
             // PERMISSIONS:
             await CheckPermi.CheckMemberPermissions(ctx, 4);
             await CheckPermi.CheckBotPermissions(ctx, 4);
+            await CheckRoleType.CheckType(ctx, 1, Role);
+            await CheckRoleType.CheckType(ctx, 2, Role);
+            await CheckRoleType.CheckType(ctx, 3, Role);
 
 
 
@@ -181,7 +190,7 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-    [SlashCommand("clear", "🎟️ | Remove all automatic roles!")]
+    [SlashCommand("clear", "🎟️ | Remover todos os cargos automáticos!")]
     public static async Task Clear(InteractionContext ctx)
     {
         try
