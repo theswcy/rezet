@@ -159,7 +159,7 @@ namespace RezetSharp
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($"  {y}  |  SHARP  ⚯   Version: Sharp 1.5\n");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write($"       ⚯  Engine V1 working!\n\n");
+                Console.Write($"       ⚯  Engine V1 working on .NET {Environment.Version}!\n\n");
                 Console.ForegroundColor = ConsoleColor.White;
                 await Task.Delay(-1);
             }
