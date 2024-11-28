@@ -9,8 +9,8 @@ using DSharpPlus.SlashCommands;
 
 // RESUMO:
 //        > (  1 ) IS EVERYONE.
-//        > (  1 ) IS BOOSTER.
-//        > (  1 ) IS MANAGED.
+//        > (  2 ) IS BOOSTER.
+//        > (  3 ) IS MANAGED.
 
 
 
