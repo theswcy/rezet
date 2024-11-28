@@ -27,7 +27,7 @@ public static class CheckChannelType
         switch(Type)
         {
             case 1: // TEXT:
-                if (Channel.Type != ChannelType.Text)
+                if (Channel.Type != ChannelType.Text || Channel.Type != ChannelType.News)
                 {
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
