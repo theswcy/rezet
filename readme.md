@@ -33,7 +33,7 @@
   Black Cat:
 </h3>
 <p>
-  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 27.3</code></strong>.<br>
+  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 27.4</code></strong>.<br>
   Hosting: <code>null</code>.
 </p>
 <br><br>
@@ -51,9 +51,10 @@
 <details>
   <summary>📂 Clique aqui para ver as changelogs!</summary>
   <pre>
-    [ 25/novembro/2024 ] - Novo motor Engine V1 adicionado e com todos os comandos e eventos adaptados.
-    [ 24/novembro/2024 ] - Novo banco de dados fragmentado e aprimorado, chamado de Herrscher, começou a ser desenvolvido.
-    [ 20/novembro/2024 ] - Desenvolvimento da próxima versão Sharp 1.5 iniciada.
+  [ 28/novembro/2024 ] - Suporte ao .NET 9.0.
+  [ 25/novembro/2024 ] - Novo motor Engine V1 adicionado e com todos os comandos e eventos adaptados.
+  [ 24/novembro/2024 ] - Novo banco de dados fragmentado e aprimorado, chamado de Herrscher, começou a ser desenvolvido.
+  [ 20/novembro/2024 ] - Desenvolvimento da próxima versão Sharp 1.5 iniciada.
   </pre>
 </details>
 <br><br>
