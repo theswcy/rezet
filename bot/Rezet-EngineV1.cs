@@ -111,7 +111,7 @@ namespace RezetSharp
                 CommandsRazor = RezetRazor.UseCommandsNext(
                     new CommandsNextConfiguration
                     {
-                        StringPrefixes = ["-r "],
+                        StringPrefixes = [ "-r " ],
                         CaseSensitive = false,
                         EnableDms = false,
                         EnableMentionPrefix = true
