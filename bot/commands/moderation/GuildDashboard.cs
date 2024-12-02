@@ -11,7 +11,7 @@ using RezetSharp;
 [SlashCommandGroup("moderator", "To moderators")]
 public class Moderators : ApplicationCommandModule
 {
-    [SlashCommand("dashboard", "🧰 | Moderation dashboard.")]
+    [SlashCommand("dashboard", "🧰 | Dashboard das configurações de moderação.")]
     public static async Task Dashboard(InteractionContext ctx)
     {
         try
@@ -32,6 +32,14 @@ public class Moderators : ApplicationCommandModule
             };
             if (Guild.IconUrl != null) { embed.WithThumbnail(Guild.IconUrl); }
             var button = new DiscordButtonComponent(ButtonStyle.Primary, $"{ctx.User.Id}_PAexit", "Exit", emoji: new DiscordComponentEmoji(id: 1308125206883078225));
+
+
+
+
+            embed.AddField(
+                "<:rezet_settings1:1147163366561955932> Basics:",
+                "a"
+            );
 
 
 
