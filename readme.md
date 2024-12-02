@@ -33,7 +33,7 @@
   Black Cat:
 </h3>
 <p>
-  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 27.5</code></strong>.<br>
+  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 27.6</code></strong>.<br>
   Hosting: <code>null</code>.
 </p>
 <br><br>
@@ -107,6 +107,7 @@
   <tr><td align=center>🟡</td><td><code>mod warn</code></td><td>Em desenvolvimento</td></tr>
   <tr><td align=center>🟡</td><td><code>mod unwarn</code></td><td>Em desenvolvimento</td></tr>
   <tr><td align=center>🟡</td><td><code>mod warns</code></td><td>Em desenvolvimento</td></tr>
+  <tr><td align=center>🟡</td><td><code>mod warn-modify</code></td><td>Em desenvolvimento</td></tr>
   <tr><td>‎</td></tr>
   <tr><td align=center>🟢</td><td><code>autorole add</code></td><td>Okay</td></tr>
   <tr><td align=center>🟢</td><td><code>autorole remove</code></td><td>Okay</td></tr>
@@ -123,6 +124,8 @@
 </h3>
 <table>
   <tr><td align=center>Status</td><td align=center>Comando</td><td align=center>Condição</td></tr>
+  <tr><td align=center>🟢</td><td><code>ping</code></td><td>Okay</td></tr>
+  <tr><td>‎</td></tr>
   <tr><td align=center>🔵</td><td><code>kick</code></td><td>Ainda será criado</td></tr>
   <tr><td align=center>🟣</td><td><code>Mute</code> / <code>timeout</code></td><td>Monitorando</td></tr>
   <tr><td align=center>🔵</td><td><code>unmute</code> / <code>untimeout</code></td><td>Ainda será criado</td></tr>
@@ -134,8 +137,10 @@
   <tr><td>‎</td></tr>
   <tr><td align=center>🔵</td><td><code>ptem</code></td><td>Ainda será criado</td></tr>
   <tr><td align=center>🔵</td><td><code>tutorial</code></td><td>Ainda será criado</td></tr>
-  <tr><td align=center>🔵</td><td><code>search</code></td><td>Okay</td></tr>
-  <tr><td align=center>🔵</td><td><code>commands</code> / <code>comandos</code></td><td>Okay</td></tr>
+  <tr><td align=center>🔵</td><td><code>search</code></td><td>Ainda será criado</td></tr>
+  <tr><td align=center>🔵</td><td><code>commands</code> / <code>comandos</code></td><td>Ainda será criado</td></tr>
+  tr><td>‎</td></tr>
+  <tr><td align=center>🟢</td><td><code>unmute</code> / <code>untimeout</code></td><td>Okay</td></tr>
 </table>
 <hr>
 </details>
