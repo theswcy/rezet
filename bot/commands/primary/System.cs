@@ -2,17 +2,35 @@ using DSharpPlus.SlashCommands;
 using DSharpPlus.Entities;
 using System.Diagnostics;
 using System.Reflection;
-using Rezet;
 using MongoDB.Bson;
-using ZstdSharp.Unsafe;
-using DSharpPlus;
 using RezetSharp;
+using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.CommandsNext;
 
 
 
 
 #pragma warning disable CS8604
 #pragma warning disable CS8602
+public class RezetGets_prefix : BaseCommandModule
+{
+    [Command("ping")]
+    [Aliases("latency")]
+    public async Task MySy(CommandContext ctx)
+    {
+        try
+        {
+            await ctx.RespondAsync(
+                $"My latency: `{ctx.Client.Ping}ms`"
+            );   
+        }
+        catch (Exception ex)
+        {
+            await ctx.RespondAsync("Falha ao verificar ping...");
+            Console.WriteLine(ex);
+        }
+    }
+}
 [SlashCommandGroup("my", "My systems.")]
 public class RezetSystems : ApplicationCommandModule
 {
