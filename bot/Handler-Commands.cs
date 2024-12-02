@@ -15,32 +15,29 @@ namespace Rezet.Commands
         public static void RegisterCommands(DiscordClient client)
         {
             var prefix = EngineV1.CommandsRazor;
-
-            // PRIMARY:
-            // prefix.RegisterCommands<ToModerationBasic_prefix>(); // !! EM TESTES
-            // prefix.RegisterCommands<SharpTestDatabase>();
-
-
-
-
-
             var slash = client.UseSlashCommands(null);
             // slash.RegisterCommands<RezetGets>(null);
             slash.RegisterCommands<RezetSystems>(null);
+            prefix.RegisterCommands<RezetGets_prefix>();
+
 
             // COMMUNITY:
             slash.RegisterCommands<CommunityCommands>(null);
             slash.RegisterCommands<CommunityRole>(null);
             slash.RegisterCommands<CommunityChats>(null);
+            prefix.RegisterCommands<CommunityCommands_prefix>();
+
 
             // PARTNERSHIP:
             slash.RegisterCommands<PartnershipCommands>(null);
             slash.RegisterCommands<CommunityPartnerMore>(null);
             slash.RegisterCommands<PartnershipTickets>(null);
 
+
             // MODERATION:
-            // slash.RegisterCommands<ToModerationBasic_slash>(null);
-            // slash.RegisterCommands<ModdingLogs>(null);
+            slash.RegisterCommands<ToModerationBasic_slash>(null);
+            slash.RegisterCommands<ModdingLogs>(null);
+
 
             // AUTOMATIC:
             slash.RegisterCommands<AutoRoleSettings>(null);
