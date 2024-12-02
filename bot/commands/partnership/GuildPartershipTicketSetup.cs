@@ -15,7 +15,7 @@ public class PartnershipTickets : ApplicationCommandModule
     [SlashCommandGroup("ticket", "Ticket setup.")]
     public class Tickets : ApplicationCommandModule
     {
-        [SlashCommand("setup", "🔖 | Setup the ticket of the partnership.")]
+        [SlashCommand("setup", "🔖 | Configurar e enviar ticket de parcerias.")]
         public static async Task TicketSetup(InteractionContext ctx,
             [Option("channel", "The channel of the ticket.")] DiscordChannel Channel,
             [Option("category", "The ID of the category for the tickets. [ ⚠️ ONLY categories!! ]")] DiscordChannel Category,

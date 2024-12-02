@@ -4,6 +4,8 @@ using DSharpPlus.Entities;
 using RezetSharp;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.CommandsNext;
 
 
 
@@ -12,9 +14,9 @@ using MongoDB.Driver;
 public class CommunityPartnerMore : ApplicationCommandModule
 {
     [SlashCommandGroup("ranking", "ranking configs.")]
-    public class RankingConigs : ApplicationCommandModule
+    public class RankingConfigs : ApplicationCommandModule
     {
-        [SlashCommand("local", "🎋 | The local user ranking's leaderboard!")]
+        [SlashCommand("local", "🎋 | Leaderboard local de parcerias!")]
         public static async Task Local(InteractionContext ctx)
         {
             try
@@ -108,7 +110,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-        [SlashCommand("global", "🎋 | The global community ranking's leaderboard")]
+        [SlashCommand("global", "🎋 | Leaderboard global de parcerias")]
         public static async Task Global(InteractionContext ctx)
         {
             try

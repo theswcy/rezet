@@ -10,13 +10,12 @@ using RezetSharp;
 [SlashCommandGroup("moderation", "To moderation.")]
 public class ToModerationBasic_slash : ApplicationCommandModule
 {
-    [SlashCommand("ban", "💉 | Ban someone.")]
+    [SlashCommand("ban", "💉 | BBanir um membro.")]
     public static async Task Ban(InteractionContext ctx,
-        [Option("member", "Select the member to ban. [ for ID: @rezet ban <id> ]")] DiscordUser User,
-        [Option("reason", "The reason of the ban.")] string? Reason = null,
-        [Option("messages", "Delete messages of the banned member.")]
-            [Choice("yes", "Delete the messages.")]
-            [Choice("no", "Don'd delete the messages.")]
+        [Option("member", "Selecione o membro. [ for ID: @rezet ban <id> ]")] DiscordUser User,
+        [Option("reason", "Motivo do banimento.")] string? Reason = null,
+        [Option("messages", "Deletar mensagens do membro banido?")]
+            [Choice("yes", "Deletar as mensagens.")]
             string? Delete = null
     )
     {
@@ -58,10 +57,10 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
 
 
-    [SlashCommand("unban", "💉 | Unban someone")]
+    [SlashCommand("unban", "💉 | Remover o banimento de um usuário.")]
     public static async Task Unban(InteractionContext ctx,
-        [Option("id", "The ID of the member")] string ID,
-        [Option("reason", "The reason of the unban")] string? Reason = null
+        [Option("id", "ID do membro.")] string ID,
+        [Option("reason", "Motivo da remoção do banimento")] string? Reason = null
     )
     {
         try
@@ -89,10 +88,10 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
 
 
-    [SlashCommand("timeout", "💉 | Timeout someone.")]
+    [SlashCommand("timeout", "💉 | Mutar um membro.")]
     public static async Task Timeoout(InteractionContext ctx,
-        [Option("member", "Select the member to timeout.")] DiscordUser User,
-        [Option("time", "The time of the timeout.")]
+        [Option("member", "Selecione o membro.")] DiscordUser User,
+        [Option("time", "Tempo do mute.")]
             [Choice("10 minutes", 10)]
             [Choice("30 minutes", 30)]
             [Choice("1 hours", 60)]
@@ -103,7 +102,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
             [Choice("2 days", 1440)]
             [Choice("7 days", 1440)]
             long Time,
-        [Option("reason", "The reason fo the timeout.")] string? Reason = null
+        [Option("reason", "Motivo do mute.")] string? Reason = null
     )
     {
         try
@@ -148,10 +147,10 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
 
 
-    [SlashCommand("untimeout", "💉 | Untimeout someone.")]
+    [SlashCommand("untimeout", "💉 | Remover o mute de um membro.")]
     public static async Task Unmute(InteractionContext ctx,
-        [Option("member", "Select the member to untimeout.")] DiscordUser User,
-        [Option("reason", "The reason of the unimeout.")] string? Reason = null
+        [Option("member", "Selecione o membro.")] DiscordUser User,
+        [Option("reason", "Motivo da remoção do mute.")] string? Reason = null
     )
     {
         try
@@ -180,10 +179,10 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
 
 
-    [SlashCommand("kick", "💉 | Kick someone.")]
+    [SlashCommand("kick", "💉 | Expulsar.")]
     public static async Task Kick(InteractionContext ctx,
-        [Option("member", "Select the member to kick.")] DiscordUser User,
-        [Option("reason", "The reason of the kick.")] string? Reason = null
+        [Option("member", "Selecione o membro.")] DiscordUser User,
+        [Option("reason", "Motivo da expulsão.")] string? Reason = null
     )
     {
         try
@@ -221,7 +220,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
 
 
-    [SlashCommand("warn", "💉 | Warn someone.")]
+    [SlashCommand("warn", "💉 | Aplicar uma advertência a um membro.")]
     public static async Task Warn(InteractionContext ctx,
         [Option("member", "Select the member to warn.")] DiscordUser User,
         [Option("reason", "The reaosn of the warn.")] string? Reason = null
@@ -264,7 +263,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
 
 
-    [SlashCommand("unwarn", "💉 | Unwarn someone.")]
+    [SlashCommand("unwarn", "💉 | Remover advertência de um membro.")]
     public static async Task Unwarn(InteractionContext ctx,
         [Option("warn_id", "The id of the warn.")] string WarnID,
         [Option("reason", "The reaosn of the unwarn.")] string? Reason = null
@@ -283,7 +282,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
 
 
-    [SlashCommand("warn-modify", "💉 | Modify the warns of someone.")]
+    [SlashCommand("warn-modify", "💉 | Editar advertência de um membro.")]
     public static async Task WarnModify(InteractionContext ctx,
         [Option("warn", "Select the to modify.")] string WarnID,
         [Option("reason", "The warn reason.")] string Reason
@@ -302,7 +301,7 @@ public class ToModerationBasic_slash : ApplicationCommandModule
 
 
 
-    [SlashCommand("warns", "💉 | View the warns of someone.")]
+    [SlashCommand("warns", "💉 | Ver as advertências de um usuário.")]
     public static async Task Unwarn(InteractionContext ctx,
         [Option("member", "Select the member to view warns.")] DiscordUser User
     )

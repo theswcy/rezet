@@ -10,7 +10,7 @@ using RezetSharp;
 [SlashCommandGroup("partnership", "Partnership's commands")]
 public class PartnershipCommands : ApplicationCommandModule
 {
-    [SlashCommand("dashboard", "🎋 | Partnership's dashboard!")]
+    [SlashCommand("dashboard", "🎋 | Dashboard das configurações de parcerias!")]
     public static async Task Dashboard(InteractionContext ctx)
     {
         try
@@ -247,12 +247,12 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
 
-    [SlashCommand("setup", "🎋 | Setup partnership function.")]
+    [SlashCommand("setup", "🎋 | Configurar função de parcerias.")]
     public static async Task Activate(InteractionContext ctx,
-        [Option("channel", "The partnership's channel.")] DiscordChannel channel,
-        [Option("ping", "The partnership's ping.")] DiscordRole ping,
-        [Option("role", "The partner role.")] DiscordRole role,
-        [Option("logs", "The partnership's logs channel.")] DiscordChannel? logs = null
+        [Option("channel", "Canal de parcerias.")] DiscordChannel channel,
+        [Option("ping", "Ping de notificação de novas parcerias.")] DiscordRole ping,
+        [Option("role", "Cargo que será dado aos novos parceiros.")] DiscordRole role,
+        [Option("logs", "Canal de logs de parcerias (recomendado configurar).")] DiscordChannel? logs = null
     )
     {
         try
