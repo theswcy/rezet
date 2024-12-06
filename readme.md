@@ -33,7 +33,7 @@
   Black Cat:
 </h3>
 <p>
-  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 27.6</code></strong>.<br>
+  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 27.7</code></strong>.<br>
   Hosting: <code>null</code>.
 </p>
 <br><br>
@@ -51,6 +51,7 @@
 <details>
   <summary>📂 Clique aqui para ver as changelogs!</summary>
   <pre>
+  [ 06/dezembro/2024 ] - Engine V8 Extreme!
   [ 28/novembro/2024 ] - Suporte ao .NET 9.0.
   [ 25/novembro/2024 ] - Novo motor Engine V1 adicionado e com todos os comandos e eventos adaptados.
   [ 24/novembro/2024 ] - Novo banco de dados fragmentado e aprimorado, chamado de Herrscher, começou a ser desenvolvido.
