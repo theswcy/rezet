@@ -4,7 +4,7 @@
     {
         public static async Task Main(string[] args)
         {
-            await RezetSharp.EngineV1.AwaysOnCore();
+            await RezetSharp.EngineV8X.EngineStart();
         }
     }
 }
