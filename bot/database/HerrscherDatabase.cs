@@ -71,7 +71,7 @@ public class HerrscherService
                 }
                 else
                 {
-                    Console.WriteLine($"    ➜  {y}  |  Database Shard\n       The guild {Guild.Name} / {Guild.Id} don't have a database in Herrscher {HerrscherNumber}.");
+                    Console.WriteLine($"    ➜  {y}  |  Database Herrscher\n       The guild {Guild.Name} / {Guild.Id} don't have a database in Herrscher {HerrscherNumber}.");
                 }
             }
             return null;
@@ -113,7 +113,7 @@ public class HerrscherService
                     }
                     else
                     {
-                        Console.WriteLine($"    ➜  {y}  |  Database Shard\n       The Herrscher {HerrscherNumber} is full!");
+                        Console.WriteLine($"    ➜  {y}  |  Database Herrscher\n       The Herrscher {HerrscherNumber} is full!");
                     }
                 }
             }

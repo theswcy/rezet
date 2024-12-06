@@ -66,26 +66,26 @@ public class PartnershipTickets : ApplicationCommandModule
 
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(ctx.Guild);
-                var SelectedEmbed = shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["embed_1"].AsString;
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(ctx.Guild);
+                var SelectedEmbed = Herrscher[$"{ctx.Guild.Id}"]["partner"]["ticket"]["embed_1"].AsString;
 
 
 
                 // BUTTON BUILDER:
                 var p = ButtonStyle.Primary;
-                if (shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["button"]["color"].AsString == "gray")
+                if (Herrscher[$"{ctx.Guild.Id}"]["partner"]["ticket"]["button"]["color"].AsString == "gray")
                 {
                     p = ButtonStyle.Secondary;
                 }
-                else if (shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["button"]["color"].AsString == "green")
+                else if (Herrscher[$"{ctx.Guild.Id}"]["partner"]["ticket"]["button"]["color"].AsString == "green")
                 {
                     p = ButtonStyle.Success;
                 }
-                else if (shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["button"]["color"].AsString == "red")
+                else if (Herrscher[$"{ctx.Guild.Id}"]["partner"]["ticket"]["button"]["color"].AsString == "red")
                 {
                     p = ButtonStyle.Danger;
                 }
-                var button = new DiscordButtonComponent(p, $"{ctx.Guild.Id}_TicketB", $"{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["button"]["text"].AsString}");
+                var button = new DiscordButtonComponent(p, $"{ctx.Guild.Id}_TicketB", $"{Herrscher[$"{ctx.Guild.Id}"]["partner"]["ticket"]["button"]["text"].AsString}");
 
 
 
@@ -101,7 +101,7 @@ public class PartnershipTickets : ApplicationCommandModule
                     foreach (var EmbedEntry in SeEmbed)
                     {
                         string NativeEmbed = SeEmbed[de];
-                        var EmbedBox = shard[$"{ctx.Guild.Id}"]["partner"]["req_embeds"][NativeEmbed].AsBsonDocument;
+                        var EmbedBox = Herrscher[$"{ctx.Guild.Id}"]["partner"]["req_embeds"][NativeEmbed].AsBsonDocument;
 
 
 
@@ -136,7 +136,7 @@ public class PartnershipTickets : ApplicationCommandModule
                 }
                 else
                 {
-                    var EmbedBox = shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["req_embeds"][SelectedEmbed].AsBsonDocument;
+                    var EmbedBox = Herrscher[$"{ctx.Guild.Id}"]["partner"]["ticket"]["req_embeds"][SelectedEmbed].AsBsonDocument;
 
 
 
@@ -171,13 +171,13 @@ public class PartnershipTickets : ApplicationCommandModule
 
 
                 // UPDATE DATABASE:
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update
                     .Set($"{ctx.Guild.Id}.partner.ticket.configs.channel", Channel.Id)
                     .Set($"{ctx.Guild.Id}.partner.ticket.configs.support", SupportRole.Id)
                     .Set($"{ctx.Guild.Id}.partner.ticket.configs.category", Category.Id)
                     .Set($"{ctx.Guild.Id}.partner.ticket.configs.logs", LogsChannel.Id);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 

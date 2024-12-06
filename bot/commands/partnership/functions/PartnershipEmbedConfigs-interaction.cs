@@ -78,8 +78,8 @@ public class PartnershipEmbedConfigs
                     await e.Interaction.DeferAsync();
 
 
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                    var SelectedEmbed = shard[$"{e.Guild.Id}"]
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var SelectedEmbed = Herrscher[$"{e.Guild.Id}"]
                             ["partner"]
                             ["configs"]
                             ["embeds"]
@@ -118,8 +118,8 @@ public class PartnershipEmbedConfigs
                     await e.Interaction.DeferAsync();
 
 
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                    var SelectedEmbed = shard[$"{e.Guild.Id}"]
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var SelectedEmbed = Herrscher[$"{e.Guild.Id}"]
                             ["partner"]
                             ["configs"]
                             ["embeds"].AsBsonDocument;
@@ -147,11 +147,11 @@ public class PartnershipEmbedConfigs
                     await e.Interaction.DeferAsync();
 
 
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
 
 
 
-                    var SelectedEmbed = shard[$"{e.Guild.Id}"]
+                    var SelectedEmbed = Herrscher[$"{e.Guild.Id}"]
                             ["partner"]
                             ["configs"]
                             ["embeds"].AsBsonDocument;
@@ -191,14 +191,14 @@ public class PartnershipEmbedConfigs
 
 
 
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                    var value = shard[$"{e.Guild.Id}"]
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var value = Herrscher[$"{e.Guild.Id}"]
                                 ["partner"]
                                 ["selected"].ToString();
 
 
 
-                    var SelectedEmbed = shard[$"{e.Guild.Id}"]
+                    var SelectedEmbed = Herrscher[$"{e.Guild.Id}"]
                             ["partner"]
                             ["configs"]
                             ["embeds"]
@@ -270,7 +270,7 @@ public class PartnershipEmbedConfigs
                 await PartnershipEmbedEdit(sender, e, e.Values[0]);
                 await Task.Delay(120000);
                 var msgs = await e.Interaction.Channel.GetMessagesAsync(30);
-                var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(e.Values[0]) && m.Author.Id == EngineV1.RezetRazor.CurrentUser.Id).Id);
+                var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(e.Values[0]) && m.Author.Id == EngineV8X.RezetRazor.CurrentUser.Id).Id);
                 try
                 {
                     await msgg.ModifyAsync(
@@ -292,8 +292,8 @@ public class PartnershipEmbedConfigs
 
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                if (shard[$"{e.Guild.Id}"]
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                if (Herrscher[$"{e.Guild.Id}"]
                         ["partner"]
                         ["selected"] == value)
                 {
@@ -307,14 +307,14 @@ public class PartnershipEmbedConfigs
 
 
 
-                var SelectedEmbed = shard[$"{e.Guild.Id}"]
+                var SelectedEmbed = Herrscher[$"{e.Guild.Id}"]
                         ["partner"]
                         ["configs"]
                         ["embeds"]
                         [value.ToString()];
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.selected", value);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 
@@ -332,11 +332,11 @@ public class PartnershipEmbedConfigs
 
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
 
 
 
-                if (shard[$"{e.Guild.Id}"]
+                if (Herrscher[$"{e.Guild.Id}"]
                         ["partner"]
                         ["selected"] == value)
                 {
@@ -360,9 +360,9 @@ public class PartnershipEmbedConfigs
 
 
 
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Unset($"{e.Guild.Id}.partner.configs.embeds.{value}");
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 
@@ -415,10 +415,10 @@ public class PartnershipEmbedConfigs
             {
                 var content = e.Interaction.Data.CustomId.Split('_');
                 var Guild = e.Interaction.Guild;
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Unset($"{Guild.Id}.partner.configs.embeds.{content[2]}");
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 
@@ -437,7 +437,7 @@ public class PartnershipEmbedConfigs
                 await PartnershipEmbedEdit(sender, e, t[2]);
                 await Task.Delay(120000);
                 var msgs = await e.Interaction.Channel.GetMessagesAsync(30);
-                var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(t[2]) && m.Author.Id == EngineV1.RezetRazor.CurrentUser.Id).Id);
+                var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(t[2]) && m.Author.Id == EngineV8X.RezetRazor.CurrentUser.Id).Id);
                 try
                 {
                     await msgg.ModifyAsync(
@@ -479,7 +479,7 @@ public class PartnershipEmbedConfigs
 
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
 
 
 
@@ -602,8 +602,8 @@ public class PartnershipEmbedConfigs
 
 
                 var Guild = e.Interaction.Guild;
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var content = new BsonDocument
                             {
                                 { "title", title },
@@ -616,7 +616,7 @@ public class PartnershipEmbedConfigs
                             };
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.partner.configs.embeds.{t}", content);
 #pragma warning disable CS8602
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 
@@ -639,7 +639,7 @@ public class PartnershipEmbedConfigs
 
 
                 var msgs = await e.Interaction.Channel.GetMessagesAsync(30);
-                var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(t) && m.Author.Id == EngineV1.RezetRazor.CurrentUser.Id).Id);
+                var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(t) && m.Author.Id == EngineV8X.RezetRazor.CurrentUser.Id).Id);
                 await msgg.ModifyAsync(
                     builder: new DiscordMessageBuilder()
                         .WithContent($"{t}")
@@ -666,8 +666,8 @@ public class PartnershipEmbedConfigs
         try
         {
             await e.Interaction.DeferAsync();
-            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-            var SelectedEmbed = shard[$"{e.Guild.Id}"]
+            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+            var SelectedEmbed = Herrscher[$"{e.Guild.Id}"]
                     ["partner"]
                     ["configs"]
                     ["embeds"]
@@ -761,8 +761,8 @@ public class PartnershipEmbedConfigs
     {
         try
         {
-            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-            var SelectedEmbed = shard[$"{e.Interaction.Guild.Id}"]
+            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+            var SelectedEmbed = Herrscher[$"{e.Interaction.Guild.Id}"]
                     ["partner"]
                     ["configs"]
                     ["embeds"]
@@ -838,7 +838,7 @@ public class PartnershipEmbedConfigs
 
 
             var msgs = await e.Interaction.Channel.GetMessagesAsync(30);
-            var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(name) && m.Author.Id == EngineV1.RezetRazor.CurrentUser.Id).Id);
+            var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains(name) && m.Author.Id == EngineV8X.RezetRazor.CurrentUser.Id).Id);
             await msgg.ModifyAsync(
                 builder: new DiscordMessageBuilder()
                     .WithContent($"{name}")
@@ -923,18 +923,18 @@ public class PartnershipEmbedConfigs
                 else if (e.Values[0] == "author")
                 {
                     var t = e.Interaction.Data.CustomId.Split('_');
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
-                    if (shard[$"{e.Guild.Id}"]["partner"]["configs"]["embeds"][$"{t[2]}"]["author"] == 0)
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    if (Herrscher[$"{e.Guild.Id}"]["partner"]["configs"]["embeds"][$"{t[2]}"]["author"] == 0)
                     {
                         var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t[2]}.author", 1);
-                        await collection.UpdateOneAsync(shard, update);
+                        await collection.UpdateOneAsync(Herrscher, update);
                         await PartnershipEmbedEdit(sender, e, t[2]);
                     }
                     else
                     {
                         var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t[2]}.author", 0);
-                        await collection.UpdateOneAsync(shard, update);
+                        await collection.UpdateOneAsync(Herrscher, update);
                         await PartnershipEmbedEdit(sender, e, t[2]);
                     }
                 }
@@ -979,8 +979,8 @@ public class PartnershipEmbedConfigs
                 {
                     await e.Interaction.DeferAsync();
                     var t = e.Interaction.Data.CustomId.Split('_');
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                    var y = shard[$"{e.Guild.Id}"]["partner"]["configs"]["embeds"][$"{t[2]}"]["thumb"];
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var y = Herrscher[$"{e.Guild.Id}"]["partner"]["configs"]["embeds"][$"{t[2]}"]["thumb"];
 
 
                     var button1 = new DiscordButtonComponent(ButtonStyle.Secondary, $"{e.Interaction.User.Id}_EE-1_{t[2]}", "Unactivate");
@@ -1023,10 +1023,10 @@ public class PartnershipEmbedConfigs
             else if (e.Interaction.Data.CustomId.Contains($"{e.Interaction.User.Id}_EE-1_"))
             {
                 var t = e.Interaction.Data.CustomId.Split('_');
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t[2]}.thumb", 0);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
                 await PartnershipEmbedEdit(sender, e, t[2]);
             }
             // ========== EMBED EDIT THUMBNAIL - USE COMMUNITY ICON:
@@ -1044,10 +1044,10 @@ public class PartnershipEmbedConfigs
                 }
                 else
                 {
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t[2]}.thumb", 1);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
                     await PartnershipEmbedEdit(sender, e, t[2]);
                 }
             }
@@ -1091,10 +1091,10 @@ public class PartnershipEmbedConfigs
 
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.title", e.Values["title_input"]);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
                 await PartnershipEmbedEditForModal(sender, e, t);
 
 
@@ -1114,10 +1114,10 @@ public class PartnershipEmbedConfigs
 
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.description", e.Values["desc_input"]);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
                 await PartnershipEmbedEditForModal(sender, e, t);
 
 
@@ -1139,17 +1139,17 @@ public class PartnershipEmbedConfigs
 
                 if (!string.IsNullOrEmpty(e.Values["footer_input"]))
                 {
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.footer", e.Values["footer_input"]);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
                 }
                 else
                 {
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.footer", 0);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
                 }
                 await PartnershipEmbedEditForModal(sender, e, t);
 
@@ -1186,10 +1186,10 @@ public class PartnershipEmbedConfigs
 
                 var p = e.Interaction.Data.CustomId.Split('_');
                 var t = p[2];
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.color", e.Values["color_input"]);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
                 await PartnershipEmbedEditForModal(sender, e, t);
 
 
@@ -1219,10 +1219,10 @@ public class PartnershipEmbedConfigs
                         );
                         return;
                     }
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.image", e.Values["image_input"]);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
                     await PartnershipEmbedEditForModal(sender, e, t);
 
 
@@ -1231,10 +1231,10 @@ public class PartnershipEmbedConfigs
                 }
                 else
                 {
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.image", 0);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
                     await PartnershipEmbedEditForModal(sender, e, t);
 
 
@@ -1265,16 +1265,16 @@ public class PartnershipEmbedConfigs
                         );
                         return;
                     }
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.configs.embeds.{t}.thumb", e.Values["thumb_input"]);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
                     await PartnershipEmbedEditForModal(sender, e, t);
 
 
 
                     var msgs = await e.Interaction.Channel.GetMessagesAsync(30);
-                    var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains("Hoyo!") && m.Author.Id == EngineV1.RezetRazor.CurrentUser.Id).Id);
+                    var msgg = await e.Interaction.Channel.GetMessageAsync(msgs.FirstOrDefault(m => m.Content.Contains("Hoyo!") && m.Author.Id == EngineV8X.RezetRazor.CurrentUser.Id).Id);
                     await msgg.DeleteAsync();
 
 

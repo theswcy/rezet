@@ -26,8 +26,8 @@ public class PartnershipRanked
 
 
 
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                    if (!shard[$"{e.Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.Any())
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    if (!Herrscher[$"{e.Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.Any())
                     {
                         await e.Interaction.CreateFollowupMessageAsync(
                             new DiscordFollowupMessageBuilder()
@@ -39,9 +39,9 @@ public class PartnershipRanked
 
 
 
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.leaderboard.ranking", new BsonDocument { });
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
 
 
 
@@ -58,10 +58,10 @@ public class PartnershipRanked
 
 
 
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.leaderboard.option", 0);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
 
 
 
@@ -139,10 +139,10 @@ public class PartnershipRanked
                     );
                     return;
                 }
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Interaction.Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Interaction.Guild.Id}.partner.leaderboard.invite", match.Groups[1].Value);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 

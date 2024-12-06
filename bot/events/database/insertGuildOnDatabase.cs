@@ -199,15 +199,15 @@ public static class InsertGuildDB
             // ========== INSERT GUILD DATABASE:
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e);
-            if (shard == null)
+            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e);
+            if (Herrscher == null)
             {
                 Console.WriteLine($"    ⌬  {y}  |  GUILD CREATE\n    ➜  Failed to acess guild: {e.Name} / {e.Id}\n\n\n");
                 return;
             }
-            var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+            var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
             var update = Builders<BsonDocument>.Update.Set($"{e.Id}", guildStructure);
-            var result = await collection.UpdateOneAsync(shard, update);
+            var result = await collection.UpdateOneAsync(Herrscher, update);
 
             if (result.ModifiedCount > 0)
             {

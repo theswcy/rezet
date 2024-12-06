@@ -42,7 +42,7 @@ public class RezetGets : ApplicationCommandModule
             $"\n> **Operating in**: `{ctx.Client.Guilds.Count} communities`"
             );
         var t = proc.PrivateMemorySize64 / 1024 / 1024;
-        var ss = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("Guilds");
+        var ss = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("Guilds");
 #pragma warning disable CS8602
         var stats = ss.Database.RunCommand<BsonDocument>(new BsonDocument { { "dbStats", 1 } });
         var st = Convert.ToDouble(stats["dataSize"]) / (1024 * 1024);
@@ -54,7 +54,7 @@ public class RezetGets : ApplicationCommandModule
             $"\n> **DB**: `{st:F2}MB / 512MB`"
             );
         embed.WithImageUrl("https://media.discordapp.net/attachments/1111358828282388532/1172043117294264350/IMG_20231109_020343.png");
-        embed.WithThumbnail(EngineV1.RezetRazor?.CurrentUser.AvatarUrl);
+        embed.WithThumbnail(EngineV8X.RezetRazor?.CurrentUser.AvatarUrl);
 
 
 

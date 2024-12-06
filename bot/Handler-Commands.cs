@@ -14,7 +14,7 @@ namespace Rezet.Commands
         #pragma warning disable CS8602
         public static void RegisterCommands(DiscordClient client)
         {
-            var prefix = EngineV1.CommandsRazor;
+            var prefix = EngineV8X.CommandsRazor;
             var slash = client.UseSlashCommands(null);
             // slash.RegisterCommands<RezetGets>(null);
             slash.RegisterCommands<RezetSystems>(null);

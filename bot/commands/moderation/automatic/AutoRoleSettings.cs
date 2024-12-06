@@ -52,10 +52,10 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
+            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+            if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
             {
-                if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Contains($"{Role.Id}"))
+                if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Contains($"{Role.Id}"))
                 {
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
@@ -63,7 +63,7 @@ public class AutoRoleSettings : ApplicationCommandModule
                     );
                     return;
                 }
-                var GetAllRoles = shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Count();
+                var GetAllRoles = Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Count();
                 if (GetAllRoles >= 10)
                 {
                     await ctx.EditResponseAsync(
@@ -75,9 +75,9 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_role.{Role.Id}", Role.Id);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
                 await ctx.EditResponseAsync(
@@ -92,9 +92,9 @@ public class AutoRoleSettings : ApplicationCommandModule
                 {
                     { $"{Role.Id}", (long)Role.Id }
                 };
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_role", t);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
                 await ctx.EditResponseAsync(
@@ -136,8 +136,8 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] == BsonNull.Value)
+            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+            if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] == BsonNull.Value)
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
@@ -145,7 +145,7 @@ public class AutoRoleSettings : ApplicationCommandModule
                 );
                 return;
             }
-            else if (!shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Contains($"{Role.Id}"))
+            else if (!Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Contains($"{Role.Id}"))
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
@@ -153,11 +153,11 @@ public class AutoRoleSettings : ApplicationCommandModule
                 );
                 return;
             }
-            else if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Count() == 1)
+            else if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"].AsBsonDocument.Count() == 1)
             {
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_role", BsonNull.Value);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
                 await ctx.EditResponseAsync(
@@ -167,9 +167,9 @@ public class AutoRoleSettings : ApplicationCommandModule
             }
             else
             {
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Unset($"{Guild.Id}.moderation.auto_actions.auto_role.{Role.Id}");
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
                 await ctx.EditResponseAsync(
@@ -206,8 +206,8 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] == BsonNull.Value)
+            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+            if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] == BsonNull.Value)
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
@@ -218,9 +218,9 @@ public class AutoRoleSettings : ApplicationCommandModule
 
 
 
-            var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+            var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
             var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.auto_actions.auto_role", BsonNull.Value);
-            await collection.UpdateOneAsync(shard, update);
+            await collection.UpdateOneAsync(Herrscher, update);
 
 
             await ctx.EditResponseAsync(

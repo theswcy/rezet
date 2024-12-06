@@ -27,15 +27,15 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-                if (shard[Guild.Id.ToString()]["partner"]["option"].AsInt32 == 0)
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+                if (Herrscher[Guild.Id.ToString()]["partner"]["option"].AsInt32 == 0)
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
                         .WithContent("<:rezet_dred:1147164215837208686> Essa comunidade não possui a função **Partnership** ativada!")
                     );
                     return;
                 }
-                if (shard[Guild.Id.ToString()]["partner"]["leaderboard"]["option"].AsInt32 == 0)
+                if (Herrscher[Guild.Id.ToString()]["partner"]["leaderboard"]["option"].AsInt32 == 0)
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
                         .WithContent("<:rezet_dred:1147164215837208686> Essa comunidade não possui a função **Partnership ranked** ativada!")
@@ -45,7 +45,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-                var rankingDict = shard[Guild.Id.ToString()]
+                var rankingDict = Herrscher[Guild.Id.ToString()]
                         ["partner"]
                         ["leaderboard"]
                         ["ranking"]
@@ -121,13 +121,13 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
 
 
 
                 var guildRanking = new List<(ulong GuildId, string Name, dynamic Invite, int Score, string rxp)>();
                 var f = ctx.User.AvatarUrl;
-                foreach (var element in shard.Elements)
+                foreach (var element in Herrscher.Elements)
                 {
                     if (element.Name == "_id") continue;
 
@@ -174,7 +174,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 };
                 embed.WithFooter(
                     "Powered by Rezet Sharp!",
-                    EngineV1.RezetRazor.CurrentUser.AvatarUrl
+                    EngineV8X.RezetRazor.CurrentUser.AvatarUrl
                 );
                 embed.WithAuthor(
                     $"Top 1: {rankedGuild[0].Name}",
@@ -227,12 +227,12 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 await CheckPermi.CheckBotPermissions(ctx, 3);
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-                if (shard[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+                if (Herrscher[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                 {
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Inc($"{Guild.Id}.partner.leaderboard.ranking.{user.Id}", (uint)amount);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
 
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
@@ -281,8 +281,8 @@ public class CommunityPartnerMore : ApplicationCommandModule
 
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-                if (!shard[$"{Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.Contains(user.Id.ToString()))
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+                if (!Herrscher[$"{Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.Contains(user.Id.ToString()))
                 {
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
@@ -290,13 +290,13 @@ public class CommunityPartnerMore : ApplicationCommandModule
                     );
                     return;
                 }
-                long p = shard[$"{Guild.Id}"]["partner"]["leaderboard"]["ranking"][$"{user.Id}"].AsInt32;
+                long p = Herrscher[$"{Guild.Id}"]["partner"]["leaderboard"]["ranking"][$"{user.Id}"].AsInt32;
                 if (amount >= p) { p = 0; } else { p -= amount; if (p <= 0) { p = 0; } }
-                if (shard[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                if (Herrscher[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                 {
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.partner.leaderboard.ranking.{user.Id}", (uint)p);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
 
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()

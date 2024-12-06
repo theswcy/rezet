@@ -19,11 +19,11 @@ public class ModeratorDashboard
             if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_AAOpti")
             {
                 var Guild = e.Guild;
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
                 if (e.Values[0] == "autorole")
                 {
                     await e.Interaction.DeferAsync();
-                    var RoleDict = shard
+                    var RoleDict = Herrscher
                             [$"{Guild.Id}"]
                             ["moderation"]
                             ["auto_actions"]
@@ -46,7 +46,7 @@ public class ModeratorDashboard
                     foreach (var entry in RoleDict)
                     {
                         var r = Guild.GetRole((ulong)entry.Value);
-                        var botMember = await e.Guild.GetMemberAsync(EngineV1.RezetRazor.CurrentUser.Id);
+                        var botMember = await e.Guild.GetMemberAsync(EngineV8X.RezetRazor.CurrentUser.Id);
                         var highestBotRole = botMember.Roles.OrderByDescending(r => r.Position).FirstOrDefault();
 
                         // PERMISSIONS:
@@ -115,12 +115,47 @@ public class ModeratorDashboard
                 }
                 else if (e.Values[0] == "autoping")
                 {
+                    await e.Interaction.DeferAsync();
+                    var PingDict = Herrscher
+                            [$"{Guild.Id}"]
+                            ["moderation"]
+                            ["auto_actions"]
+                            ["auto_ping"]
+                            .AsBsonDocument.ToDictionary(
+                                elem => elem.Name,
+                                elem => elem.Value
+                            );
 
+
+                    var embed = new DiscordEmbedBuilder()
+                    {
+                        Color = new DiscordColor("#7e67ff")
+                    };
+                    var desc = "## <:rezet_shine:1147373071737573446> Autoping!\nEsses aqui são os canais que possuem a função **Autoping** ativada!\n";
+
+
+
+                    foreach (var Entry in PingDict)
+                    {
+                        var PingD = PingDict[$"{Entry.Key}"].AsBsonDocument;
+                        desc += $"<:rezet_channels:1308125117875752961> <#{Entry.Key}>\n> **Ping**: <@&{PingD["ping"]}>\n> **Text**: ```{PingD["text"]}```\n\n";
+                    }
+
+
+
+                    embed.WithDescription(desc);
+                    var button = new DiscordButtonComponent(ButtonStyle.Primary, $"{e.Interaction.User.Id}_PAexit", "Exit", emoji: new DiscordComponentEmoji(id: 1308125206883078225));
+                    await e.Interaction.CreateFollowupMessageAsync(
+                        new DiscordFollowupMessageBuilder()
+                            .WithContent("BIp bup bip!")
+                            .AddEmbed(embed)
+                            .AddComponents(button)
+                    );
                 }
                 else if (e.Values[0] == "modlogs")
                 {
                     await e.Interaction.DeferAsync();
-                    var LogsDict = shard
+                    var LogsDict = Herrscher
                             [$"{Guild.Id}"]
                             ["moderation"]
                             ["mod_logs"]

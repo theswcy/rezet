@@ -85,15 +85,15 @@ public class ModdingLogs : ApplicationCommandModule
 
 
                 // NEW BUILD:
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
-                if (shard[$"{Guild.Id}"]["moderation"]["mod_logs"][$"{ConfigLog}"] != BsonNull.Value)
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                if (Herrscher[$"{Guild.Id}"]["moderation"]["mod_logs"][$"{ConfigLog}"] != BsonNull.Value)
                 {
                     var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.mod_logs.{ConfigLog}", Channel.Id);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
 
 
-                    var ch2 = Guild.GetChannel((ulong)shard[$"{Guild.Id}"]["moderation"]["mod_logs"][$"{ConfigLog}"].AsInt64);
+                    var ch2 = Guild.GetChannel((ulong)Herrscher[$"{Guild.Id}"]["moderation"]["mod_logs"][$"{ConfigLog}"].AsInt64);
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
                             .WithContent($"Bip bup bip!\n> Configuration: `{r}`\n> {ch2.Mention} -> {Channel.Mention} ")
@@ -107,7 +107,7 @@ public class ModdingLogs : ApplicationCommandModule
                 else
                 {
                     var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.mod_logs.{ConfigLog}", Channel.Id);
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
                             .WithContent($"Bip bup bip!\n> Configuration: `{r}`\n> In: {Channel.Mention} ")
@@ -188,9 +188,9 @@ public class ModdingLogs : ApplicationCommandModule
 
 
 
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
-                if (shard[$"{Guild.Id}"]["moderation"]["mod_logs"][$"{ConfigLog}"] == BsonNull.Value)
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                if (Herrscher[$"{Guild.Id}"]["moderation"]["mod_logs"][$"{ConfigLog}"] == BsonNull.Value)
                 {
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
@@ -199,7 +199,7 @@ public class ModdingLogs : ApplicationCommandModule
                     return;
                 }
                 var update = Builders<BsonDocument>.Update.Set($"{Guild.Id}.moderation.mod_logs.{ConfigLog}", BsonNull.Value);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 

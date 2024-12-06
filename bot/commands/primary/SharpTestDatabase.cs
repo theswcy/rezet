@@ -16,11 +16,11 @@ public class SharpTestDatabase : BaseCommandModule
     {
         try
         {
-            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(ctx.Guild);
-            var collection = EngineV1.HerrscherRazor._database?.GetCollection<BsonDocument>("guilds");
+            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(ctx.Guild);
+            var collection = EngineV8X.HerrscherRazor._database?.GetCollection<BsonDocument>("guilds");
             var update = Builders<BsonDocument>.Update
                 .Set($"{ctx.Guild.Id}.partner.ticket.count", 0);
-            await collection.UpdateOneAsync(shard, update);
+            await collection.UpdateOneAsync(Herrscher, update);
             await ctx.RespondAsync("okay!");
         }
         catch (Exception ex)

@@ -27,13 +27,13 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
 
-            var shard = EngineV1.HerrscherRazor?.GetHerrscherDocument(Guild);
+            var Herrscher = EngineV8X.HerrscherRazor?.GetHerrscherDocument(Guild);
 
 
 
 
 #pragma warning disable CS8602
-            if (shard[$"{Guild.Id}"]["partner"]["option"].AsInt32 == 0)
+            if (Herrscher[$"{Guild.Id}"]["partner"]["option"].AsInt32 == 0)
             {
                 await ctx.EditResponseAsync(new DiscordWebhookBuilder()
                     .WithContent("Essa comunidade não possui a função **Partnership** ativada! Use o comando `/partnership setup` para ativar.")
@@ -79,18 +79,18 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
                 var ch = "<:rezet_3_nact:1189936390113341601> **Logs**: Unactivated.";
-                if (shard[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                if (Herrscher[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                 {
-                    var channel = Guild.GetChannel((ulong)shard[$"{Guild.Id}"]["partner"]["log"].ToInt64());
+                    var channel = Guild.GetChannel((ulong)Herrscher[$"{Guild.Id}"]["partner"]["log"].ToInt64());
                     ch = $"<:rezet_3_act:1189936284379119726> **Logs**: {channel.Mention}";
                 }
                 var xr = "<:rezet_3_nact:1189936390113341601> **On everyone/here**: Unactivated.";
-                if (shard[$"{Guild.Id}"]["partner"]["anti-eh"] != 0)
+                if (Herrscher[$"{Guild.Id}"]["partner"]["anti-eh"] != 0)
                 {
-                    xr = $"<:rezet_3_act:1189936284379119726> **On everyone/here**: Mode {shard[$"{Guild.Id}"]["partner"]["anti-eh"]}.";
+                    xr = $"<:rezet_3_act:1189936284379119726> **On everyone/here**: Mode {Herrscher[$"{Guild.Id}"]["partner"]["anti-eh"]}.";
                 }
                 var tr = "<:rezet_3_nact:1189936390113341601> **On partner quit**: Unactivated.";
-                if (shard[$"{Guild.Id}"]["partner"]["anti-qi"] != 0)
+                if (Herrscher[$"{Guild.Id}"]["partner"]["anti-qi"] != 0)
                 {
                     tr = $"<:rezet_3_act:1189936284379119726> **On partner quit**: Activated.";
                 }
@@ -98,11 +98,11 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
                 var rbxp = "<:rezet_c_elite:1290676392870023190> `C-Elite`";
-                if (shard[$"{Guild.Id}"]["partner"]["xp"] > 10000) { rbxp = "<:rezet_sss_elite:1290676886556377112> `SSS-Elite`"; }
-                else if (shard[$"{Guild.Id}"]["partner"]["xp"] > 5000) { rbxp = "<:rezet_ss_elite:1290676831544017046> `SS-Elite`"; }
-                else if (shard[$"{Guild.Id}"]["partner"]["xp"] > 2500) { rbxp = "<:rezet_s_elite:1290676775826886696> `S-Elite`"; }
-                else if (shard[$"{Guild.Id}"]["partner"]["xp"] > 1000) { rbxp = "<:rezet_a_elite:1290676720537567373> `A-Elite`"; }
-                else if (shard[$"{Guild.Id}"]["partner"]["xp"] >= 500) { rbxp = "<:rezet_b_elite:1290676630527934567>`B-Elite`"; }
+                if (Herrscher[$"{Guild.Id}"]["partner"]["xp"] > 10000) { rbxp = "<:rezet_sss_elite:1290676886556377112> `SSS-Elite`"; }
+                else if (Herrscher[$"{Guild.Id}"]["partner"]["xp"] > 5000) { rbxp = "<:rezet_ss_elite:1290676831544017046> `SS-Elite`"; }
+                else if (Herrscher[$"{Guild.Id}"]["partner"]["xp"] > 2500) { rbxp = "<:rezet_s_elite:1290676775826886696> `S-Elite`"; }
+                else if (Herrscher[$"{Guild.Id}"]["partner"]["xp"] > 1000) { rbxp = "<:rezet_a_elite:1290676720537567373> `A-Elite`"; }
+                else if (Herrscher[$"{Guild.Id}"]["partner"]["xp"] >= 500) { rbxp = "<:rezet_b_elite:1290676630527934567>`B-Elite`"; }
                 var embed = new DiscordEmbedBuilder()
                 {
                     Description =
@@ -110,7 +110,7 @@ public class PartnershipCommands : ApplicationCommandModule
                         "\nBem vindo(a) a **dashboard** da função **partnership**.",
                     Color = new DiscordColor("7e67ff")
                 };
-                var Opti = shard[$"{Guild.Id}"]["partner"]["configs"]["options"];
+                var Opti = Herrscher[$"{Guild.Id}"]["partner"]["configs"]["options"];
                 embed.AddField(
                     "<:rezet_channels:1308125117875752961> Setup:",
                     $"> <:rezet_3_act:1189936284379119726> **Role**: <@&{Opti["role"]}>" +
@@ -121,31 +121,31 @@ public class PartnershipCommands : ApplicationCommandModule
                     $"\n> {tr}"
                 );
                 var o = "Unactivated.";
-                if (shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"] != BsonNull.Value)
+                if (Herrscher[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"] != BsonNull.Value)
                 {
                     try
                     {
-                        var inv = await EngineV1.RezetRazor.GetInviteByCodeAsync(shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString);
+                        var inv = await EngineV8X.RezetRazor.GetInviteByCodeAsync(Herrscher[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString);
                         if (inv.Guild.Id != Guild.Id)
                         {
-                            o = $"https://discord.gg/{shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}\n> [ <:rezet_exclamation:1164417019303702570> este convite pertence a outro servidor! ]";
+                            o = $"https://discord.gg/{Herrscher[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}\n> [ <:rezet_exclamation:1164417019303702570> este convite pertence a outro servidor! ]";
                         }
                         else
                         {
-                            o = $"https://discord.gg/{shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}";
+                            o = $"https://discord.gg/{Herrscher[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}";
                         }
                     }
                     catch (Exception)
                     {
-                        o = $"https://discord.gg/{shard[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}\n> [ <:rezet_exclamation:1164417019303702570> convite inválido! ]";
+                        o = $"https://discord.gg/{Herrscher[$"{Guild.Id}"]["partner"]["leaderboard"]["invite"].AsString}";
                     }
                 }
-                if (shard[$"{Guild.Id}"]["partner"]["leaderboard"]["option"] == 1)
+                if (Herrscher[$"{Guild.Id}"]["partner"]["leaderboard"]["option"] == 1)
                 {
                     embed.AddField(
                         "<:rezet_channels:1308125117875752961> Ranked:",
-                        $"> **Partnerships**: `{shard[$"{Guild.Id}"]["partner"]["ps"]}`" +
-                        $"\n> **Partner XP**: `{shard[$"{Guild.Id}"]["partner"]["xp"]}`" +
+                        $"> **Partnerships**: `{Herrscher[$"{Guild.Id}"]["partner"]["ps"]}`" +
+                        $"\n> **Partner XP**: `{Herrscher[$"{Guild.Id}"]["partner"]["xp"]}`" +
                         $"\n> **Ranking**: {rbxp}" +
                         $"\n> **Invite**: {o}"
                     );
@@ -162,7 +162,7 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
                 var DashboardBuilder = new DiscordWebhookBuilder();
-                if (shard[$"{Guild.Id}"]["partner"]["leaderboard"]["option"] == 1)
+                if (Herrscher[$"{Guild.Id}"]["partner"]["leaderboard"]["option"] == 1)
                 {
                     DashboardBuilder
                         .AddComponents(buttons[0], buttons[1])
@@ -181,15 +181,15 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
 
-                if (shard[$"{Guild.Id}"]["partner"]["ticket"]["option"] == 1)
+                if (Herrscher[$"{Guild.Id}"]["partner"]["ticket"]["option"] == 1)
                 {
                     embed.AddField(
                         "<:rezet_3_act:1189936284379119726> Tickets:",
                         "> **Automatic**: coming soon." +
-                        $"\n> **Tickets Total**: `{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["count"].AsInt32}`" +
-                        $"\n> **Ticket Channel**: <#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["channel"].AsInt64}>" +
-                        $"\n> **Ticket Category**: <#{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["category"].AsInt64}>" +
-                        $"\n> **Support Role**: <@&{shard[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["support"].AsInt64}>"
+                        $"\n> **Tickets Total**: `{Herrscher[$"{ctx.Guild.Id}"]["partner"]["ticket"]["count"].AsInt32}`" +
+                        $"\n> **Ticket Channel**: <#{Herrscher[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["channel"].AsInt64}>" +
+                        $"\n> **Ticket Category**: <#{Herrscher[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["category"].AsInt64}>" +
+                        $"\n> **Support Role**: <@&{Herrscher[$"{ctx.Guild.Id}"]["partner"]["ticket"]["configs"]["support"].AsInt64}>"
                     );
 
 
@@ -297,8 +297,8 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
             // DATABASE:
-            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
-            var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+            var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
             var tropical = new BsonDocument
                     {
                         { "role", (long)role.Id },
@@ -312,7 +312,7 @@ public class PartnershipCommands : ApplicationCommandModule
                         .Set($"{Guild.Id}.partner.configs.options", tropical)
                         .Set($"{Guild.Id}.partner.option", 1)
                         .Set($"{Guild.Id}.partner.log", (long)logs.Id);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
             }
             else
             {
@@ -320,7 +320,7 @@ public class PartnershipCommands : ApplicationCommandModule
                         .Set($"{Guild.Id}.partner.configs.options", tropical)
                         .Set($"{Guild.Id}.partner.option", 1)
                         .Set($"{Guild.Id}.partner.log", BsonNull.Value);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
             }
 
 

@@ -24,8 +24,8 @@ public class PartnershipTicketConfigs
                 if (e.Values[0] == "1_edit")
                 {
                     await e.Interaction.DeferAsync();
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
 
 
 
@@ -36,7 +36,7 @@ public class PartnershipTicketConfigs
                         Color = new DiscordColor("#7e67ff")
                     };
                     var SelectedTickets = "";
-                    var SelectedTickets1 = shard[$"{e.Guild.Id}"]["partner"]["ticket"]["embed_1"].AsString;
+                    var SelectedTickets1 = Herrscher[$"{e.Guild.Id}"]["partner"]["ticket"]["embed_1"].AsString;
                     if (SelectedTickets1.Contains('+'))
                     {
                         var t = SelectedTickets1.Split('+');
@@ -89,10 +89,10 @@ public class PartnershipTicketConfigs
 
 
                     
-                    // BUTTON SHARD:
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
-                    var ButtonSettings = shard[$"{e.Guild.Id}"]["partner"]["ticket"]["button"].AsBsonDocument;
+                    // BUTTON Herrscher:
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var ButtonSettings = Herrscher[$"{e.Guild.Id}"]["partner"]["ticket"]["button"].AsBsonDocument;
 
 
 

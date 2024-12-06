@@ -25,7 +25,7 @@ public class PartnershipOthersConfigs
 
 
 
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
 
 
 
@@ -57,7 +57,7 @@ public class PartnershipOthersConfigs
 
 
 
-                    if (shard[$"{e.Guild.Id}"]["partner"]["anti-eh"] == 0)
+                    if (Herrscher[$"{e.Guild.Id}"]["partner"]["anti-eh"] == 0)
                     {
                         await e.Interaction.CreateFollowupMessageAsync(
                         new DiscordFollowupMessageBuilder()
@@ -83,16 +83,16 @@ public class PartnershipOthersConfigs
 
 
 
-                    var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
 
 
 
                     var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Exit");
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
-                    if (shard[$"{e.Guild.Id}"]["partner"]["anti-qi"] == 0)
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    if (Herrscher[$"{e.Guild.Id}"]["partner"]["anti-qi"] == 0)
                     {
                         var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-qi", 1);
-                        await collection.UpdateOneAsync(shard, update);
+                        await collection.UpdateOneAsync(Herrscher, update);
 
 
                         await e.Interaction.CreateFollowupMessageAsync(
@@ -104,7 +104,7 @@ public class PartnershipOthersConfigs
                     else
                     {
                         var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-qi", 0);
-                        await collection.UpdateOneAsync(shard, update);
+                        await collection.UpdateOneAsync(Herrscher, update);
 
                         await e.Interaction.CreateFollowupMessageAsync(
                             new DiscordFollowupMessageBuilder()
@@ -122,10 +122,10 @@ public class PartnershipOthersConfigs
             // MODE 0:
             else if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_OSMode0")
             {
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-eh", 0);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 
@@ -140,10 +140,10 @@ public class PartnershipOthersConfigs
             // MODE 1:
             else if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_OSMode1")
             {
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-eh", 1);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 
@@ -158,10 +158,10 @@ public class PartnershipOthersConfigs
             // MODE 2:
             else if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_OSMode2")
             {
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-eh", 2);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 
@@ -176,10 +176,10 @@ public class PartnershipOthersConfigs
             // MODE 3:
             else if (e.Interaction.Data.CustomId == e.Interaction.User.Id.ToString() + "_OSMode3")
             {
-                var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                 var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.anti-eh", 3);
-                await collection.UpdateOneAsync(shard, update);
+                await collection.UpdateOneAsync(Herrscher, update);
 
 
 

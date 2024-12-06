@@ -12,32 +12,32 @@ using System.Text.RegularExpressions;
 public static class PartnershipGoMessage
 {
     // ========== START:
-    public static async Task StartThePartnership(MessageCreateEventArgs e, BsonDocument shard)
+    public static async Task StartThePartnership(MessageCreateEventArgs e, BsonDocument Herrscher)
     {
         try
         {
             // IF EVERYONE OR HERE:
             if (e.Message.Content.Contains("@everyone") || e.Message.Content.Contains("@here"))
             {
-                if (shard[$"{e.Guild.Id}"]["partner"]["anti-eh"] == 1)
+                if (Herrscher[$"{e.Guild.Id}"]["partner"]["anti-eh"] == 1)
                 {
-                    await IfMentions(e, shard, 1);
+                    await IfMentions(e, Herrscher, 1);
                     return;
                 }
-                else if (shard[$"{e.Guild.Id}"]["partner"]["anti-eh"] == 2)
+                else if (Herrscher[$"{e.Guild.Id}"]["partner"]["anti-eh"] == 2)
                 {
-                    await IfMentions(e, shard, 2);
+                    await IfMentions(e, Herrscher, 2);
                     return;
                 }
-                else if (shard[$"{e.Guild.Id}"]["partner"]["anti-eh"] == 3)
+                else if (Herrscher[$"{e.Guild.Id}"]["partner"]["anti-eh"] == 3)
                 {
-                    await IfMentions(e, shard, 3);
+                    await IfMentions(e, Herrscher, 3);
                     return;
                 }
             }
             else
             {
-                await Go(e, shard);
+                await Go(e, Herrscher);
             }
         }
         catch (Exception ex)
@@ -51,7 +51,7 @@ public static class PartnershipGoMessage
 
 
     // ========== IF MENTIONS @EVERYONE - @HERE:
-    public static async Task IfMentions(MessageCreateEventArgs e, BsonDocument shard, int OPT)
+    public static async Task IfMentions(MessageCreateEventArgs e, BsonDocument Herrscher, int OPT)
     {
         try
         {
@@ -63,9 +63,9 @@ public static class PartnershipGoMessage
 
 
 
-                if (shard[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                if (Herrscher[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                 {
-                    var ch = e.Guild.GetChannel((ulong)shard[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
+                    var ch = e.Guild.GetChannel((ulong)Herrscher[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
                     var embed = new DiscordEmbedBuilder()
                     {
                         Description = $"O usuário {e.Author.Mention} [ `{e.Author.Id}` ] enviou um convite de parcerias que continha menções **everyone** e/ou **here**! O convite foi detelado.",
@@ -99,9 +99,9 @@ public static class PartnershipGoMessage
                     new DiscordMessageBuilder()
                         .WithContent("Oops! Os Convites de parceria não podem mencionar **everyone** e **here**!")
                 );
-                if (shard[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                if (Herrscher[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                 {
-                    var ch = e.Guild.GetChannel((ulong)shard[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
+                    var ch = e.Guild.GetChannel((ulong)Herrscher[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
                     var embed = new DiscordEmbedBuilder()
                     {
                         Description = $"O usuário {e.Author.Mention} [ `{e.Author.Id}` ] enviou um convite de parcerias que continha menções **everyone** e/ou **here**!",
@@ -135,9 +135,9 @@ public static class PartnershipGoMessage
                     new DiscordMessageBuilder()
                         .WithContent("Oops! Os Convites de parceria não podem mencionar **everyone** e **here**!")
                 );
-                if (shard[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                if (Herrscher[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                 {
-                    var ch = e.Guild.GetChannel((ulong)shard[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
+                    var ch = e.Guild.GetChannel((ulong)Herrscher[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
                     var embed = new DiscordEmbedBuilder()
                     {
                         Description = $"O usuário {e.Author.Mention} [ `{e.Author.Id}` ] enviou um convite de parcerias que continha menções **everyone** e/ou **here**!",
@@ -166,17 +166,17 @@ public static class PartnershipGoMessage
         }
     }
     // ========== GO MESSAGE:
-    public static async Task Go(MessageCreateEventArgs e, BsonDocument shard)
+    public static async Task Go(MessageCreateEventArgs e, BsonDocument Herrscher)
     {
         try
         {
-            var ConfigsOptions = shard[$"{e.Guild.Id}"]["partner"]["configs"]["options"];
+            var ConfigsOptions = Herrscher[$"{e.Guild.Id}"]["partner"]["configs"]["options"];
             var Role = e.Guild.GetRole((ulong)ConfigsOptions["role"].ToInt64());
             var Ping = e.Guild.GetRole((ulong)ConfigsOptions["ping"].ToInt64());
-            var SelectedEmbedName = shard[$"{e.Guild.Id}"]["partner"]["selected"];
-            var embedConfigs = shard[$"{e.Guild.Id}"]["partner"]["configs"]["embeds"][SelectedEmbedName.ToString()];
+            var SelectedEmbedName = Herrscher[$"{e.Guild.Id}"]["partner"]["selected"];
+            var embedConfigs = Herrscher[$"{e.Guild.Id}"]["partner"]["configs"]["embeds"][SelectedEmbedName.ToString()];
             var points = 0;
-            var leaderboard = shard[$"{e.Guild.Id}"]["partner"]["leaderboard"];
+            var leaderboard = Herrscher[$"{e.Guild.Id}"]["partner"]["leaderboard"];
 
 
 
@@ -190,48 +190,48 @@ public static class PartnershipGoMessage
                 {
                     if (leaderboard["ranking"].AsBsonDocument.Contains($"{e.Author.Id}"))
                     {
-                        int pta = (int)shard[$"{e.Guild.Id}"]["partner"]["leaderboard"]["ranking"][$"{e.Author.Id}"];
-                        var k = shard[$"{e.Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.ToDictionary(elem => elem.Name, elem => elem.Value);
+                        int pta = (int)Herrscher[$"{e.Guild.Id}"]["partner"]["leaderboard"]["ranking"][$"{e.Author.Id}"];
+                        var k = Herrscher[$"{e.Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.ToDictionary(elem => elem.Name, elem => elem.Value);
                         var kt = k.OrderByDescending(x => x.Value);
                         foreach (var entry in kt)
                         {
                             ranking++;
                             if (ulong.Parse(entry.Key) == e.Author.Id) { break; }
                         }
-                        var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                        var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                         var update = Builders<BsonDocument>.Update
                             .Inc($"{e.Guild.Id}.partner.leaderboard.ranking.{e.Author.Id}", 1)
                             .Inc($"{e.Guild.Id}.partner.ps", 1)
                             .Inc($"{e.Guild.Id}.partner.xp", rnd.Next(2, 5));
-                        await collection.UpdateOneAsync(shard, update);
+                        await collection.UpdateOneAsync(Herrscher, update);
                         points = pta++;
                     }
                     else
                     {
-                        var k = shard[$"{e.Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.ToDictionary(elem => elem.Name, elem => elem.Value);
+                        var k = Herrscher[$"{e.Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.ToDictionary(elem => elem.Name, elem => elem.Value);
                         var kt = k.OrderByDescending(x => x.Value);
                         foreach (var entry in kt)
                         {
                             ranking++;
                             if (ulong.Parse(entry.Key) == e.Author.Id) { break; }
                         }
-                        var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                        var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                         var update = Builders<BsonDocument>.Update
                             .Set($"{e.Guild.Id}.partner.leaderboard.ranking.{e.Author.Id}", 1)
                             .Inc($"{e.Guild.Id}.partner.ps", 1)
                             .Inc($"{e.Guild.Id}.partner.xp", rnd.Next(2, 5));
-                        await collection.UpdateOneAsync(shard, update);
+                        await collection.UpdateOneAsync(Herrscher, update);
                         points = 1;
                     }
                 }
                 else
                 {
-                    var collection = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
                     var update = Builders<BsonDocument>.Update
                         .Set($"{e.Guild.Id}.partner.leaderboard.ranking.{e.Author.Id}", 1)
                         .Inc($"{e.Guild.Id}.partner.ps", 1)
                         .Inc($"{e.Guild.Id}.partner.xp", rnd.Next(2, 5));
-                    await collection.UpdateOneAsync(shard, update);
+                    await collection.UpdateOneAsync(Herrscher, update);
                     points = 1;
                 }
             }
@@ -255,7 +255,7 @@ public static class PartnershipGoMessage
                     var match = inviteRegex.Match(e.Message.Content);
                     try
                     {
-                        var g = await EngineV1.RezetRazor.GetInviteByCodeAsync(match.Groups[1].Value);
+                        var g = await EngineV8X.RezetRazor.GetInviteByCodeAsync(match.Groups[1].Value);
                         if (!g.IsRevoked)
                         {
                             embed.WithTitle(
@@ -327,7 +327,7 @@ public static class PartnershipGoMessage
                     var match = inviteRegex.Match(e.Message.Content);
                     try
                     {
-                        var g = await EngineV1.RezetRazor.GetInviteByCodeAsync(match.Groups[1].Value);
+                        var g = await EngineV8X.RezetRazor.GetInviteByCodeAsync(match.Groups[1].Value);
                         if (!g.IsRevoked)
                         {
                             embed.WithTitle(

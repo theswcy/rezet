@@ -57,7 +57,7 @@ public class DatabaseService
     //         return null;
     //     }
     // }
-    // ========== GET DOCUMENT AND SHARD:
+    // ========== GET DOCUMENT AND Herrscher:
     public BsonDocument? GetHerrscher(DiscordGuild Guild, long Option)
     {
         try
@@ -65,10 +65,10 @@ public class DatabaseService
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
             long x = 1;
-            for (long shard = 0; shard < x; shard++)
+            for (long Herrscher = 0; Herrscher < x; Herrscher++)
             {
                 var collection = database?.GetCollection<BsonDocument>("guilds");
-                var filter = Builders<BsonDocument>.Filter.Eq("_id", $"shard_{shard}");
+                var filter = Builders<BsonDocument>.Filter.Eq("_id", $"Herrscher_{Herrscher}");
                 var SelectedHerrscher = collection.Find(filter).FirstOrDefault();
 
 
@@ -81,16 +81,16 @@ public class DatabaseService
                     }
                     else
                     {
-                        Console.WriteLine($"    ➜  {y}  |  Database Shard\n       The guild {Guild.Name} / {Guild.Id} don't have a database in shard {shard}.");
+                        Console.WriteLine($"    ➜  {y}  |  Database Herrscher\n       The guild {Guild.Name} / {Guild.Id} don't have a database in Herrscher {Herrscher}.");
                     }
                 }
-                else if (Option == 2) // RETURN SHARD WITHOUT GUILD TO ADD.
+                else if (Option == 2) // RETURN Herrscher WITHOUT GUILD TO ADD.
                 {
                     if (SelectedHerrscher != null && SelectedHerrscher.Contains(Guild.Id.ToString()) == false)
                     {
                         if (SelectedHerrscher.ElementCount >= 1000)
                         {
-                            Console.WriteLine($"    ➜  {y}  |  Database Shard\n       The shard {shard} is full!");
+                            Console.WriteLine($"    ➜  {y}  |  Database Herrscher\n       The Herrscher {Herrscher} is full!");
                         }
                         else
                         {
@@ -105,7 +105,7 @@ public class DatabaseService
         {
             DateTime now = DateTime.Now;
             var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-            Console.WriteLine($"    ➜  {y}  |  Database Shard\n       Error in shard select:\n       {ex.Message}");
+            Console.WriteLine($"    ➜  {y}  |  Database Herrscher\n       Error in Herrscher select:\n       {ex.Message}");
             return null;
         }
     }

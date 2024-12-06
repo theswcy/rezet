@@ -15,26 +15,26 @@ public static class OnMessageEvents
         try
         {
             var Guild = e.Guild;
-            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
+            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
 
 
 
 
             // FOR AUTOPING:
-            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
+            if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
             {
                 if (e.Author.IsBot) { return; }
-                await ForAutoping(sender, e, shard);
+                await ForAutoping(sender, e, Herrscher);
             }
 
 
 
             // FOR PARTNERSHIP:
-            if (shard[$"{Guild.Id}"]["partner"]["option"] != 0)
+            if (Herrscher[$"{Guild.Id}"]["partner"]["option"] != 0)
             {
                 if (e.Author.IsBot) { return; }
-                if ((ulong)shard[$"{Guild.Id}"]["partner"]["configs"]["options"]["channel"].ToInt64() != e.Channel.Id) { return; }
-                await PartnershipGoMessage.StartThePartnership(e, shard);
+                if ((ulong)Herrscher[$"{Guild.Id}"]["partner"]["configs"]["options"]["channel"].ToInt64() != e.Channel.Id) { return; }
+                await PartnershipGoMessage.StartThePartnership(e, Herrscher);
             }
         }
         catch (Exception ex)
@@ -46,12 +46,12 @@ public static class OnMessageEvents
 
 
     // AUTOPING:
-    public static async Task ForAutoping(DiscordClient sender, MessageCreateEventArgs e, BsonDocument shard)
+    public static async Task ForAutoping(DiscordClient sender, MessageCreateEventArgs e, BsonDocument Herrscher)
     {
         try
         {
             var Guild = e.Guild;
-            var PingDict = shard
+            var PingDict = Herrscher
                             [$"{Guild.Id}"]
                             ["moderation"]
                             ["auto_actions"]

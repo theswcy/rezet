@@ -63,7 +63,7 @@ public class RezetSystems : ApplicationCommandModule
             "\n> **Engine**: `.NET 8.0`"
         );
         var t = proc.PrivateMemorySize64 / 1024 / 1024;
-        var ss = EngineV1.HerrscherRazor?._database?.GetCollection<BsonDocument>("Guilds");
+        var ss = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("Guilds");
         var stats = ss.Database.RunCommand<BsonDocument>(new BsonDocument { { "dbStats", 1 } });
         var st = Convert.ToDouble(stats["dataSize"]) / (1024 * 1024);
         var pingEmoji = "<:rezet_1_goodping:1147907217593479179>";
@@ -77,15 +77,15 @@ public class RezetSystems : ApplicationCommandModule
             $"\n> <:database:1184560409005522965> **DB**: `{st:F2}MB / 512MB`"
         );
         MachineInformations.WithImageUrl("https://media.discordapp.net/attachments/1111358828282388532/1172043117294264350/IMG_20231109_020343.png");
-        MachineInformations.WithThumbnail(EngineV1.RezetRazor.CurrentUser.AvatarUrl);
+        MachineInformations.WithThumbnail(EngineV8X.RezetRazor.CurrentUser.AvatarUrl);
 
 
 
 
         // SHARDS:
-        var ShardedClientInformations = new DiscordEmbedBuilder()
+        var ShardClientInformations = new DiscordEmbedBuilder()
         {
-            Description = "## <a:rezet_loading:1147722017806762045> Shards!",
+            Description = "## <a:rezet_loading:1147722017806762045> Herrschers!",
             Color = new DiscordColor("#7e67ff")
         };
         int MembersCount = 0;
@@ -93,35 +93,35 @@ public class RezetSystems : ApplicationCommandModule
         {
             MembersCount += entry.MemberCount;
         }
-        ShardedClientInformations.AddField(
+        ShardClientInformations.AddField(
             "<:rezet_box:1147164112091086920> Single Shard Client:",
             $"> **Servers**: `{ctx.Client.Guilds.Count}`" +
             $"\n> **Members**: `{MembersCount}`"
         );
-        ShardedClientInformations.WithImageUrl("https://media.discordapp.net/attachments/1031214679915233380/1082297086290178048/IMG_20230306_104146.png");
-        // foreach (var shard in Program.ShardedRezet.ShardClients)
+        ShardClientInformations.WithImageUrl("https://media.discordapp.net/attachments/1031214679915233380/1082297086290178048/IMG_20230306_104146.png");
+        // foreach (var Herrscher in Program.HerrscheredRezet.HerrscherClients)
         // {
-        //     var shardId = shard.Key;
-        //     var guildCount = shard.Value.Guilds.Count;
-        //     var shardPing = shard.Value.Ping;
+        //     var HerrscherId = Herrscher.Key;
+        //     var guildCount = Herrscher.Value.Guilds.Count;
+        //     var HerrscherPing = Herrscher.Value.Ping;
 
         //     var pingEmoji1 = "<:rezet_1_goodping:1147907217593479179>";
-        //     if (shardPing > 40) { pingEmoji1 = "<:rezet_1_idelping:1147907282844274879>"; }
-        //     else if (shardPing > 60) { pingEmoji1 = "<:rezet_1_badping:1147907161507246254>"; }
+        //     if (HerrscherPing > 40) { pingEmoji1 = "<:rezet_1_idelping:1147907282844274879>"; }
+        //     else if (HerrscherPing > 60) { pingEmoji1 = "<:rezet_1_badping:1147907161507246254>"; }
 
-        //     int shardUsers = 0;
-        //     foreach (var s in shard.Value.Guilds)
+        //     int HerrscherUsers = 0;
+        //     foreach (var s in Herrscher.Value.Guilds)
         //     {
-        //         shardUsers += s.Value.MemberCount;
+        //         HerrscherUsers += s.Value.MemberCount;
         //     }
 
 
 
-        //     ShardedClientInformations.AddField(
-        //         $"<:rezet_shine:1147368423475658882> Andromeda {shardId}:",
+        //     HerrscheredClientInformations.AddField(
+        //         $"<:rezet_shine:1147368423475658882> Andromeda {HerrscherId}:",
         //         $"> <:rezet_box:1147164112091086920> **Servers**: `{guildCount}`" +
-        //         $"\n: <:rezet_Bugs:1148010355147153489> **Users**:`{shardUsers:N0}`" +
-        //         $"\n> {pingEmoji1} **Ping**: `{shardPing}ms`",
+        //         $"\n: <:rezet_Bugs:1148010355147153489> **Users**:`{HerrscherUsers:N0}`" +
+        //         $"\n> {pingEmoji1} **Ping**: `{HerrscherPing}ms`",
         //         true
         //     );
         // }
@@ -130,18 +130,18 @@ public class RezetSystems : ApplicationCommandModule
 
 
         // DATABASE:
-        var ShardedDatabaseInformations = new DiscordEmbedBuilder()
+        var HerrscheredDatabaseInformations = new DiscordEmbedBuilder()
         {
             Description = "## <a:rezet_loading:1147722017806762045> Database!",
             Color = new DiscordColor("#7e67ff")
         };
-        var Herrscher = EngineV1.HerrscherRazor.GetHerrscherDocument(ctx.Guild);
+        var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(ctx.Guild);
         var GuildsInHerrscher = Herrscher.AsBsonDocument.ToDictionary();
-        ShardedDatabaseInformations.AddField(
+        HerrscheredDatabaseInformations.AddField(
             "<:rezet_share:1147165266887856209> Herrscher 0",
             $"> **Servers**: `{GuildsInHerrscher.Count}/1000`"
         );
-        ShardedDatabaseInformations.WithImageUrl("https://media.discordapp.net/attachments/1031214679915233380/1082297086290178048/IMG_20230306_104146.png");
+        HerrscheredDatabaseInformations.WithImageUrl("https://media.discordapp.net/attachments/1031214679915233380/1082297086290178048/IMG_20230306_104146.png");
         
 
 
@@ -152,8 +152,8 @@ public class RezetSystems : ApplicationCommandModule
             new DiscordWebhookBuilder()
                 .WithContent("Bip bup bip!")
                 .AddEmbed(MachineInformations)
-                .AddEmbed(ShardedClientInformations)
-                .AddEmbed(ShardedDatabaseInformations)
+                .AddEmbed(ShardClientInformations)
+                .AddEmbed(HerrscheredDatabaseInformations)
         );
     }
 }

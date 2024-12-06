@@ -15,15 +15,15 @@ public static class OnJoinOrQuit
         try
         {
             var Guild = e.Guild;
-            var shard = EngineV1.HerrscherRazor?.GetHerrscherDocument(Guild);
+            var Herrscher = EngineV8X.HerrscherRazor?.GetHerrscherDocument(Guild);
             var Member = e.Member;
 
 
 
 #pragma warning disable CS8602
-            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
+            if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
             {
-                var RolesDict = shard
+                var RolesDict = Herrscher
                                 [$"{Guild.Id}"]
                                 ["moderation"]
                                 ["auto_actions"]
@@ -57,23 +57,23 @@ public static class OnJoinOrQuit
         try
         {
             var Guild = e.Guild;
-            var shard = EngineV1.HerrscherRazor.GetHerrscherDocument(Guild);
+            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
             var Member = e.Member;
 
 
 
 
 
-            if (shard[$"{Guild.Id}"]["partner"]["anti-qi"] == 1)
+            if (Herrscher[$"{Guild.Id}"]["partner"]["anti-qi"] == 1)
             {
-                var ch2 = e.Guild.GetChannel((ulong)shard[$"{Guild.Id}"]["partner"]["configs"]["options"]["channel"].AsInt64);
+                var ch2 = e.Guild.GetChannel((ulong)Herrscher[$"{Guild.Id}"]["partner"]["configs"]["options"]["channel"].AsInt64);
                 var messages = await ch2.GetMessagesAsync(100);
                 var msg = messages.Where(msg => msg.MentionedUsers.Any(u => u.Id == Member.Id));
                 if (msg.Count() != 0)
                 {
-                    if (shard[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                    if (Herrscher[$"{Guild.Id}"]["partner"]["log"] != BsonNull.Value)
                     {
-                        var ch = e.Guild.GetChannel((ulong)shard[$"{Guild.Id}"]["partner"]["log"].AsInt64);
+                        var ch = e.Guild.GetChannel((ulong)Herrscher[$"{Guild.Id}"]["partner"]["log"].AsInt64);
                         foreach (var message in msg)
                         {
                             await message.DeleteAsync();
