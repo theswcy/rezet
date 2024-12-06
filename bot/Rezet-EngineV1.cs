@@ -13,8 +13,8 @@ using Rezet.Events;
 #pragma warning disable CS8602
 namespace RezetSharp
 {
-    // ========== REZET ENGINE V1.0
-    class EngineV1
+    // ========== REZET ENGINE V8.0 Extreme.
+    class EngineV8X
     {
         // ========== IGNITES:
         public static DiscordClient? RezetRazor;
@@ -28,11 +28,12 @@ namespace RezetSharp
         // ========== AOCORE:
         public static async Task AwaysOnCore()
         {
-            await EngineStart();
             RezetRazor.SocketOpened += async (sender, e) =>
             {
                 DateTime now = DateTime.Now; var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-                Console.WriteLine($"    ➜  {y}  |  EngineV1 Started\n       Socket Opened!");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"    ➜  {y}  |  EngineV8X Started\n       Socket Opened! 🔥");
+                Console.ResetColor();
                 await Task.CompletedTask;
             };
             RezetRazor.SocketClosed += async (sender, e) =>
@@ -41,7 +42,7 @@ namespace RezetSharp
                 int RetryCount = 0;
                 while (RetryCount < 10)
                 {
-                    Console.WriteLine($"    ➜  {y}  |  EngineV1 Error\n       Socket Connection Closed:\n       {e.CloseMessage}");
+                    Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       Socket Connection Closed:\n       {e.CloseMessage}");
                     try
                     {
                         await EngineStart();
@@ -49,18 +50,19 @@ namespace RezetSharp
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"    ➜  {y}  |  EngineV1 Error\n       Error in EngineV1 restart:\n       {ex.Message}\n       {e.CloseMessage}");
+                        Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       Error in EngineV8X restart:\n       {ex.Message}\n       {e.CloseMessage}");
                         await Task.Delay(TimeSpan.FromSeconds(10));
                     }
                 }
-                Console.WriteLine($"    ➜  {y}  |  EngineV1 Error\n       The engine will not restart:\n\n       {e.CloseMessage}");
+                Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       The engine will not restart:\n\n       {e.CloseMessage}");
             };
             RezetRazor.SocketErrored += async (sender, e) => 
             {
                 DateTime now = DateTime.Now; var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-                Console.WriteLine($"    ➜  {y}  |  EngineV1 Error\n       Socket Connection Errored:\n       {e.Exception.Message}");
+                Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       Socket Connection Errored:\n       {e.Exception.Message}");
                 await Task.CompletedTask;
             };
+            await Task.CompletedTask;
         }
 
 
@@ -76,7 +78,7 @@ namespace RezetSharp
             while (true)
             {
                 var serverCount = RezetRazor?.Guilds.Count;
-                var activity = new DiscordActivity($"Heyo! In {serverCount} communities!", ActivityType.Playing); var userStatus = UserStatus.DoNotDisturb;
+                var activity = new DiscordActivity($"Heyo! {serverCount} servers with {RezetRazor.Ping}ms!", ActivityType.Playing); var userStatus = UserStatus.DoNotDisturb;
                 await RezetRazor.UpdateStatusAsync(activity, userStatus); await Task.Delay(StatusUpdateInterval);
             }
         }
@@ -85,12 +87,13 @@ namespace RezetSharp
 
 
         // ========== ENGINE START:
-        private static async Task EngineStart()
+        public static async Task EngineStart()
         {
             try
             {
                 // ========== GET THE TOKEN:
-                Console.ForegroundColor = ConsoleColor.White; Console.WriteLine("\n\n\n       ⚯  Engine V1 Started!"); Console.ResetColor();
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.White; Console.WriteLine("\n\n\n       ⚯  Engine V8 Extreme Started!"); Console.ResetColor();
                 var configPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "obj", "config.json");
                 var configJson = await File.ReadAllTextAsync(configPath);
                 var config = JsonSerializer.Deserialize<Config>(configJson);
@@ -150,6 +153,7 @@ namespace RezetSharp
                 // ========== START!
                 await RezetRazor.ConnectAsync();
                 RezetRazor.Ready += Client_Ready;
+                await AwaysOnCore();
                 Console.ResetColor();
                 Console.Write("    ➜  ");
                 Console.ForegroundColor = ConsoleColor.Blue;
@@ -159,7 +163,7 @@ namespace RezetSharp
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.Write($"  {y}  |  SHARP  ⚯   Version: Sharp 1.5\n");
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write($"       ⚯  Engine V1 working on .NET {Environment.Version}!\n\n");
+                Console.Write($"       ⚯  Engine V8 Extreme working on .NET {Environment.Version}!\n\n");
                 Console.ForegroundColor = ConsoleColor.White;
                 await Task.Delay(-1);
             }
