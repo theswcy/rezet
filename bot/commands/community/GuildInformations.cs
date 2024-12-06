@@ -1,7 +1,6 @@
 using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.Entities;
-using Rezet;
 using RezetSharp;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
@@ -86,20 +85,21 @@ public class CommunityCommands : ApplicationCommandModule
 
 
 
-            var Guild = await EngineV1.RezetRazor.GetGuildAsync(ctx.Guild.Id);
+            var Guild = await EngineV8X.RezetRazor.GetGuildAsync(ctx.Guild.Id);
             await Guild.RequestMembersAsync();
             var Members = await Guild.GetAllMembersAsync();
             var Channels = await Guild.GetChannelsAsync();
             var Roles = Guild.Roles;
 
 
-
+ 
+            int bl = 0;
             var bc = Guild.PremiumSubscriptionCount;
-            var BoostBadge = "<:rezet_globo:1147178426927681646>";
-            if (bc == 1) {BoostBadge = "<:rezet_sb_0:1171817483779457186>"; }
-            else if (bc >= 2 && bc < 7) {BoostBadge = "<:rezet_sb_1:1171817556319936583>"; }
-            else if (bc >= 7 && bc < 14) {BoostBadge = "<:rezet_sb_2:1171817619762991204>"; }
-            else if (bc >= 14) {BoostBadge = "<:rezet_sb_3:1171817673852715008>"; }
+            string BoostBadge = "<:rezet_globo:1147178426927681646>";
+            if (bc == 1) { BoostBadge = "<:rezet_sb_0:1171817483779457186>"; }
+            else if (bc >= 2 && bc < 7) { BoostBadge = "<:rezet_sb_1:1171817556319936583>"; bl = 1; }
+            else if (bc >= 7 && bc < 14) { BoostBadge = "<:rezet_sb_2:1171817619762991204>"; bl = 2; }
+            else if (bc >= 14) { BoostBadge = "<:rezet_sb_3:1171817673852715008>"; bl = 3; }
             
 
             
@@ -118,6 +118,12 @@ public class CommunityCommands : ApplicationCommandModule
                 $"> **Owner**: {Guild.Owner.DisplayName} | `{Guild.OwnerId}`" +
                 $"\n> **Type**: `Community`"
             );
+            embed.AddField(
+                "<:rezet_colornitrod:1164416963121008701> Boost",
+                $"> **Boost role**: {(Guild.Roles.Values.FirstOrDefault(r => r.Tags.IsPremiumSubscriber) != null ? Guild.Roles.Values.FirstOrDefault(r => r.Tags.IsPremiumSubscriber).Mention : "**Uncativated**.")}" +
+                $"\n> **Boosts**: `{Guild.PremiumSubscriptionCount}`" +
+                $"\n> **Level**: `{bl}`"
+            );
 
 
             
@@ -127,31 +133,33 @@ public class CommunityCommands : ApplicationCommandModule
                  m.Presence.Status == UserStatus.DoNotDisturb));
             embed.AddField(
                 "<:rezet_globo:1147178426927681646> Members",
-                $"> <:rezet_dgreen:1147164307889586238> **Online**: `{onlineMembers}`" +
-                $"\n> <:rezet_dred:1147164215837208686> **Offline**: `{Members.Count - onlineMembers}`" +
-                $"\n> <:rezet_shine:1147373071737573446> **Bots**: `{Members.Count(m => m.IsBot)}`" +
-                $"\n> <:rezet_globo:1147178426927681646> **Total**: `{Members.Count}`"
+                $"> <:rezet_dgreen:1147164307889586238> `{onlineMembers}` **Online**." +
+                $"\n> <:rezet_dred:1147164215837208686> `{Members.Count - onlineMembers}` **Offline**." +
+                $"\n> <:rezet_shine:1147373071737573446> `{Members.Count(m => m.IsBot)}` **Bots**." +
+                $"\n> <:rezet_globo:1147178426927681646> `{Members.Count}` **Total**."
             );
 
 
             
             embed.AddField(
                 "<:rezet_connect:1147907330378309652> Channels",
-                $"> **Text**: `{Channels.Count(c => c.Type == ChannelType.Text)}`" + 
-                $"\n> **Voice** `{Channels.Count(c => c.Type == ChannelType.Voice)}`" +
-                $"\n> **Forum**: `{Channels.Count(c => c.Type == ChannelType.GuildForum)}`" +
-                $"\n> **Stage**: `{Channels.Count(c => c.Type == ChannelType.Stage)}`" +
-                $"\n> **Category**: `{Channels.Count(c => c.Type == ChannelType.Category)}`" +
-                $"\n> **Public Threads**: `{Channels.Count(c => c.Type == ChannelType.PublicThread)}`" +
-                $"\n> **Private Threads**: `{Channels.Count(c => c.Type == ChannelType.PrivateThread)}`" +
-                $"\n> **Announcement**: `{Channels.Count(c => c.Type == ChannelType.News)}`" 
+                $"> `{Channels.Count(c => c.Type == ChannelType.Text)}` **Text**." + 
+                $"\n> `{Channels.Count(c => c.Type == ChannelType.Voice)}` **Voice**." +
+                $"\n> `{Channels.Count(c => c.Type == ChannelType.GuildForum)}` **Forum**." +
+                $"\n> `{Channels.Count(c => c.Type == ChannelType.Stage)}` **Stage**." +
+                $"\n> `{Channels.Count(c => c.Type == ChannelType.Category)}` **Category**." +
+                $"\n> `{Channels.Count(c => c.Type == ChannelType.PublicThread)}` **Public Threads**." +
+                $"\n> `{Channels.Count(c => c.Type == ChannelType.PrivateThread)}` **Private Threads**." +
+                $"\n> `{Channels.Count(c => c.Type == ChannelType.News)}` **Announcement**." 
             );
 
 
-
+            int z = 0;
+            foreach (var entry in Roles) { if (entry.Value.IsManaged) {z++;} }
             embed.AddField(
                 "<:rezet_share:1147165266887856209> Roles",
-                $"> **Roles**: `{Roles.Count}`"
+                $"> `{Roles.Count}` **Roles**." +
+                $"\n> `{z}` **Managed**."
             );
 
 
@@ -182,7 +190,7 @@ public class CommunityCommands : ApplicationCommandModule
         try
         {
             await ctx.DeferAsync();
-            var Guild = await EngineV1.RezetRazor.GetGuildAsync(ctx.Guild.Id);
+            var Guild = await EngineV8X.RezetRazor.GetGuildAsync(ctx.Guild.Id);
             var Author = ctx.Member;
 
 
