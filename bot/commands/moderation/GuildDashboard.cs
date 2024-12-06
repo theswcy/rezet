@@ -36,9 +36,13 @@ public class Moderators : ApplicationCommandModule
 
 
 
+#pragma warning disable CS8602
             embed.AddField(
-                "<:rezet_settings1:1147163366561955932> Basics:",
-                "a"
+                "<:rezet_settings1:1147163366561955932> Community",
+                $"> {(Guild.RulesChannel != null ? "<:rezet_3_act:1189936284379119726>" : "<:rezet_3_nact:1189936390113341601>")} **Canal de regras**: {(Guild.RulesChannel != null ? Guild.RulesChannel.Mention : "`Uncativated`.")}" +
+                $"\n> {(Guild.SystemChannel != null ? "<:rezet_3_act:1189936284379119726>": "<:rezet_3_nact:1189936390113341601>")} **Canal padrão**: {(Guild.SystemChannel != null ? Guild.SystemChannel.Mention : "`Uncativated`.")}" +
+                $"\n> {(Guild.MfaLevel == MfaLevel.Enabled ? "<:rezet_3_act:1189936284379119726>" : "<:rezet_3_nact:1189936390113341601>")} **2FA interno**. {(Guild.MfaLevel == MfaLevel.Enabled ? "`Activated`." : "`Uncativated`. <:rezet_exclamation:1164417019303702570> `Ativação recomendada`.")}" +
+                $"\n> <:rezet_verified:1147163979022610472> **Verificação**: `{Guild.VerificationLevel}`."
             );
 
 
@@ -51,12 +55,25 @@ public class Moderators : ApplicationCommandModule
                 new("View autopings", "autoping", "View channels with autoping function.", emoji: emoji),
                 new("View mod logs channel", "modlogs", "View channels with mod logs function.", emoji: emoji)
             };
+
+
+
+
+            var Herrscher = EngineV8X.HerrscherRazor?.GetHerrscherDocument(Guild);
+            // SHOW THE MODERATION CONFIGS:
+            var GuildSecurity = Herrscher[$"{Guild.Id}"]["moderation"]["security"];
+            embed.AddField(
+                "<:rezet_shine:1147373071737573446> Security [ Em breve! ]",
+                $"> {(GuildSecurity["sharp-mode"] != false ? "<:rezet_3_act:1189936284379119726>" : "<:rezet_3_nact:1189936390113341601>")} **Sharp-mode**." +
+                $"\n> {(GuildSecurity["anti-invites"] != BsonNull.Value ? "<:rezet_3_act:1189936284379119726>" : "<:rezet_3_nact:1189936390113341601>")} **Anti-invites**." +
+                $"\n> {(GuildSecurity["anti-raid"] != BsonNull.Value ? "<:rezet_3_act:1189936284379119726>" : "<:rezet_3_nact:1189936390113341601>")} **Anti-raid**." +
+                $"\n> {(GuildSecurity["anti-selfbot"] != BsonNull.Value ? "<:rezet_3_act:1189936284379119726>" : "<:rezet_3_nact:1189936390113341601>")} **Anti-selfbot**." +
+                $"\n> {(GuildSecurity["blackout"] != BsonNull.Value ? "<:rezet_3_act:1189936284379119726>" : "<:rezet_3_nact:1189936390113341601>")} **Blackout**."
+            );
             // SHOW THE AUTOROLE CONFIGS:
-            var shard = EngineV1.HerrscherRazor?.GetHerrscherDocument(Guild);
-#pragma warning disable CS8602
-            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
+            if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_role"] != BsonNull.Value)
             {
-                var RolesDict = shard
+                var RolesDict = Herrscher
                 [$"{Guild.Id}"]
                 ["moderation"]
                 ["auto_actions"]
@@ -70,15 +87,15 @@ public class Moderators : ApplicationCommandModule
                     cc++;
                 }
                 embed.AddField(
-                    "<:rezet_3_act:1189936284379119726> Autorole:",
-                    $"> Cargos na função Autorole: **{cc}**."
+                    "<:rezet_3_act:1189936284379119726> Autorole",
+                    $"> `{cc}` **Cargos na função Autorole**."
                 );
             }
             else
             {
                 embed.AddField(
-                    "<:rezet_3_nact:1189936390113341601> Autorole:",
-                    "> Nenhum cargo adicionado a função **Autorole**."
+                    "<:rezet_3_nact:1189936390113341601> Autorole",
+                    "> **Nenhum cargo adicionado a função Autorole**."
                 );
                 AutomaticActions.RemoveAll(action => action.Value == "autorole");
             }
@@ -86,9 +103,9 @@ public class Moderators : ApplicationCommandModule
 
 
             // SHOW THE AUTOPING CONFIGS:
-            if (shard[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
+            if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
             {
-                var PingDict = shard
+                var PingDict = Herrscher
                 [$"{Guild.Id}"]
                 ["moderation"]
                 ["auto_actions"]
@@ -100,15 +117,15 @@ public class Moderators : ApplicationCommandModule
                     r++;
                 }
                 embed.AddField(
-                    "<:rezet_3_act:1189936284379119726> Autoping: <:rezet_beta:1165999715633090620>",
-                    $"> Canais com a função Autoping: **{r}**."
+                    "<:rezet_3_act:1189936284379119726> Autoping",
+                    $"> `{r}`**Canais com a função Autoping**."
                 );
             }
             else
             {
                 embed.AddField(
-                    "<:rezet_3_nact:1189936390113341601> Autoping: <:rezet_beta:1165999715633090620>",
-                    "> Nenhum canal com a função autoping ativada."
+                    "<:rezet_3_nact:1189936390113341601> Autoping",
+                    "> **Nenhum canal com a função autoping ativada**."
                 );
                 AutomaticActions.RemoveAll(action => action.Value == "autoping");
             }
@@ -116,7 +133,7 @@ public class Moderators : ApplicationCommandModule
 
 
             // SHOW THE MODERATION LOGS CONFIGS:
-            var ModLogs = shard
+            var ModLogs = Herrscher
                 [$"{Guild.Id}"]
                 ["moderation"]
                 ["mod_logs"]
@@ -135,15 +152,15 @@ public class Moderators : ApplicationCommandModule
             if (t != 0)
             {
                 embed.AddField(
-                    "<:rezet_3_act:1189936284379119726> Mod Logs: [ em breve! ]",
-                    $"> Canais de registro da moderação: **{t}**."
+                    "<:rezet_3_act:1189936284379119726> Mod Logs",
+                    $"> `{t}` **Canais de registro da moderação**."
                 );
             }
             else
             {
                 embed.AddField(
-                    "<:rezet_3_nact:1189936390113341601> Mod Logs: [ em breve! ]",
-                    "> Nenhum canal possui a função de registros."
+                    "<:rezet_3_nact:1189936390113341601> Mod Logs",
+                    "> **Nenhum canal possui a função de registros**."
                 );
                 AutomaticActions.RemoveAll(action => action.Value == "modlogs");
             }
