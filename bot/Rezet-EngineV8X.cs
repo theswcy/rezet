@@ -5,6 +5,7 @@ using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.CommandsNext;
 using Rezet.Commands;
 using Rezet.Events;
+using DSharpPlus.Net.WebSocket;
 
 
 
@@ -56,7 +57,7 @@ namespace RezetSharp
                 }
                 Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       The engine will not restart:\n\n       {e.CloseMessage}");
             };
-            RezetRazor.SocketErrored += async (sender, e) => 
+            RezetRazor.SocketErrored += async (sender, e) =>
             {
                 DateTime now = DateTime.Now; var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
                 Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       Socket Connection Errored:\n       {e.Exception.Message}");
@@ -108,13 +109,13 @@ namespace RezetSharp
                     Intents = DiscordIntents.All,
                     ReconnectIndefinitely = true,
                     GatewayCompressionLevel = GatewayCompressionLevel.Payload,
-                    MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error
+                    MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error,
                 };
                 RezetRazor = new DiscordClient(rzt);
                 CommandsRazor = RezetRazor.UseCommandsNext(
                     new CommandsNextConfiguration
                     {
-                        StringPrefixes = [ "-r " ],
+                        StringPrefixes = ["-r "],
                         CaseSensitive = false,
                         EnableDms = false,
                         EnableMentionPrefix = true
