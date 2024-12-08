@@ -15,6 +15,7 @@ using DSharpPlus.SlashCommands;
 
 
 
+#pragma warning disable CS8602
 public static class CheckRoleType
 {
     public static async Task CheckType(InteractionContext ctx, int Type, DiscordRole Role)
@@ -32,13 +33,16 @@ public static class CheckRoleType
                 }
                 break;
             case 2: // BOOSTER:
-                if (Role.Tags.IsPremiumSubscriber)
+                if (ctx.Guild.Roles.Values.FirstOrDefault(r => r.Tags.IsPremiumSubscriber) != null)
                 {
-                    await ctx.EditResponseAsync(
+                    if (Role.Id == ctx.Guild.Roles.Values.FirstOrDefault(r => r.Tags.IsPremiumSubscriber).Id)
+                    {
+                        await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
                             .WithContent($"`{Role.Name}` é um cargo de **boost** e não pode ser gerenciado!")
-                    );
-                    throw new UnauthorizedAccessException();
+                        );
+                        throw new UnauthorizedAccessException();
+                    }
                 }
                 break;
             case 3: // MANAGED:

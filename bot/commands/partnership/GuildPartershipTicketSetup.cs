@@ -193,9 +193,10 @@ public class PartnershipTickets : ApplicationCommandModule
             catch (Exception ex)
             {
                 await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
                 );
+                Console.WriteLine($"    ➜  Slash Command: /partners ticket setup\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
                 return;
             }
         }

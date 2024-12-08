@@ -131,14 +131,14 @@ public class ModeratorDashboard
                     {
                         Color = new DiscordColor("#7e67ff")
                     };
-                    var desc = "## <:rezet_shine:1147373071737573446> Autoping!\nEsses aqui são os canais que possuem a função **Autoping** ativada!\n";
+                    var desc = "## <:rezet_shine:1147373071737573446> Autoping!\nEsses aqui são os canais que possuem a função **Autoping** ativada!\n\n";
 
 
 
                     foreach (var Entry in PingDict)
                     {
                         var PingD = PingDict[$"{Entry.Key}"].AsBsonDocument;
-                        desc += $"<:rezet_channels:1308125117875752961> <#{Entry.Key}>\n> **Ping**: <@&{PingD["ping"]}>\n> **Text**: ```{PingD["text"]}```\n\n";
+                        desc += $"<:rezet_channels:1308125117875752961> <#{Entry.Key}>\n> **Ping**: <@&{PingD["ping"]}>\n> **Message**: ```{PingD["message"]}```\n\n";
                     }
 
 
@@ -229,7 +229,7 @@ public class ModeratorDashboard
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+            Console.WriteLine($"    ➜  Moderator Dashboard Select Menu\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
 }

@@ -121,9 +121,10 @@ public class ModdingLogs : ApplicationCommandModule
             catch (Exception ex)
             {
                 await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
-            );
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+                );
+                Console.WriteLine($"    ➜  Slash Command: /modding logs add\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
                 return;
             }
         }
@@ -132,7 +133,7 @@ public class ModdingLogs : ApplicationCommandModule
 
 
 
-        [SlashCommand("Unactivate", "📜 | Desativar uma função de logs.")]
+        [SlashCommand("unactivate", "📜 | Desativar uma função de logs.")]
         public static async Task Unactivate(InteractionContext ctx,
             [Option("config", "The configuration type that will be uncativated.")]
                 [Choice("Message delete / modify.", 1)]
@@ -211,9 +212,10 @@ public class ModdingLogs : ApplicationCommandModule
             catch (Exception ex)
             {
                 await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
-            );
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+                );
+                Console.WriteLine($"    ➜  Slash Command: /modding logs unactivate\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
                 return;
             }
         }

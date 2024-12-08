@@ -22,103 +22,131 @@ public class PartnershipRanked
                 // RESET RANKING:
                 if (e.Values[0] == "reset")
                 {
-                    await e.Interaction.DeferAsync(ephemeral: true);
-
-
-
-                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                    if (!Herrscher[$"{e.Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.Any())
+                    try
                     {
+                        await e.Interaction.DeferAsync(ephemeral: true);
+
+
+
+                        var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                        if (!Herrscher[$"{e.Guild.Id}"]["partner"]["leaderboard"]["ranking"].AsBsonDocument.Any())
+                        {
+                            await e.Interaction.CreateFollowupMessageAsync(
+                                new DiscordFollowupMessageBuilder()
+                                    .WithContent("Hey! Não há nenhum usuário no ranking!")
+                                    .AsEphemeral(true)
+                            );
+                            return;
+                        }
+
+
+
+                        var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                        var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.leaderboard.ranking", new BsonDocument { });
+                        await collection.UpdateOneAsync(Herrscher, update);
+
+
+
                         await e.Interaction.CreateFollowupMessageAsync(
                             new DiscordFollowupMessageBuilder()
-                                .WithContent("Hey! Não há nenhum usuário no ranking!")
+                                .WithContent("Bip bup bip! O ranking foi limpo!")
                                 .AsEphemeral(true)
                         );
-                        return;
                     }
-
-
-
-                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
-                    var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.leaderboard.ranking", new BsonDocument { });
-                    await collection.UpdateOneAsync(Herrscher, update);
-
-
-
-                    await e.Interaction.CreateFollowupMessageAsync(
-                        new DiscordFollowupMessageBuilder()
-                            .WithContent("Bip bup bip! O ranking foi limpo!")
-                            .AsEphemeral(true)
-                    );
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"    ➜  Partnership Ranking Reset\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                    }
                 }
                 // UNACTIVATE RANKING:
                 else if (e.Values[0] == "unactivate")
                 {
-                    await e.Interaction.DeferAsync();
+                    try
+                    {
+                        await e.Interaction.DeferAsync();
 
 
 
-                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
-                    var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
-                    var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.leaderboard.option", 0);
-                    await collection.UpdateOneAsync(Herrscher, update);
+                        var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e.Guild);
+                        var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
+                        var update = Builders<BsonDocument>.Update.Set($"{e.Guild.Id}.partner.leaderboard.option", 0);
+                        await collection.UpdateOneAsync(Herrscher, update);
 
 
 
-                    await e.Interaction.CreateFollowupMessageAsync(
-                        new DiscordFollowupMessageBuilder()
-                            .WithContent("Bip bup bip! O módulo **ranked** da função **partnership** foi desativado!")
-                    );
-                    await e.Message.DeleteAsync();
+                        await e.Interaction.CreateFollowupMessageAsync(
+                            new DiscordFollowupMessageBuilder()
+                                .WithContent("Bip bup bip! O módulo **ranked** da função **partnership** foi desativado!")
+                        );
+                        await e.Message.DeleteAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"    ➜  Partnership Ranking Unactivate\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                    }
                 }
                 // PATENTS RANKING:
                 else if (e.Values[0] == "patents")
                 {
-                    await e.Interaction.DeferAsync();
-
-
-                    var embed = new DiscordEmbedBuilder()
+                    try
                     {
-                        Color = new DiscordColor("7e67ff")
-                    };
-                    embed.AddField(
-                        "<:rezet_shine:1147373071737573446> Patents:",
-                        "> <:rezet_sss_elite:1290676886556377112> `SSS-Elite⠀-⠀  10000`" +
-                        "\n> <:rezet_ss_elite:1290676831544017046> `SS-Elite⠀ -⠀  5000`" +
-                        "\n> <:rezet_s_elite:1290676775826886696> `S-Elite⠀  -⠀  2500`" +
-                        "\n> <:rezet_a_elite:1290676720537567373> `A-Elite⠀  -⠀  1000`" +
-                        "\n> <:rezet_b_elite:1290676630527934567> `B-Elite⠀  -⠀  500`" +
-                        "\n> <:rezet_c_elite:1290676392870023190> `C-Elite⠀  -⠀  0`"
-                    );
-                    var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Exit");
+                        await e.Interaction.DeferAsync();
+
+
+                        var embed = new DiscordEmbedBuilder()
+                        {
+                            Color = new DiscordColor("7e67ff")
+                        };
+                        embed.AddField(
+                            "<:rezet_shine:1147373071737573446> Patents:",
+                            "> <:rezet_sss_elite:1290676886556377112> `SSS-Elite⠀-⠀  10000`" +
+                            "\n> <:rezet_ss_elite:1290676831544017046> `SS-Elite⠀ -⠀  5000`" +
+                            "\n> <:rezet_s_elite:1290676775826886696> `S-Elite⠀  -⠀  2500`" +
+                            "\n> <:rezet_a_elite:1290676720537567373> `A-Elite⠀  -⠀  1000`" +
+                            "\n> <:rezet_b_elite:1290676630527934567> `B-Elite⠀  -⠀  500`" +
+                            "\n> <:rezet_c_elite:1290676392870023190> `C-Elite⠀  -⠀  0`"
+                        );
+                        var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{e.Interaction.User.Id}_PAexit", "Exit");
 
 
 
-                    await e.Interaction.CreateFollowupMessageAsync(
-                        new DiscordFollowupMessageBuilder()
-                            .WithContent("Bip bup bip!")
-                            .AddEmbed(embed)
-                            .AddComponents(button)
-                    );
+                        await e.Interaction.CreateFollowupMessageAsync(
+                            new DiscordFollowupMessageBuilder()
+                                .WithContent("Bip bup bip!")
+                                .AddEmbed(embed)
+                                .AddComponents(button)
+                        );
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"    ➜  Partnership Ranking Patents\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                    }
                 }
                 // INVITE LINK
                 else if (e.Values[0] == "invite")
                 {
-                    var modal = new DiscordInteractionResponseBuilder()
-                    .WithTitle("Guild Link")
-                    .WithCustomId($"{e.Interaction.User.Id}_RCIL")
-                    .AddComponents(
-                        new TextInputComponent(
-                            "Link:", "invite_input", "Only HTTPS!", style: TextInputStyle.Paragraph
-                        )
-                    );
-                    await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
+                    try
+                    {
+                        var modal = new DiscordInteractionResponseBuilder()
+                        .WithTitle("Guild Link")
+                        .WithCustomId($"{e.Interaction.User.Id}_RCIL")
+                        .AddComponents(
+                            new TextInputComponent(
+                                "Link:", "invite_input", "Only HTTPS!", style: TextInputStyle.Paragraph
+                            )
+                        );
+                        await e.Interaction.CreateResponseAsync(InteractionResponseType.Modal, modal);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"    ➜  Partnership Ranking Change Invite\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                    }
                 }
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+            Console.WriteLine($"    ➜  Partnership Ranking Select Menu\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.User.Username} ( {e.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     public static async Task PartnerrankingModifyInvite(DiscordClient sender, ModalSubmitEventArgs e)
@@ -154,7 +182,7 @@ public class PartnershipRanked
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"    ➜  In: {e.Interaction.Guild.Name} ( {e.Interaction.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Interaction.User.Username} ( {e.Interaction.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+            Console.WriteLine($"    ➜  Partnership Ranking Change Invite\n    ➜  In: {e.Interaction.Guild.Name} ( {e.Interaction.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Interaction.User.Username} ( {e.Interaction.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
 }

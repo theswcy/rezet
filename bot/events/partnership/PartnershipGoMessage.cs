@@ -42,7 +42,7 @@ public static class PartnershipGoMessage
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Author.Username} ( {e.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+            Console.WriteLine($"    ➜  Event: Start The Partnership\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Message.Author.Username} ( {e.Message.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
 
@@ -57,112 +57,133 @@ public static class PartnershipGoMessage
         {
             if (OPT == 1)
             {
-                await e.Message.RespondAsync(
-                    "Oops! Os convites de parceria não podem mencionar **everyone** e/ou **here**!"
-                );
-
-
-
-                if (Herrscher[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                try
                 {
-                    var ch = e.Guild.GetChannel((ulong)Herrscher[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
-                    var embed = new DiscordEmbedBuilder()
-                    {
-                        Description = $"O usuário {e.Author.Mention} [ `{e.Author.Id}` ] enviou um convite de parcerias que continha menções **everyone** e/ou **here**! O convite foi detelado.",
-                        Color = new DiscordColor("7e67ff")
-                    };
-                    embed.WithTimestamp(e.Message.Timestamp);
-                    var embed2 = new DiscordEmbedBuilder()
-                    {
-                        Description = $"Message:\n```{e.Message.Content}```",
-                        Color = new DiscordColor("7e67ff")
-                    };
-                    await ch.SendMessageAsync(
-                        new DiscordMessageBuilder()
-                            .WithContent("Oh...")
-                            .AddEmbed(embed)
-                            .AddEmbed(embed2)
+                    await e.Message.RespondAsync(
+                        "Oops! Os convites de parceria não podem mencionar **everyone** e/ou **here**!"
                     );
+
+
+
+                    if (Herrscher[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                    {
+                        var ch = e.Guild.GetChannel((ulong)Herrscher[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
+                        var embed = new DiscordEmbedBuilder()
+                        {
+                            Description = $"O usuário {e.Author.Mention} [ `{e.Author.Id}` ] enviou um convite de parcerias que continha menções **everyone** e/ou **here**! O convite foi detelado.",
+                            Color = new DiscordColor("7e67ff")
+                        };
+                        embed.WithTimestamp(e.Message.Timestamp);
+                        var embed2 = new DiscordEmbedBuilder()
+                        {
+                            Description = $"Message:\n```{e.Message.Content}```",
+                            Color = new DiscordColor("7e67ff")
+                        };
+                        await ch.SendMessageAsync(
+                            new DiscordMessageBuilder()
+                                .WithContent("Oh...")
+                                .AddEmbed(embed)
+                                .AddEmbed(embed2)
+                        );
+                    }
+                    await e.Message.DeleteAsync();
+                    return;
                 }
-                await e.Message.DeleteAsync();
-                return;
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"    ➜  Event: If Mentions - Option 1\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Message.Author.Username} ( {e.Message.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                }
             }
             else if (OPT == 2)
             {
-                var rep = e.MentionedUsers;
-                foreach (var i in rep)
+                try
                 {
-                    var p = await e.Guild.GetMemberAsync(i.Id);
-                    await p.RemoveAsync("Móduto de parcerias anti menção everyone/here ativado: Mode 2.");
-                }
-                await e.Message.RespondAsync(
-                    new DiscordMessageBuilder()
-                        .WithContent("Oops! Os Convites de parceria não podem mencionar **everyone** e **here**!")
-                );
-                if (Herrscher[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
-                {
-                    var ch = e.Guild.GetChannel((ulong)Herrscher[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
-                    var embed = new DiscordEmbedBuilder()
+                    var rep = e.MentionedUsers;
+                    foreach (var i in rep)
                     {
-                        Description = $"O usuário {e.Author.Mention} [ `{e.Author.Id}` ] enviou um convite de parcerias que continha menções **everyone** e/ou **here**!",
-                        Color = new DiscordColor("7e67ff")
-                    };
-                    embed.WithTimestamp(e.Message.Timestamp);
-                    var embed2 = new DiscordEmbedBuilder()
-                    {
-                        Description = $"Message:\n```{e.Message.Content}```",
-                        Color = new DiscordColor("7e67ff")
-                    };
-                    await ch.SendMessageAsync(
+                        var p = await e.Guild.GetMemberAsync(i.Id);
+                        await p.RemoveAsync("Móduto de parcerias anti menção everyone/here ativado: Mode 2.");
+                    }
+                    await e.Message.RespondAsync(
                         new DiscordMessageBuilder()
-                            .WithContent("Oh...")
-                            .AddEmbed(embed)
-                            .AddEmbed(embed2)
+                            .WithContent("Oops! Os Convites de parceria não podem mencionar **everyone** e **here**!")
                     );
+                    if (Herrscher[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                    {
+                        var ch = e.Guild.GetChannel((ulong)Herrscher[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
+                        var embed = new DiscordEmbedBuilder()
+                        {
+                            Description = $"O usuário {e.Author.Mention} [ `{e.Author.Id}` ] enviou um convite de parcerias que continha menções **everyone** e/ou **here**!",
+                            Color = new DiscordColor("7e67ff")
+                        };
+                        embed.WithTimestamp(e.Message.Timestamp);
+                        var embed2 = new DiscordEmbedBuilder()
+                        {
+                            Description = $"Message:\n```{e.Message.Content}```",
+                            Color = new DiscordColor("7e67ff")
+                        };
+                        await ch.SendMessageAsync(
+                            new DiscordMessageBuilder()
+                                .WithContent("Oh...")
+                                .AddEmbed(embed)
+                                .AddEmbed(embed2)
+                        );
+                    }
+                    await e.Message.DeleteAsync();
+                    return;
                 }
-                await e.Message.DeleteAsync();
-                return;
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"    ➜  Event: If Mentions - Option 2\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Message.Author.Username} ( {e.Message.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                }
             }
             else if (OPT == 3)
             {
-                var rep = e.MentionedUsers;
-                foreach (var i in rep)
+                try
                 {
-                    var p = await e.Guild.GetMemberAsync(i.Id);
-                    await p.BanAsync(reason: "Móduto de parcerias anti menção everyone/here ativado: Mode 3.");
-                }
-                await e.Message.RespondAsync(
-                    new DiscordMessageBuilder()
-                        .WithContent("Oops! Os Convites de parceria não podem mencionar **everyone** e **here**!")
-                );
-                if (Herrscher[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
-                {
-                    var ch = e.Guild.GetChannel((ulong)Herrscher[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
-                    var embed = new DiscordEmbedBuilder()
+                    var rep = e.MentionedUsers;
+                    foreach (var i in rep)
                     {
-                        Description = $"O usuário {e.Author.Mention} [ `{e.Author.Id}` ] enviou um convite de parcerias que continha menções **everyone** e/ou **here**!",
-                        Color = new DiscordColor("7e67ff")
-                    };
-                    embed.WithTimestamp(e.Message.Timestamp);
-                    var embed2 = new DiscordEmbedBuilder()
-                    {
-                        Description = $"Message:\n```{e.Message.Content}```",
-                        Color = new DiscordColor("7e67ff")
-                    };
-                    await ch.SendMessageAsync(
+                        var p = await e.Guild.GetMemberAsync(i.Id);
+                        await p.BanAsync(reason: "Móduto de parcerias anti menção everyone/here ativado: Mode 3.");
+                    }
+                    await e.Message.RespondAsync(
                         new DiscordMessageBuilder()
-                            .WithContent("Oh...")
-                            .AddEmbed(embed)
-                            .AddEmbed(embed2)
+                            .WithContent("Oops! Os Convites de parceria não podem mencionar **everyone** e **here**!")
                     );
+                    if (Herrscher[$"{e.Guild.Id}"]["partner"]["log"] != BsonNull.Value)
+                    {
+                        var ch = e.Guild.GetChannel((ulong)Herrscher[$"{e.Guild.Id}"]["partner"]["log"].AsInt64);
+                        var embed = new DiscordEmbedBuilder()
+                        {
+                            Description = $"O usuário {e.Author.Mention} [ `{e.Author.Id}` ] enviou um convite de parcerias que continha menções **everyone** e/ou **here**!",
+                            Color = new DiscordColor("7e67ff")
+                        };
+                        embed.WithTimestamp(e.Message.Timestamp);
+                        var embed2 = new DiscordEmbedBuilder()
+                        {
+                            Description = $"Message:\n```{e.Message.Content}```",
+                            Color = new DiscordColor("7e67ff")
+                        };
+                        await ch.SendMessageAsync(
+                            new DiscordMessageBuilder()
+                                .WithContent("Oh...")
+                                .AddEmbed(embed)
+                                .AddEmbed(embed2)
+                        );
+                    }
+                    await e.Message.DeleteAsync();
+                    return;
                 }
-                await e.Message.DeleteAsync();
-                return;
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"    ➜  Event: If Mentions - Option 3\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Message.Author.Username} ( {e.Message.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                }
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Author.Username} ( {e.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+            Console.WriteLine($"    ➜  Event: If Mentions\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Message.Author.Username} ( {e.Message.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
     // ========== GO MESSAGE:
@@ -439,7 +460,7 @@ public static class PartnershipGoMessage
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Author.Username} ( {e.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+            Console.WriteLine($"    ➜  Event: Partnership Go Message\n    ➜  In: {e.Guild.Name} ( {e.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {e.Message.Author.Username} ( {e.Message.Author.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
         }
     }
 }

@@ -16,12 +16,25 @@ public class SharpTestDatabase : BaseCommandModule
     {
         try
         {
+            await ctx.RespondAsync("okay!");
             var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(ctx.Guild);
             var collection = EngineV8X.HerrscherRazor._database?.GetCollection<BsonDocument>("guilds");
-            var update = Builders<BsonDocument>.Update
-                .Set($"{ctx.Guild.Id}.partner.ticket.count", 0);
-            await collection.UpdateOneAsync(Herrscher, update);
-            await ctx.RespondAsync("okay!");
+
+
+            int o = 0;
+            foreach (var Entry in EngineV8X.RezetRazor.Guilds.Values)
+            {
+                if (Herrscher.AsBsonDocument.Contains($"{Entry.Id}"))
+                {
+                    o++;
+                    DateTime now = DateTime.Now; var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
+                    Console.ResetColor();
+                    Console.Write("    ➜  ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write($"  {y}  |  SHARP  ⚯   [ #{o} ] Guild {Entry.Name} [ {Entry.Id} ] Updated.\n");
+                    Console.ResetColor();
+                }
+            }
         }
         catch (Exception ex)
         {

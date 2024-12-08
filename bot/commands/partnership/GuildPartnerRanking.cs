@@ -4,8 +4,6 @@ using DSharpPlus.Entities;
 using RezetSharp;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.CommandsNext;
 
 
 
@@ -31,14 +29,14 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 if (Herrscher[Guild.Id.ToString()]["partner"]["option"].AsInt32 == 0)
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> Essa comunidade não possui a função **Partnership** ativada!")
+                        .WithContent("Essa comunidade não possui a função **Partnership** ativada!")
                     );
                     return;
                 }
                 if (Herrscher[Guild.Id.ToString()]["partner"]["leaderboard"]["option"].AsInt32 == 0)
                 {
                     await ctx.EditResponseAsync(new DiscordWebhookBuilder()
-                        .WithContent("<:rezet_dred:1147164215837208686> Essa comunidade não possui a função **Partnership ranked** ativada!")
+                        .WithContent("Essa comunidade não possui a função **Partnership ranked** ativada!")
                     );
                     return;
                 }
@@ -57,7 +55,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 {
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
-                            .WithContent("<:rezet_dred:1147164215837208686> Não há usuários no ranking!")
+                            .WithContent("Não há usuários no ranking!")
                     );
                     return;
                 }
@@ -87,7 +85,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                     Color = new DiscordColor("7e67ff")
                 };
                 embed.WithAuthor(Guild.Name, iconUrl: Guild.IconUrl);
-                var button = new DiscordButtonComponent(ButtonStyle.Danger, $"{ctx.User.Id}_PAexit", "Exit");
+                var button = new DiscordButtonComponent(ButtonStyle.Primary, $"{ctx.User.Id}_PAexit", "Close", emoji: new DiscordComponentEmoji(id: 1308125206883078225));
 
 
 
@@ -101,9 +99,10 @@ public class CommunityPartnerMore : ApplicationCommandModule
             catch (Exception ex)
             {
                 await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
                 );
+                Console.WriteLine($"    ➜  Slash Command: /partner ranking local\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
                 return;
             }
         }
@@ -130,14 +129,14 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 foreach (var element in Herrscher.Elements)
                 {
                     if (element.Name == "_id") continue;
+                    var g = await EngineV8X.RezetRazor.GetGuildAsync(ulong.Parse(element.Name));
 
 
 
                     var guildData = element.Value.AsBsonDocument;
                     ulong guildId = ulong.Parse(element.Name);
-                    string GuildName = guildData["guild_name"].AsString;
                     var GuildInvite = guildData["partner"]["leaderboard"]["invite"];
-                    if (GuildInvite == BsonNull.Value) { GuildInvite = $"{GuildName}"; } else { GuildInvite = $"[{GuildName}](https://discord.gg/{GuildInvite})"; }
+                    if (GuildInvite == BsonNull.Value) { GuildInvite = $"{g.Name}"; } else { GuildInvite = $"[{g.Name}](https://discord.gg/{GuildInvite})"; }
                     int GuildScore = guildData["partner"]["ps"].AsInt32;
 
                     if (GuildScore > 0)
@@ -150,7 +149,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                         else if (guildData["partner"]["xp"] >= 500) { rbxp = "<:rezet_b_elite:1290676630527934567>"; }
 
 
-                        guildRanking.Add((guildId, GuildName, GuildInvite, GuildScore, rbxp));
+                        guildRanking.Add((guildId, g.Name, GuildInvite, GuildScore, rbxp));
                     }
                 }
                 var rankedGuild = guildRanking.OrderByDescending(g => g.Score).Take(20).ToList();
@@ -194,9 +193,10 @@ public class CommunityPartnerMore : ApplicationCommandModule
             catch (Exception ex)
             {
                 await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
                 );
+                Console.WriteLine($"    ➜  Slash Command: /partner ranking global\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
                 return;
             }
         }
@@ -244,7 +244,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 {
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
-                            .WithContent("<:rezet_dred:1147164215837208686> O canal de registro de parcerias precisa está ativado")
+                            .WithContent("O canal de registro de parcerias precisa está ativado")
                     );
                     return;
                 }
@@ -252,9 +252,10 @@ public class CommunityPartnerMore : ApplicationCommandModule
             catch (Exception ex)
             {
                 await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
                 );
+                Console.WriteLine($"    ➜  Slash Command: /partner points add\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
                 return;
             }
         }
@@ -286,7 +287,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 {
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
-                            .WithContent($"<:rezet_dred:1147164215837208686> O usuário {user.Mention} não está no ranking!")
+                            .WithContent($"O usuário {user.Mention} não está no ranking!")
                     );
                     return;
                 }
@@ -308,7 +309,7 @@ public class CommunityPartnerMore : ApplicationCommandModule
                 {
                     await ctx.EditResponseAsync(
                         new DiscordWebhookBuilder()
-                            .WithContent("<:rezet_dred:1147164215837208686> O canal de registro de parcerias precisa está ativado")
+                            .WithContent("O canal de registro de parcerias precisa está ativado")
                     );
                     return;
                 }
@@ -316,9 +317,10 @@ public class CommunityPartnerMore : ApplicationCommandModule
             catch (Exception ex)
             {
                 await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
                 );
+                Console.WriteLine($"    ➜  Slash Command: /partner points remove\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
                 return;
             }
         }

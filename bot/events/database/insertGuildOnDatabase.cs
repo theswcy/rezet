@@ -67,8 +67,8 @@ public static class InsertGuildDB
                         // ---------- START TEST NEW:
                         { "warns", new BsonDocument 
                             {
-                                { "type_w", BsonNull.Value },
-                                { "type_u", BsonNull.Value }
+                                { "count", 0 },
+                                { "cases", BsonNull.Value }
                             }
                         },
                         // ---------- END TEST NEW.

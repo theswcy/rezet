@@ -233,13 +233,14 @@ public class PartnershipCommands : ApplicationCommandModule
             }
         }
         catch (Exception ex)
-        {
-            await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
-            );
-            return;
-        }
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+                );
+                Console.WriteLine($"    ➜  Slash Command: /partnership dashboard\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                return;
+            }
     }
 
 
@@ -356,12 +357,13 @@ public class PartnershipCommands : ApplicationCommandModule
             );
         }
         catch (Exception ex)
-        {
-            await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
-            );
-            return;
-        }
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+                );
+                Console.WriteLine($"    ➜  Slash Command: /partnership setup\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                return;
+            }
     }
 }
