@@ -75,7 +75,7 @@ namespace RezetSharp
                         DiscordIntents.GuildPresences |
                         DiscordIntents.MessageContents,
                     ReconnectIndefinitely = true,
-                    GatewayCompressionLevel = GatewayCompressionLevel.Payload,
+                    GatewayCompressionLevel = GatewayCompressionLevel.None,
                     MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error,
                 };
                 RezetRazor = new DiscordClient(rzt);
