@@ -90,7 +90,9 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+                );
+                Console.WriteLine($"    ➜  Slash Command: /role add\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
                 return;
             }
         }
@@ -98,7 +100,9 @@ public class CommunityRole : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
+                    .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+            );
+            Console.WriteLine($"    ➜  Slash Command: /role add\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
             return;
         }
 
@@ -196,17 +200,21 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+                );
+                Console.WriteLine($"    ➜  Slash Command: /role remove\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
                 return;
             }
         }
         catch (Exception ex)
-        {
-            await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
-            return;
-        }
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+                );
+                Console.WriteLine($"    ➜  Slash Command: /role remove\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                return;
+            }
     }
 
 
@@ -264,12 +272,14 @@ public class CommunityRole : ApplicationCommandModule
             return;
         }
         catch (Exception ex)
-        {
-            await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
-            return;
-        }
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+                );
+                Console.WriteLine($"    ➜  Slash Command: /role info\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                return;
+            }
     }
 
 
@@ -520,7 +530,7 @@ public class CommunityRole : ApplicationCommandModule
                         new DiscordWebhookBuilder()
                             .WithContent("Bip bup bip!")
                             .AddEmbed(embed));
-                        if (time != 0) { await DeleteRole(1, time, Author, Role); }
+                    if (time != 0) { await DeleteRole(1, time, Author, Role); }
                     return;
                 }
             }
@@ -528,17 +538,21 @@ public class CommunityRole : ApplicationCommandModule
             {
                 await ctx.EditResponseAsync(
                     new DiscordWebhookBuilder()
-                        .WithContent($"Erro: `{ex}`"));
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+                );
+                Console.WriteLine($"    ➜  Slash Command: /role create\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
                 return;
             }
         }
         catch (Exception ex)
-        {
-            await ctx.EditResponseAsync(
-                new DiscordWebhookBuilder()
-                    .WithContent($"Erro: `{ex}`"));
-            return;
-        }
+            {
+                await ctx.EditResponseAsync(
+                    new DiscordWebhookBuilder()
+                        .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
+                );
+                Console.WriteLine($"    ➜  Slash Command: /role create\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+                return;
+            }
     }
     public static async Task DeleteRole(long f, long? Time, DiscordMember Member, DiscordRole Role)
     {
