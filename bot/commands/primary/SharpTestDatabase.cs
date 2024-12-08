@@ -3,7 +3,6 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Rezet;
 using RezetSharp;
 
 

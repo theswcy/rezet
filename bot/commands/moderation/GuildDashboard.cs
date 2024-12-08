@@ -1,7 +1,6 @@
 using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.Entities;
-using Rezet;
 using MongoDB.Bson;
 using System.Collections;
 using RezetSharp;
