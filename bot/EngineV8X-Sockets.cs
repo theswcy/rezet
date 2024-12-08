@@ -65,7 +65,7 @@ namespace RezetSharp.AOCore
                 Console.WriteLine($"    ➜    {y}  ・  ⚡ EngineV8X AOCore Error\n    ⚯   🟠 Socket Connection Closed\n    ➜  {e.CloseMessage}");
                 try
                 {
-                    await sender.ConnectAsync();
+                    await sender.ReconnectAsync();
                     return;
                 }
                 catch (Exception ex)
