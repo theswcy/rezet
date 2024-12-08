@@ -1,6 +1,5 @@
 using DSharpPlus;
 using DSharpPlus.SlashCommands;
-using Rezet;
 using RezetSharp;
 
 
