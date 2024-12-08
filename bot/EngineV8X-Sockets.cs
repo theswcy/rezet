@@ -30,7 +30,7 @@ namespace RezetSharp.AOCore
                 {
                     try
                     {
-                        await DiscordHeart.ReconnectAsync();
+                        await DiscordHeart.ConnectAsync();
                         Console.WriteLine($"    ➜    {_lastHeartBeat}  |  ⚡ EngineV8X AOCore Heartbeat\n     ⚯   🟢 Client connected!");
                     }
                     catch (Exception ex)
@@ -65,7 +65,7 @@ namespace RezetSharp.AOCore
                 Console.WriteLine($"    ➜    {y}  ・  ⚡ EngineV8X AOCore Error\n    ⚯   🟠 Socket Connection Closed\n    ➜  {e.CloseMessage}");
                 try
                 {
-                    await sender.ReconnectAsync();
+                    await sender.ConnectAsync();
                     return;
                 }
                 catch (Exception ex)
