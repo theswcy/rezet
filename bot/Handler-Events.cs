@@ -45,7 +45,7 @@ namespace Rezet.Events
 
 
             // MODERATOR:
-            client.ComponentInteractionCreated += ModeratorDashboard.MD_Primary;
+            // client.ComponentInteractionCreated += ModeratorDashboard.MD_Primary;
 
 
 

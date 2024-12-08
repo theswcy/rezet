@@ -18,14 +18,14 @@ namespace Rezet.Commands
             // slash.RegisterCommands<RezetGets>(null);
             slash.RegisterCommands<RezetSystems>(null);
             prefix.RegisterCommands<RezetGets_prefix>();
-            prefix.RegisterCommands<SharpTestDatabase>();
+            // prefix.RegisterCommands<SharpTestDatabase>();
 
 
             // COMMUNITY:
             slash.RegisterCommands<CommunityCommands>(null);
             slash.RegisterCommands<CommunityRole>(null);
             slash.RegisterCommands<CommunityChats>(null);
-            prefix.RegisterCommands<CommunityCommands_prefix>();
+            // prefix.RegisterCommands<CommunityCommands_prefix>();
 
 
             // PARTNERSHIP:
@@ -36,8 +36,8 @@ namespace Rezet.Commands
 
 
             // MODERATION:
-            slash.RegisterCommands<ToModerationBasic_slash>(null);
-            //slash.RegisterCommands<ModdingLogs>(null);
+            // slash.RegisterCommands<ToModerationBasic_slash>(null);
+            // slash.RegisterCommands<ModdingLogs>(null);
 
 
             // AUTOMATIC:
