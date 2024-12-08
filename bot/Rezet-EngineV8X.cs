@@ -9,6 +9,7 @@ using Rezet.Events;
 
 
 
+#pragma warning disable CS8622
 #pragma warning disable CS8604
 #pragma warning disable CS8602
 namespace RezetSharp
@@ -21,6 +22,7 @@ namespace RezetSharp
         public static CommandsNextExtension? CommandsRazor;
         public static HerrscherService? HerrscherRazor;
         private static readonly TimeSpan StatusUpdateInterval = TimeSpan.FromMinutes(1);
+        private static Timer? _connectionCheckTimer;
 
 
 
@@ -114,11 +116,18 @@ namespace RezetSharp
                 RezetRazor.SocketOpened += AwaysOnCore.OnSocketOpened;
                 RezetRazor.SocketClosed += AwaysOnCore.OnSocketClosed;
                 RezetRazor.SocketErrored += AwaysOnCore.OnSocketErrored;
+                RezetRazor.Heartbeated += AwaysOnCore.OnHeartBeated;
+                _connectionCheckTimer = new Timer(
+                    AwaysOnCore.CheckZombieConnection,
+                    RezetRazor,
+                    TimeSpan.FromSeconds(60),
+                    TimeSpan.FromSeconds(60)
+                );
 
 
 
 
-                
+
                 Console.ResetColor();
                 Console.Write("    ➜  ");
                 Console.ForegroundColor = ConsoleColor.Blue;
