@@ -2,10 +2,12 @@ using DSharpPlus;
 using DSharpPlus.EventArgs;
 using MongoDB.Bson;
 using RezetSharp;
+using RezetSharp.LuminyCache;
 
 
 
 
+#pragma warning disable CS8629
 #pragma warning disable CS8602
 public static class OnMessageEvents
 {
@@ -14,28 +16,74 @@ public static class OnMessageEvents
     {
         try
         {
-            var Guild = e.Guild;
-            var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
-
-
-
-
-            // FOR AUTOPING:
-            if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
+            var LumiCacheForPartnership = new CacheTier1_ForPartnership();
+            var LumiCacheForAutoping = new CacheTier1_ForAutoping();
+            // ========== FOR PARTNERSHIP:
+            if (LumiCacheForPartnership.GetGuild(e.Guild.Id) != null)
             {
-                if (e.Author.IsBot) { return; }
-                await ForAutoping(sender, e, Herrscher);
+                if (LumiCacheForPartnership.GetGuild(e.Guild.Id).Value == e.Channel.Id)
+                {
+                    var Guild = e.Guild;
+                    var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+
+
+                    if (Herrscher[$"{Guild.Id}"]["partner"]["option"] != 0)
+                    {
+                        if (e.Author.IsBot) { return; }
+                        await PartnershipGoMessage.StartThePartnership(e, Herrscher);
+                    }
+                }
+                else
+                {
+                    return;
+                }
             }
-
-
-
-            // FOR PARTNERSHIP:
-            if (Herrscher[$"{Guild.Id}"]["partner"]["option"] != 0)
+            else
             {
-                if (e.Author.IsBot) { return; }
-                if ((ulong)Herrscher[$"{Guild.Id}"]["partner"]["configs"]["options"]["channel"].ToInt64() != e.Channel.Id) { return; }
-                await PartnershipGoMessage.StartThePartnership(e, Herrscher);
+                var Guild = e.Guild;
+                var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+
+
+                if (Herrscher[$"{Guild.Id}"]["partner"]["option"] != 0)
+                {
+                    if (e.Author.IsBot) { return; }
+                    if ((ulong)Herrscher[$"{Guild.Id}"]["partner"]["configs"]["options"]["channel"].ToInt64() != e.Channel.Id) { return; }
+                    await PartnershipGoMessage.StartThePartnership(e, Herrscher);
+                    LumiCacheForPartnership.SaveGuild(e.Guild.Id, (ulong)Herrscher[$"{e.Guild.Id}"]["partner"]["configs"]["options"]["channel"].AsInt64);
+                }
             }
+            // ========== FOR AUTOPING:
+            // if (LumiCacheForAutoping.GetGuild(e.Guild.Id) != null)
+            // {
+            //     if (LumiCacheForAutoping.GetGuild(e.Guild.Id).Value == e.Channel.Id)
+            //     {
+            //         var Guild = e.Guild;
+            //         var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+
+
+            //         if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
+            //         {
+            //             if (e.Author.IsBot) { return; }
+            //             await ForAutoping(sender, e, Herrscher);
+            //         }
+            //     }
+            //     else
+            //     {
+            //         return;
+            //     }
+            // }
+            // else
+            // {
+            //     var Guild = e.Guild;
+            //     var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
+
+
+            //     if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
+            //     {
+            //         if (e.Author.IsBot) { return; }
+            //         await ForAutoping(sender, e, Herrscher);
+            //     }
+            // }
         }
         catch (Exception ex)
         {
