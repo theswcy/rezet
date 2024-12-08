@@ -5,7 +5,6 @@ using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.CommandsNext;
 using Rezet.Commands;
 using Rezet.Events;
-using DSharpPlus.Net.WebSocket;
 
 
 
@@ -23,48 +22,6 @@ namespace RezetSharp
         public static HerrscherService? HerrscherRazor;
         private static readonly TimeSpan StatusUpdateInterval = TimeSpan.FromMinutes(1);
 
-
-
-
-        // ========== AOCORE:
-        public static async Task AwaysOnCore()
-        {
-            RezetRazor.SocketOpened += async (sender, e) =>
-            {
-                DateTime now = DateTime.Now; var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"    ➜  {y}  |  EngineV8X Started\n       Socket Opened! 🔥");
-                Console.ResetColor();
-                await Task.CompletedTask;
-            };
-            RezetRazor.SocketClosed += async (sender, e) =>
-            {
-                DateTime now = DateTime.Now; var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-                int RetryCount = 0;
-                while (RetryCount < 15)
-                {
-                    Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       Socket Connection Closed:\n       {e.CloseMessage}");
-                    try
-                    {
-                        await EngineStart();
-                        return;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       Error in EngineV8X restart:\n       {ex.Message}\n       {e.CloseMessage}");
-                        await Task.Delay(TimeSpan.FromSeconds(10));
-                    }
-                }
-                Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       The engine will not restart:\n\n       {e.CloseMessage}");
-            };
-            RezetRazor.SocketErrored += async (sender, e) =>
-            {
-                DateTime now = DateTime.Now; var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
-                Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       Socket Connection Errored:\n       {e.Exception.Message}");
-                await Task.CompletedTask;
-            };
-            await Task.CompletedTask;
-        }
 
 
 
@@ -154,7 +111,14 @@ namespace RezetSharp
                 // ========== START!
                 await RezetRazor.ConnectAsync();
                 RezetRazor.Ready += Client_Ready;
-                await AwaysOnCore();
+                RezetRazor.SocketOpened += AwaysOnCore.OnSocketOpened;
+                RezetRazor.SocketClosed += AwaysOnCore.OnSocketClosed;
+                RezetRazor.SocketErrored += AwaysOnCore.OnSocketErrored;
+
+
+
+
+                
                 Console.ResetColor();
                 Console.Write("    ➜  ");
                 Console.ForegroundColor = ConsoleColor.Blue;
