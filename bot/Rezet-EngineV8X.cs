@@ -65,7 +65,15 @@ namespace RezetSharp
                 {
                     Token = config?.Token,
                     TokenType = TokenType.Bot,
-                    Intents = DiscordIntents.All,
+                    Intents = 
+                        DiscordIntents.Guilds |
+                        DiscordIntents.GuildBans | 
+                        DiscordIntents.GuildIntegrations |
+                        DiscordIntents.GuildMembers |
+                        DiscordIntents.GuildMessages |
+                        DiscordIntents.GuildMessageTyping |
+                        DiscordIntents.GuildPresences |
+                        DiscordIntents.MessageContents,
                     ReconnectIndefinitely = true,
                     GatewayCompressionLevel = GatewayCompressionLevel.Payload,
                     MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Error,
