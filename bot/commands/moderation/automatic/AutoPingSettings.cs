@@ -53,7 +53,7 @@ public class AutoPingSettings : ApplicationCommandModule
                 return;
             }
 
-            
+
 
             var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
             if (Herrscher[$"{Guild.Id}"]["moderation"]["auto_actions"]["auto_ping"] != BsonNull.Value)
@@ -145,8 +145,9 @@ public class AutoPingSettings : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
             );
+            Console.WriteLine($"    ➜  Slash Command: /autoping add\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
             return;
         }
     }
@@ -224,8 +225,9 @@ public class AutoPingSettings : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
             );
+            Console.WriteLine($"    ➜  Slash Command: /autoping remove\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
             return;
         }
     }
@@ -272,8 +274,9 @@ public class AutoPingSettings : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
             );
+            Console.WriteLine($"    ➜  Slash Command: /autoping clear\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
             return;
         }
     }
