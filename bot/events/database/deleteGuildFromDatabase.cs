@@ -30,7 +30,7 @@ public static class DeleteGuildDB
             var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(e);
             if (Herrscher == null)
             {
-                Console.WriteLine($"    ⌬  {y}  |  GUILDE REMOVE\n    ➜  Failed to acess guild: {e.Name} / {e.Id}\n\n\n");
+                Console.WriteLine($"    ⌬  {y}  |  GUILD REMOVE\n    ➜  Failed to acess guild: {e.Name} / {e.Id}\n\n\n");
                 return;
             }
             var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");

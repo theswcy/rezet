@@ -108,7 +108,7 @@ public class RezetSystems : ApplicationCommandModule
             // SHARDS:
             var ShardClientInformations = new DiscordEmbedBuilder()
             {
-                Description = "## <a:rezet_loading:1147722017806762045> Herrschers!",
+                Description = "## <a:rezet_loading:1147722017806762045> Shards!",
                 Color = new DiscordColor("#7e67ff")
             };
             int MembersCount = 0;
