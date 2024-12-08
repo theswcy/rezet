@@ -33,7 +33,7 @@
   Black Cat:
 </h3>
 <p>
-  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 28.0</code></strong>.<br>
+  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 28.1</code></strong>.<br>
   Hosting: <code>null</code>.
 </p>
 <br><br>
@@ -51,6 +51,7 @@
 <details>
   <summary>📂 Clique aqui para ver as changelogs!</summary>
   <pre>
+  [ 08/dezembro/2024 ] - LuminyCache Adicionado!
   [ 08/dezembro/2024 ] - Engine V8 Extreme enviado para testes!
   [ 06/dezembro/2024 ] - Engine V8 Extreme!
   [ 28/novembro/2024 ] - Suporte ao .NET 9.0.
