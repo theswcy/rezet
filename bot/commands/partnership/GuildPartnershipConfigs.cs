@@ -4,6 +4,7 @@ using DSharpPlus.SlashCommands;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using RezetSharp;
+using RezetSharp.LuminyCache;
 
 
 
@@ -297,7 +298,17 @@ public class PartnershipCommands : ApplicationCommandModule
 
 
 
-            // DATABASE:
+            // DATABASE AND CACHE:
+            var LumiCache = new CacheTier1_ForPartnership();
+            if (LumiCache.GetGuild(ctx.Guild.Id) != null)
+            {
+                LumiCache.RemoveGuild(ctx.Guild.Id);
+                LumiCache.SaveGuild(ctx.Guild.Id, Channel.Id);
+            }
+            else
+            {
+                LumiCache.SaveGuild(ctx.Guild.Id, Channel.Id);
+            }
             var Herrscher = EngineV8X.HerrscherRazor.GetHerrscherDocument(Guild);
             var collection = EngineV8X.HerrscherRazor?._database?.GetCollection<BsonDocument>("guilds");
             var tropical = new BsonDocument
