@@ -1,6 +1,7 @@
 using DSharpPlus.Entities;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using RezetSharp;
 
 
 

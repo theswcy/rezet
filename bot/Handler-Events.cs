@@ -3,7 +3,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
 
-namespace Rezet.Events
+namespace RezetSharp.Events
 {
     public static class EventsHandler
     {

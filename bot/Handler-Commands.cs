@@ -6,7 +6,7 @@ using RezetSharp;
 
 
 
-namespace Rezet.Commands
+namespace RezetSharp.Commands
 {
     public static class CommandHandler
     {

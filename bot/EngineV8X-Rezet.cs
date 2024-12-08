@@ -3,8 +3,8 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.CommandsNext;
-using Rezet.Commands;
-using Rezet.Events;
+using RezetSharp.Commands;
+using RezetSharp.Events;
 
 
 
@@ -121,12 +121,12 @@ namespace RezetSharp
                 // ========== START!
                 await RezetRazor.ConnectAsync();
                 RezetRazor.Ready += Client_Ready;
-                RezetRazor.SocketOpened += AwaysOnCore.OnSocketOpened;
-                RezetRazor.SocketClosed += AwaysOnCore.OnSocketClosed;
-                RezetRazor.SocketErrored += AwaysOnCore.OnSocketErrored;
-                RezetRazor.Heartbeated += AwaysOnCore.OnHeartBeated;
+                RezetRazor.SocketOpened += AOCore.AwaysOnCore.OnSocketOpened;
+                RezetRazor.SocketClosed += AOCore.AwaysOnCore.OnSocketClosed;
+                RezetRazor.SocketErrored += AOCore.AwaysOnCore.OnSocketErrored;
+                RezetRazor.Heartbeated += AOCore.AwaysOnCore.OnHeartBeated;
                 _connectionCheckTimer = new Timer(
-                    AwaysOnCore.CheckZombieConnection,
+                    AOCore.AwaysOnCore.CheckZombieConnection,
                     RezetRazor,
                     TimeSpan.FromSeconds(60),
                     TimeSpan.FromSeconds(60)
