@@ -61,9 +61,9 @@ public class CommunityCommands_prefix : BaseCommandModule
         }
         catch (Exception ex)
         {
-            await ctx.RespondAsync(
-                builder: new DiscordMessageBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`"));
+            await ctx.RespondAsync($"Falha ao executar o comando, verifique as configurações do servidor ou contate o meu suporte!");
+            Console.WriteLine($"    ➜  Prefix Command: ban\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
+            return;
         }
     }
 }
