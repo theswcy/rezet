@@ -107,8 +107,9 @@ public class AutoRoleSettings : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
             );
+            Console.WriteLine($"    ➜  Slash Command: /autorole add\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
             return;
         }
     }
@@ -182,8 +183,9 @@ public class AutoRoleSettings : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
             );
+            Console.WriteLine($"    ➜  Slash Command: /autorole remove\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
             return;
         }
     }
@@ -232,8 +234,9 @@ public class AutoRoleSettings : ApplicationCommandModule
         {
             await ctx.EditResponseAsync(
                 new DiscordWebhookBuilder()
-                    .WithContent($"Falha ao executar o comando.\n\n> `{ex.Message}`")
+                    .WithContent($"Falha ao executar o comando, verifique minhas permissões!")
             );
+            Console.WriteLine($"    ➜  Slash Command: /autorole clear\n    ➜  In: {ctx.Guild.Name} ( {ctx.Guild.Id} )  /  {ex.GetType()}\n    ➜  Used by: {ctx.User.Username} ( {ctx.User.Id} )\n    ➜  Error: {ex.Message}\n       {ex.StackTrace}\n\n\n");
             return;
         }
     }
