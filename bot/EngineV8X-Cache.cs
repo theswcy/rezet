@@ -24,14 +24,12 @@ namespace RezetSharp.LuminyCache
                 AbsoluteExpiration = DateTimeOffset.UtcNow.AddHours(24)
             };
             _cache.Set(Key.ToString(), Channel, policy);
-            Console.WriteLine("Cache salvo");
         }
 
 
 
         public ulong? GetGuild(ulong Key)
         {
-            Console.WriteLine("Cache obtido");
             return _cache.Get(Key.ToString()) as ulong?;
         }
 
@@ -39,7 +37,6 @@ namespace RezetSharp.LuminyCache
 
         public void RemoveGuild(ulong Key)
         {
-            Console.WriteLine("Cache removido");
             _cache.Remove(Key.ToString());
         }
     }
