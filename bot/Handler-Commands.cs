@@ -19,6 +19,7 @@ namespace Rezet.Commands
             // slash.RegisterCommands<RezetGets>(null);
             slash.RegisterCommands<RezetSystems>(null);
             prefix.RegisterCommands<RezetGets_prefix>();
+            prefix.RegisterCommands<SharpTestDatabase>();
 
 
             // COMMUNITY:
@@ -31,12 +32,13 @@ namespace Rezet.Commands
             // PARTNERSHIP:
             slash.RegisterCommands<PartnershipCommands>(null);
             slash.RegisterCommands<CommunityPartnerMore>(null);
-            slash.RegisterCommands<PartnershipTickets>(null);
+            // slash.RegisterCommands<PartnershipTickets>(null);
+            // prefix.RegisterCommands<CommunityRankingPrefix>();
 
 
             // MODERATION:
             slash.RegisterCommands<ToModerationBasic_slash>(null);
-            slash.RegisterCommands<ModdingLogs>(null);
+            //slash.RegisterCommands<ModdingLogs>(null);
 
 
             // AUTOMATIC:

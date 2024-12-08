@@ -33,7 +33,7 @@
   Black Cat:
 </h3>
 <p>
-  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 27.7</code></strong>.<br>
+  Version: <strong>Sharp 1.5 / Public Repository <code>Black Cat 27.8</code></strong>.<br>
   Hosting: <code>null</code>.
 </p>
 <br><br>
@@ -84,7 +84,7 @@
   <tr><td align=center>🟢</td><td><code>partner points remove</code></td><td>Okay</td></tr>
   <tr><td align=center>🟢</td><td><code>partner ranking global</code></td><td>Okay</td></tr>
   <tr><td align=center>🟢</td><td><code>partner ranking local</code></td><td>Okay</td></tr>
-  <tr><td align=center>🟠</td><td><code>partners ticket setup</code></td><td>Incompleto mas funcionando</td></tr>
+  <tr><td align=center>🟠</td><td><code>partners ticket setup</code></td><td>Incompleto, mas funcionando</td></tr>
   <tr><td align=center>🟢</td><td><code>partnership dashboard</code></td><td>Okay</td></tr>
   <tr><td align=center>🟢</td><td><code>partnership setup</code></td><td>Okay</td></tr>
   <tr><td>‎</td></tr>
@@ -96,19 +96,20 @@
   <tr><td align=center>🟢</td><td><code>modding logs activate</code></td><td>Okay</td></tr>
   <tr><td align=center>🟢</td><td><code>modding logs unactivate</code></td><td>Okay</td></tr>
   <tr><td>‎</td></tr>
-  <tr><td align=center>🟠</td><td><code>moderator dashboard</code></td><td>Incompleto mas funcionando</td></tr>
+  <tr><td align=center>🟢</td><td><code>moderator dashboard</code></td><td>Okay</td></tr>
   <tr><td align=center>🔵</td><td><code>moderator profile</code></td><td>Ainda será criado</td></tr>
   <tr><td align=center>🔵</td><td><code>moderator clear</code></td><td>Ainda será criado</td></tr>
   <tr><td>‎</td></tr>
-  <tr><td align=center>🟣</td><td><code>mod ban</code></td><td>Monitorando</td></tr>
-  <tr><td align=center>🟣</td><td><code>mod unban</code></td><td>Monitorando</td></tr>
-  <tr><td align=center>🟣</td><td><code>mod kick</code></td><td>Monitorando</td></tr>
-  <tr><td align=center>🟣</td><td><code>mod timeout</code></td><td>Monitorando</td></tr>
-  <tr><td align=center>🟣</td><td><code>mod untimeout</code></td><td>Monitorando</td></tr>
-  <tr><td align=center>🟡</td><td><code>mod warn</code></td><td>Em desenvolvimento</td></tr>
-  <tr><td align=center>🟡</td><td><code>mod unwarn</code></td><td>Em desenvolvimento</td></tr>
-  <tr><td align=center>🟡</td><td><code>mod warns</code></td><td>Em desenvolvimento</td></tr>
-  <tr><td align=center>🟡</td><td><code>mod warn-modify</code></td><td>Em desenvolvimento</td></tr>
+  <tr><td align=center>🟢</td><td><code>mod ban</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>mod unban</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>mod kick</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>mod timeout</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>mod untimeout</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>mod warn</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>mod warn-remove</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>mod warn-view</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>mod warns</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>mod warn-modify</code></td><td>Okay</td></tr>
   <tr><td>‎</td></tr>
   <tr><td align=center>🟢</td><td><code>autorole add</code></td><td>Okay</td></tr>
   <tr><td align=center>🟢</td><td><code>autorole remove</code></td><td>Okay</td></tr>
@@ -125,10 +126,11 @@
 </h3>
 <table>
   <tr><td align=center>Status</td><td align=center>Comando</td><td align=center>Condição</td></tr>
-  <tr><td align=center>🟢</td><td><code>ping</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>ping</code> / <code>latency</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>ram</code></td><td>Okay</td></tr>
   <tr><td>‎</td></tr>
   <tr><td align=center>🔵</td><td><code>kick</code></td><td>Ainda será criado</td></tr>
-  <tr><td align=center>🟣</td><td><code>Mute</code> / <code>timeout</code></td><td>Monitorando</td></tr>
+  <tr><td align=center>🟠</td><td><code>Mute</code> / <code>timeout</code></td><td>Incompleto, mas funcionando</td></tr>
   <tr><td align=center>🔵</td><td><code>unmute</code> / <code>untimeout</code></td><td>Ainda será criado</td></tr>
   <tr><td align=center>🔵</td><td><code>ban</code></td><td>Ainda será criado</td></tr>
   <tr><td align=center>🔵</td><td><code>unban</code></td><td>Ainda será criado</td></tr>
@@ -136,12 +138,14 @@
   <tr><td align=center>🔵</td><td><code>unwarn</code></td><td>Ainda será criado</td></tr>
   <tr><td align=center>🔵</td><td><code>warns</code></td><td>Ainda será criado</td></tr>
   <tr><td>‎</td></tr>
-  <tr><td align=center>🔵</td><td><code>ptem</code></td><td>Ainda será criado</td></tr>
   <tr><td align=center>🔵</td><td><code>tutorial</code></td><td>Ainda será criado</td></tr>
   <tr><td align=center>🔵</td><td><code>search</code></td><td>Ainda será criado</td></tr>
   <tr><td align=center>🔵</td><td><code>commands</code> / <code>comandos</code></td><td>Ainda será criado</td></tr>
-  tr><td>‎</td></tr>
-  <tr><td align=center>🟢</td><td><code>unmute</code> / <code>untimeout</code></td><td>Okay</td></tr>
+  <tr><td>‎</td></tr>
+  <tr><td align=center>🔵</td><td><code>unmute</code> / <code>untimeout</code></td><td>Ainda será criado</td></tr>
+  <tr><td>‎</td></tr>
+  <tr><td align=center>🟢</td><td><code>plr</code> / <code>plrank</code></td><td>Okay</td></tr>
+  <tr><td align=center>🟢</td><td><code>pgr</code> / <code>pgrank</code></td><td>Okay</td></tr>
 </table>
 <hr>
 </details>
@@ -167,6 +171,15 @@
 </h3>
 <li>🟢 | <code>autorole</code> [ Okay ]</li>
 <li>🟢 | <code>autoping</code> [ Okay ]</li>
+<hr>
+<h3>
+    Logging.
+</h3>
+<li>🔵 | <code>Messages Logging</code> [ Ainda será criado ]</li>
+<li>🔵 | <code>Moderation Logging</code> [ Ainda será criado ]</li>
+<li>🔵 | <code>Roles Logging</code> [ Ainda será criado ]</li>
+<li>🔵 | <code>Channels Logging</code> [ Ainda será criado ]</li>
+<li>🔵 | <code>Manager Logging</code> [ Ainda será criado ]</li>
 <hr>
 </details>
 <br><br>

@@ -41,7 +41,7 @@ namespace RezetSharp
             {
                 DateTime now = DateTime.Now; var y = now.ToString("dd/MM/yyyy - HH:mm:ss");
                 int RetryCount = 0;
-                while (RetryCount < 10)
+                while (RetryCount < 15)
                 {
                     Console.WriteLine($"    ➜  {y}  |  EngineV8X Error\n       Socket Connection Closed:\n       {e.CloseMessage}");
                     try
@@ -79,7 +79,7 @@ namespace RezetSharp
             while (true)
             {
                 var serverCount = RezetRazor?.Guilds.Count;
-                var activity = new DiscordActivity($"Heyo! {serverCount} servers with {RezetRazor.Ping}ms!", ActivityType.Playing); var userStatus = UserStatus.DoNotDisturb;
+                var activity = new DiscordActivity($"Heyo!", ActivityType.Playing); var userStatus = UserStatus.DoNotDisturb;
                 await RezetRazor.UpdateStatusAsync(activity, userStatus); await Task.Delay(StatusUpdateInterval);
             }
         }
@@ -162,7 +162,7 @@ namespace RezetSharp
                 Console.ResetColor();
                 Console.Write("    ➜  ");
                 Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.Write($"  {y}  |  SHARP  ⚯   Version: Sharp 1.5\n");
+                Console.Write($"  {y}  |  SHARP  ⚯   Version: Sharp 1.4.1\n");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write($"       ⚯  Engine V8 Extreme working on .NET {Environment.Version}!\n\n");
                 Console.ForegroundColor = ConsoleColor.White;
