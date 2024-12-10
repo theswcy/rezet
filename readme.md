@@ -3,7 +3,7 @@
   <img src="assets/icon.png" style="width: 110px;">
 </div>
 <h1 align=center>
-    Rezet Sharp 1.5
+    Rezet Sharp 1.5 [ Essa versão será descontinuada! ]
 </h1>
 <h3 align=center>
   Public Test Repository. / Developed by: <a href="https://github.com/theswcy">Horizon Witwicky</a>.
